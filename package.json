@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "Farmers Hub",
+    "icon": "app-icon.png",
+    "version": "1.0.0",
+    "slug": "your-app-slug",
+    "ios": {
+      "bundleIdentifier": "farmershub",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "farmershub",
+      "versionCode": 1
+    }
+  },
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^10.0.0",
+    "@react-native-community/cli-debugger-ui": "^4.9.0",
+    "@react-native-community/masked-view": "0.1.6",
+    "@react-native-community/netinfo": "5.5.1",
+    "@react-navigation/bottom-tabs": "^5.5.2",
+    "@react-navigation/native": "^5.5.1",
+    "@react-navigation/stack": "^5.5.1",
+    "@types/react-native-snap-carousel": "^3.8.1",
+    "aws-amplify": "^3.0.18",
+    "aws-amplify-react-native": "^4.2.1",
+    "expo": "^37.0.0",
+    "expo-camera": "~8.2.0",
+    "expo-document-picker": "~8.1.0",
+    "expo-image-picker": "~8.1.0",
+    "expo-splash-screen": "^0.2.3",
+    "expo-updates": "~0.2.1",
+    "navigation": "^5.3.1",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-native": "0.61.4",
+    "react-native-gesture-handler": "~1.6.0",
+    "react-native-google-places-autocomplete": "^1.7.2",
+    "react-native-reanimated": "~1.7.0",
+    "react-native-safe-area-context": "0.7.3",
+    "react-native-safe-area-view": "^1.1.1",
+    "react-native-screens": "~2.2.0",
+    "react-native-snap-carousel": "^3.9.1",
+    "react-native-textarea": "^1.0.4",
+    "react-native-unimodules": "~0.8.1",
+    "react-native-web": "^0.11.7",
+    "react-navigation": "^4.3.9",
+    "react-navigation-stack": "^2.7.0",
+    "stream-chat": "^1.12.1",
+    "stream-chat-expo": "^0.12.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.6",
+    "babel-jest": "~25.2.6",
+    "jest": "~25.2.6",
+    "react-test-renderer": "~16.9.0",
+    "@types/react": "^16.9.11",
+    "@types/react-native": "^0.60.22",
+    "babel-preset-expo": "^8.1.0",
+    "typescript": "^3.8.3"
+  },
+  "private": true
+}
