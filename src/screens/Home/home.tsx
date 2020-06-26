@@ -81,17 +81,22 @@ class Home extends React.Component<Props>{
 
     renderNearbytItems = ({ item }) => (
         <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.goToDetails(item)}>
-           
+
             <View style={styles.horizonatalContainer}>
-            
+
                 <View>
                     <Image style={styles.photo} source={{ uri: item.photo_url }} /></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.price}>{'$260000'}</Text></View>
+                    <Text style={styles.price}>{'$260000'}</Text>
+                </View>
+
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.title}>{item.title}</Text></View>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.location}>{getCategoryName(item.categoryId)}</Text></View>
+                    <Text style={styles.title}>{item.title}</Text>
+                </View>
+
+                <View style={styles.locationcontainer}>
+                    <Text style={styles.location}>  <Image style={styles.locationimage} source={require('../../../assets/icons/location1.png')} /> {getCategoryName(item.categoryId)}</Text>
+                </View>
             </View>
         </TouchableHighlight>
     );
@@ -102,13 +107,16 @@ class Home extends React.Component<Props>{
 
                 <View><Image style={styles.highphoto} source={{ uri: item.photo_url }} /></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.price}>{'$260000'}</Text></View>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Text style={styles.price}>{'$260000'}</Text>
+                </View>
 
-                    <Text style={styles.title}>{item.title}</Text></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Text style={styles.title}>{item.title}</Text>
+                </View>
 
-                    <Text style={styles.location}>{getCategoryName(item.categoryId)}</Text></View>
+                <View style={styles.locationcontainer}>
+                    <Text style={styles.location}>  <Image style={styles.locationimage} source={require('../../../assets/icons/location1.png')} /> {getCategoryName(item.categoryId)}</Text>
+                </View>
             </View>
         </TouchableHighlight>
     );
@@ -194,6 +202,8 @@ const styles = StyleSheet.create({
     title: RecipeCard.title,
     price: RecipeCard.price,
     location: RecipeCard.location,
+    locationimage: RecipeCard.locationimage,
+    locationcontainer: RecipeCard.locationcontainer,
     category: RecipeCard.category
 
 

@@ -18,6 +18,8 @@ import Account from '../../screens/Account/Account';
 import ChannelScreen from '../../screens/Chat/Chat';
 import Profile from '../../screens/Account/Profile';
 import MainNavigator from '../../appnavigator';
+import Review from '../../screens/PostAd/reviewaccount';
+import SetPrice from '../../screens/PostAd/price';
 const Stack = createStackNavigator();
 
 function HomeTab() {
@@ -39,8 +41,10 @@ function HomeTab() {
 function PostAdTab() {
   return (
     <Stack.Navigator>
-    <Stack.Screen name="Categories" component={Categories} />
+    <Stack.Screen name="Select Category" component={Categories} />
     <Stack.Screen name="Ad Details" component={CreateAd} />
+    <Stack.Screen name="Review Details" component={Review} />
+    <Stack.Screen name="Set a price" component={SetPrice} /> 
     <Stack.Screen name="Upload Images"  component={AddImages} />
     <Stack.Screen name="Camera Images"  component={CamerPage} />
     

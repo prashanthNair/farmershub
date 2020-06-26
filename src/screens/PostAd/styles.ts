@@ -7,6 +7,14 @@ const styles = StyleSheet.create({
         marginTop: 15,
         flex: 1
     },
+
+    lineheader: {
+        backgroundColor: '#f0f0f0',
+        width: '100%',
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginTop: 0
+    },
     detailsRow: {
         // flexDirection: 'row',
         width: '100%',
@@ -14,6 +22,16 @@ const styles = StyleSheet.create({
         marginBottom: 1,
         padding: 5,
         fontSize: 22,
+    },
+    radioRow: {
+        // flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+        marginTop:5,
+        padding: 5,
+        fontSize: 22, 
+        borderColor: '#c7c7c7',
     },
     infoContainer: {
         marginTop: 10,
@@ -41,7 +59,11 @@ const styles = StyleSheet.create({
         height: 110,
         padding: 5,
         backgroundColor: '#ffffff',
-        marginBottom: 30
+        marginBottom: 30,
+        borderWidth:0.5,
+        marginTop:10,
+        marginLeft:10,
+        width:'97%'
     },
     textarea: {
         textAlignVertical: 'top',  // hack android
@@ -49,21 +71,20 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#333',
     },
-    loginFormTextInput: {
-        width: '99%',
-        height: 43,
+    formTextInput: {
+        width: '98%',
+        height: 30,
         fontSize: 14,
         borderRadius: 5,
         borderBottomWidth: 1,
-        borderColor: '#0591fc',
+        borderColor: '#c7c7c7',
         backgroundColor: '#fafafa',
-        paddingLeft: 10,
-        marginRight: 15,
-        marginTop: 5,
-        marginBottom: 5,
-
+        marginLeft: 10,
+        marginRight: 10
     },
-
+    inputlabel: {
+        marginLeft:10, color:'#878686', fontSize:15
+    },
     alignCenter: {
         flex: 1,
         alignItems: 'center',
@@ -103,17 +124,17 @@ const styles = StyleSheet.create({
         backgroundColor: "red",
         borderColor: "transparent",
     },
-    galleryContainer: { 
-        bottom: 100 
+    galleryContainer: {
+        bottom: 100
     },
-    galleryImageContainer: { 
-        width: 75, 
-        height: 75, 
-        marginRight: 5 
+    galleryImageContainer: {
+        width: 75,
+        height: 75,
+        marginRight: 5
     },
-    galleryImage: { 
-        width: 75, 
-        height: 75 
+    galleryImage: {
+        width: 75,
+        height: 75
     }
 });
 export default styles

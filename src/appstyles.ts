@@ -9,7 +9,7 @@ const recipeNumColums = 2;
 // item size
 const NEAR_ITEM_HEIGHT = 100;
 const ITEM_MARGIN = 0;
-const RECOMMENTED_ITEM_HEIGHT = 150;
+const RECOMMENTED_ITEM_HEIGHT = 160;
 // 2 photos per width
 export const RecipeCard = StyleSheet.create({
   container: {
@@ -28,22 +28,23 @@ export const RecipeCard = StyleSheet.create({
   horizonatalContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#ffffff', 
-    paddingTop:5,
+    backgroundColor: '#ffffff',
+    paddingTop: 5,
     margin: 5,
-    width: (SCREEN_WIDTH / recipeNumColums-0.2)
-},
+    width: (SCREEN_WIDTH / recipeNumColums - 0.2)
+  },
 
   photo: {
     // width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
     width: (SCREEN_WIDTH / 2.2),
     height: NEAR_ITEM_HEIGHT,
+    marginBottom:10
     // borderRadius: 10,
     // borderBottomLeftRadius: 0,
     // borderBottomRightRadius: 0
   },
   highphoto: {
-    width: (SCREEN_WIDTH - (recipeNumColums + 1) * (ITEM_MARGIN + 15)) / 2.2,
+    width: (SCREEN_WIDTH - (recipeNumColums + 1) * (ITEM_MARGIN + 15)) / 2.1,
     // width:(SCREEN_WIDTH/2.2),
     height: RECOMMENTED_ITEM_HEIGHT,
     justifyContent: 'center',
@@ -54,37 +55,52 @@ export const RecipeCard = StyleSheet.create({
   },
   title: {
     flex: 1,
-    fontSize: 16, 
     textAlign: 'left',
-    color: 'black',
-    fontWeight: 'bold',
+    color: '#091c42',
+    // fontWeight: 'bold',
+    // fontFamily: 'Helvetica Neue',
     marginRight: 1,
-    marginLeft: 5,
+    marginLeft: 2,
     flexWrap: 'nowrap'
   },
   price: {
     flex: 1,
-    fontSize: 22,
     fontWeight: 'bold',
+    // fontFamily: 'Helvetica Neue',
     textAlign: 'left',
-    color: 'black',
+    color: '#091c42',
     marginRight: 5,
-    marginLeft:10,
-    flexWrap: 'nowrap', 
-    
-    
+    marginLeft: 2,
+    flexWrap: 'nowrap',
+
+
   },
   location: {
     flex: 1,
-    fontSize: 11, 
-    textAlign: 'left',
+    fontSize: 11,
+    // textAlign: 'left',fontFamily: 'Helvetica Neue',
     color: 'grey',
-    marginRight: 10,
-    marginLeft: 5,
-    flexWrap: 'nowrap'
+    marginRight: 1,
+    marginLeft: 0,
+    flexWrap: 'nowrap',
+    marginBottom: 5
+  },
+  locationimage: {
+    height: 10,
+    width: 10,
+    marginRight: 10, borderWidth: 1
   },
   category: {
     marginTop: 5,
     marginBottom: 5
+  },
+  locationcontainer: {
+    marginTop: 10,
+    backgroundColor: '#f0f0f0',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    paddingBottom:0,
+    marginBottom:0
   }
 });
