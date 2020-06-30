@@ -20,6 +20,8 @@ import Profile from '../../screens/Account/Profile';
 import MainNavigator from '../../appnavigator';
 import Review from '../../screens/PostAd/reviewaccount';
 import SetPrice from '../../screens/PostAd/price';
+import ImagePicker from '../../screens/PostAd/ImagePicker';
+import ImageBrowser from '../../screens/PostAd/ImageBrowse';
 const Stack = createStackNavigator();
 
 function HomeTab() {
@@ -45,7 +47,7 @@ function PostAdTab() {
     <Stack.Screen name="Ad Details" component={CreateAd} />
     <Stack.Screen name="Review Details" component={Review} />
     <Stack.Screen name="Set a price" component={SetPrice} /> 
-    <Stack.Screen name="Upload Images"  component={AddImages} />
+    <Stack.Screen name="Upload Images"  component={ImageBrowser} />
     <Stack.Screen name="Camera Images"  component={CamerPage} />
     
   </Stack.Navigator>
@@ -54,8 +56,10 @@ function PostAdTab() {
 
 function AccountTab() {
   return (
-    <Stack.Navigator>
-    {/* <Stack.Screen name="Account" component={Account} />  */}
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}>
+    <Stack.Screen name="Account" component={Account} /> 
     <Stack.Screen name="Profile"  component={Profile} /> 
     
   </Stack.Navigator>
@@ -100,16 +104,16 @@ function MyTabs() {
         ),
       }}
     />
-    {/* <Tab.Screen
-      name="Camera"
+    <Tab.Screen
+      name="My Ads"
       component={CameraPage}
       options={{
-        tabBarLabel: 'Camera',
+        tabBarLabel: 'Ads',
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="camera" color={color} size={size} />
         ),
       }}
-    /> */}
+    />
 
     {/* <Tab.Screen
       name="ImagePicker"

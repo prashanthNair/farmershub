@@ -16,6 +16,26 @@ import { withNavigation } from 'react-navigation';
 
 const accountDetails = [
     {
+        name: 'Buy package',
+        id: 1,
+        tag: "Sell faster and more at higher margins"
+    },
+    {
+        name: 'My Order',
+        id: 1,
+        tag: "Check my order status and payments"
+    },
+    {
+        name: 'Invoices',
+        id: 1,
+        tag: "download your invoices"
+    },
+    {
+        name: 'My Ads',
+        id: 1,
+        tag: "download your invoices"
+    },
+    {
         name: 'Settings',
         id: 1,
         tag: "Privacy and logout"
@@ -52,17 +72,24 @@ const Account = (props) => {
 
 
     return (
+        <ScrollView>
         <View style={styles.container}>
+
             <View style={styles.header}>
-                <View style={styles.circle} ></View>
-                <View>
-                    <View style={{ marginTop: 50, }}><Text style={{ margin: 10, fontWeight: 'bold' }}>Prasanth</Text>
+                <View style={{ marginTop: 50 }}>
+                    <Text style={{color:'#fff', fontSize:22, fontWeight:'bold'}}>My Account</Text>
+                </View>
+                <View style={{ flexDirection: 'row', marginVertical: 20, justifyContent: 'space-around' }}>
+                    <View style={styles.circle} ></View>
+                    <View>
+                        <View style={{ margin: 20, }}><Text style={{ fontWeight: 'bold',color:'#fff' }}>Welcome Prasanth</Text>
+                            <Text style={{ color: 'blue' }}
+                                onPress={() => props.navigation.navigate('Profile')}>
+                                Edit Profile
+                    </Text>
+                        </View>
 
                     </View>
-                    <Text style={{ color: 'blue' }}
-                       onPress={() => props.navigation.navigate('Profile')}>
-                        Edit Profile
-                    </Text>
                 </View>
             </View>
             <View>
@@ -76,6 +103,7 @@ const Account = (props) => {
             </View>
 
         </View>
+    </ScrollView>
     )
 }
 

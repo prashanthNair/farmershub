@@ -17,6 +17,26 @@ import { Button } from 'react-native-elements';
 
 const accountDetails = [
     {
+        name: 'Buy package',
+        id: 1,
+        tag: "Sell faster and more at higher margins"
+    },
+    {
+        name: 'My Order',
+        id: 1,
+        tag: "Check my order status and payments"
+    },
+    {
+        name: 'Invoices',
+        id: 1,
+        tag: "download your invoices"
+    },
+    {
+        name: 'My Ads',
+        id: 1,
+        tag: "download your invoices"
+    },
+    {
         name: 'Settings',
         id: 1,
         tag: "Privacy and logout"
@@ -36,7 +56,7 @@ const accountDetails = [
 const Profile = () => {
 
     return (
-        <View>
+        <View style={{height:1000}}>
             {/* <TouchableHighlight underlayColor='rgba(73,182,77,0.9)'> */}
             <View style={styles.header}>
                 <View style={styles.circle} ></View>
@@ -62,7 +82,7 @@ const Profile = () => {
                     <TextInput placeholder="Ad Tittle" defaultValue='Business, Music' style={styles.loginFormTextInput}></TextInput>
                 </View>
 
-                <View style={styles.detailsRow}>
+                <View style={styles.contactinfo}>
                     <Text style={{ textAlign: "left", fontStyle: 'normal', fontWeight: 'bold' }}>
                         Contact information
                     </Text>
@@ -88,7 +108,8 @@ const Profile = () => {
             </View>
             </ScrollView>
         </View>
-    );
+   
+   );
 }
 
 export default Profile

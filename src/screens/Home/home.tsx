@@ -23,7 +23,6 @@ class Home extends React.Component<Props>{
     render() {
 
         return (
-
             <View style={styles.homeContainer}>
 
                 {/* <View><LocationSearch></LocationSearch></View> */}
@@ -51,7 +50,7 @@ class Home extends React.Component<Props>{
                         </View>
                     </ScrollView>
 
-                    <View style={{ backgroundColor: '#fafbff', marginTop: 30, marginLeft: 5, marginRight: 5 }}>
+                    <View style={{ backgroundColor: '#fafbff', marginTop: 20, marginLeft: 5, marginRight: 5 }}>
                         <View><Text style={{ margin: 10, fontSize: 20, fontWeight: 'bold' }}>Nearby Ads</Text></View>
                         <FlatList
                             showsHorizontalScrollIndicator={false}
@@ -62,7 +61,7 @@ class Home extends React.Component<Props>{
                             keyExtractor={item => `${item.recipeId}`}
                         />
                     </View>
-                    <View style={{ backgroundColor: '#fafbff', margin: 5, marginBottom: 100 }}>
+                    <View style={{ backgroundColor: '#fafbff', margin: 5, marginBottom: 50 }}>
                         <View><Text style={{ margin: 10, fontSize: 20, fontWeight: 'bold' }}>Recommented Ads</Text></View>
 
                         <FlatList
@@ -78,44 +77,59 @@ class Home extends React.Component<Props>{
         );
     }
 
+    renderHeader() {
+        return <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
 
-    renderNearbytItems = ({ item }) => (
-        <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.goToDetails(item)}>
-
-            <View style={styles.horizonatalContainer}>
-
-                <View>
-                    <Image style={styles.photo} source={{ uri: item.photo_url }} /></View>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.price}>{'$260000'}</Text>
-                </View>
-
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.title}>{item.title}</Text>
-                </View>
-
-                <View style={styles.locationcontainer}>
-                    <Text style={styles.location}>  <Image style={styles.locationimage} source={require('../../../assets/icons/location1.png')} /> {getCategoryName(item.categoryId)}</Text>
+            <View style={{ marginLeft: 0, position: 'relative', top: 40, zIndex: 100 }}>
+                <View style={styles.premiumcontainer}>
+                    <Text style={{ textAlign: 'center', color: 'black' }}>PREMIUM</Text>
                 </View>
             </View>
+            <View style={styles.favcontainer}>
+                {/* <MaterialCommunityIcons name="heart" color={'black'} size={22} /> */}
+                < MaterialCommunityIcons name="heart-outline" color={'black'} size={22} />
+            </View>
+        </View >
+    }
+
+    renderNearbytItems = ({ item }) => (
+        <TouchableHighlight underlayColor='#fafafa' onPress={() => this.goToDetails(item)}>
+            <View>{this.renderHeader()}
+                <View style={styles.horizonatalContainer}>
+
+                    <View>
+                        <Image style={styles.photo} source={{ uri: item.photo_url }} /></View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                        <Text style={styles.price}>{'$260000'}</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                        <Text style={styles.title}>{item.title}</Text>
+                    </View>
+
+                    <View style={styles.locationcontainer}>
+                        <Text style={styles.location}>  <Image style={styles.locationimage} source={require('../../../assets/icons/location1.png')} /> {getCategoryName(item.categoryId)}</Text>
+                    </View>
+                </View></View>
         </TouchableHighlight>
     );
 
     renderRecommentedItems = ({ item }) => (
-        <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.goToDetails(item)}>
-            <View style={styles.listcontainer}>
+        <TouchableHighlight underlayColor='#fafafa' onPress={() => this.goToDetails(item)}>
+            <View>{this.renderHeader()}
+                <View style={styles.listcontainer}>
+                    <View><Image style={styles.highphoto} source={{ uri: item.photo_url }} /></View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                        <Text style={styles.price}>{'$260000'}</Text>
+                    </View>
 
-                <View><Image style={styles.highphoto} source={{ uri: item.photo_url }} /></View>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.price}>{'$260000'}</Text>
-                </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                        <Text style={styles.title}>{item.title}</Text>
+                    </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Text style={styles.title}>{item.title}</Text>
-                </View>
-
-                <View style={styles.locationcontainer}>
-                    <Text style={styles.location}>  <Image style={styles.locationimage} source={require('../../../assets/icons/location1.png')} /> {getCategoryName(item.categoryId)}</Text>
+                    <View style={styles.locationcontainer}>
+                        <Text style={styles.location}>  <Image style={styles.locationimage} source={require('../../../assets/icons/location1.png')} /> {getCategoryName(item.categoryId)}</Text>
+                    </View>
                 </View>
             </View>
         </TouchableHighlight>
@@ -143,6 +157,7 @@ class Home extends React.Component<Props>{
         xhr.setRequestHeader('Content-Type', 'image/jpeg')
         xhr.send({ uri: '../../assets/icons/', type: 'image/jpeg', name: 'cow.png' })
     }
+
 }
 
 
@@ -166,7 +181,25 @@ const Search = () => {
 }
 const styles = StyleSheet.create({
 
-
+    premiumcontainer: {
+        width: 80,
+        maxHeight: 18,
+        borderColor: '#ffffff',
+        backgroundColor: '#fcf403',
+        height: 30,
+        marginLeft: 1,
+        marginVertical: 10
+    },
+    favcontainer: {
+        width: 40,
+        position: 'relative',
+        marginRight: 30,
+        top: 50,
+        left: 35,
+        marginVertical: 10,
+        marginLeft: 10,
+        zIndex: 100
+    },
     sliderContainer: {
         width: 500,
         height: 200,

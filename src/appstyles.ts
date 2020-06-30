@@ -16,11 +16,12 @@ export const RecipeCard = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginLeft: ITEM_MARGIN,
+     marginLeft: ITEM_MARGIN,
     marginBottom: 0,
     margin: 10,
     width: (SCREEN_WIDTH - (recipeNumColums + 1) * (ITEM_MARGIN + 10)) / recipeNumColums,
-    height: NEAR_ITEM_HEIGHT + 150,
+    height: NEAR_ITEM_HEIGHT + 190,
+    
     borderColor: 'black',
     borderWidth: 0.5,
   },
@@ -29,16 +30,20 @@ export const RecipeCard = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    paddingTop: 5,
-    margin: 5,
-    width: (SCREEN_WIDTH / recipeNumColums - 0.2)
+    // paddingTop: 5,
+    margin: 10,
+    marginLeft: ITEM_MARGIN,
+    width: (SCREEN_WIDTH / recipeNumColums - 0.2),
+    borderColor: 'black',
+    borderWidth: 0.5,
   },
 
   photo: {
     // width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
     width: (SCREEN_WIDTH / 2.2),
     height: NEAR_ITEM_HEIGHT,
-    marginBottom:10
+    marginBottom:10,
+    marginTop:40,
     // borderRadius: 10,
     // borderBottomLeftRadius: 0,
     // borderBottomRightRadius: 0
@@ -51,6 +56,8 @@ export const RecipeCard = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 15,
     margin: 10,
+    marginTop:30,
+    marginBottom:30
     // borderRadius: 10, 
   },
   title: {
@@ -94,13 +101,13 @@ export const RecipeCard = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5
   },
-  locationcontainer: {
-    marginTop: 10,
-    backgroundColor: '#f0f0f0',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-    paddingBottom:0,
-    marginBottom:0
-  }
+    locationcontainer: {
+      marginTop: 10,
+      backgroundColor: '#f0f0f0',
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'flex-end',
+      paddingBottom:0,
+      marginBottom:0
+    }
 });

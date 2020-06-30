@@ -35,6 +35,7 @@
     "expo-camera": "~8.2.0",
     "expo-document-picker": "~8.1.0",
     "expo-image-picker": "~8.1.0",
+    "expo-multiple-media-imagepicker": "^1.2.1",
     "expo-splash-screen": "^0.2.3",
     "expo-updates": "~0.2.1",
     "navigation": "^5.3.1",

@@ -10,7 +10,8 @@ import {
     Dimensions,
     TouchableOpacity
 } from 'react-native';
-
+// import { ImageBrowser } from 'expo-multiple-media-imagepicker';
+import ImageBrowser  from '../PostAd/ImageBrowse'
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import { Button } from 'react-native-elements';
@@ -70,7 +71,7 @@ class AddImages extends React.Component<Props>{
             console.log('Your generated pre-signed URL is', url);
             this.signedUrl = url;
         });
-        return  this.signedUrl
+        return this.signedUrl
     }
 
     async componentDidMount() {
@@ -102,8 +103,8 @@ class AddImages extends React.Component<Props>{
     //   };
 
     launchImageLibrary = async () => {
-        await this.awsSetup();
-       alert( this.signedUrl);
+        let url = await this.awsSetup();
+        alert(url);
         let options = {
             storageOptions: {
                 skipBackup: true,
@@ -149,25 +150,25 @@ class AddImages extends React.Component<Props>{
 
 
     launchCamera = async () => {
-        
+
         await this.awsSetup();
         let response: any = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
-        }); 
+        });
         if (response.cancelled) {
             alert('User cancelled image picker');
         } else {
-            const source = { uri: response.uri }; 
+            const source = { uri: response.uri };
             console.log('response', JSON.stringify(response));
             this.setState({
                 filePath: response,
                 fileData: response.data,
                 fileUri: response.uri
             });
-            
+
             await this.postImage(response['uri'])
         }
     }
@@ -198,19 +199,11 @@ class AddImages extends React.Component<Props>{
         }
     }
 
-    chooseImage = () => {
-        let options = {
-            title: 'Select Image',
-            customButtons: [
-                { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-            ],
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
+    chooseImage = (info) => {
+       this.postImage(info)
     }
 
+    
 
     render() {
         return (
@@ -234,14 +227,25 @@ class AddImages extends React.Component<Props>{
 
                     <View style={styles.btnParentSection}>
 
-                        <TouchableOpacity onPress={this.launchCamera} style={styles.btnSection}  >
+                        <ImageBrowser
+                            max={101} // Maximum number of pickable image. default is None
+                            headerCloseText={'Close'} // Close button text on header. default is 'Close'.
+                            headerDoneText={'Done'} // Done button text on header. default is 'Done'.
+                            headerButtonColor={'#E31676'} // Button color on header.
+                            headerSelectText={'0 Selected'} // Word when picking.  default is 'n selected'.
+                            mediaSubtype={'screenshot'} // Only iOS, Filter by MediaSubtype. default is display all.
+                            badgeColor={'#E31676'} // Badge color when picking.
+                            emptyText={'Empty'} // Empty Text
+                            callback={this.chooseImage}></ImageBrowser>
+                        {/* <TouchableOpacity onPress={this.launchCamera} style={styles.btnSection}  >
                             <Text style={styles.btnText}>Directly Launch Camera</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={this.launchImageLibrary} style={styles.btnSection}  >
                             <Text style={styles.btnText}>Directly Launch Image Library</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </View>
+
                     <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
                         this.props.navigation.navigate('Set a price');
                     }} />

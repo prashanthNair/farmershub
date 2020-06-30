@@ -5,29 +5,40 @@ const { width: viewportWidth } = Dimensions.get('window');
 const styles = StyleSheet.create({
     circle: {
         borderRadius: 100,
-        backgroundColor: 'red',
-        width: 100,
-        height: 100,
+        backgroundColor: '#f6f7f0',
+        width: 70,
+        height: 70,
         justifyContent: "center",
         alignContent: 'center',
         color: 'red'
         // padding:50
     },
     container: {
-        padding: 20,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        height:1000
     },
-    header: {
-        flexDirection:'row',
-        justifyContent:'flex-start',
-        marginBottom:30
+    header: { 
+        justifyContent:'center',
+        height:180, 
+        backgroundColor: '#03a0a8',
+        alignContent:'center',
+        alignItems:'center'
     },
     detailsRow: {
         flexDirection: 'row',
         width: '100%',
         justifyContent: 'space-between',
         margin: 5,
-        padding: 10,
+        padding: 5,
+        borderBottomColor: '#e8e8e8',
+        borderBottomWidth: 1, 
+      },
+      contactinfo: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+        marginTop: 15,
+        padding: 5,
         borderBottomColor: '#e8e8e8',
         borderBottomWidth: 1, 
       },
@@ -42,14 +53,26 @@ const styles = StyleSheet.create({
         height: 43,
         fontSize: 14,
         borderRadius: 5,
-        borderBottomWidth: 1,
-        borderColor: '#0591fc',
-        backgroundColor: '#fafafa',
+        borderBottomWidth: 0,
+        borderColor: '#c7c7c7',
+        // backgroundColor: '#fafafa',
         paddingLeft: 10,
         marginRight: 15,
         marginTop: 5,
         marginBottom: 5,
 
+    },
+
+    formTextInput: {
+        width: '98%',
+        height: 30,
+        fontSize: 14,
+        borderRadius: 5,
+        borderBottomWidth: 1,
+        borderColor: '#c7c7c7',
+        backgroundColor: '#fafafa',
+        marginLeft: 10,
+        marginRight: 10
     },
 });
 
