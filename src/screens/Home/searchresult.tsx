@@ -29,7 +29,7 @@ class SearchResult extends React.Component<Props>{
                 <ScrollView showsVerticalScrollIndicator={false}>
 
                     <View style={{ backgroundColor: '#fafbff', margin: 5, marginTop: 10, marginBottom: 100 }}>
-                        <View><Text style={{ margin: 10, fontSize: 20, textAlign: 'center', fontWeight: 'bold' }}>{recipes.length} Ads Found</Text></View>
+                        <View style={{ marginTop: 10,}}><Text style={RecipeCard.headerTextColor}>{recipes.length} Ads Found</Text></View>
 
                         <FlatList
                             showsVerticalScrollIndicator={false}

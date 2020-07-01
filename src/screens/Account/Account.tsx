@@ -28,12 +28,12 @@ const accountDetails = [
     {
         name: 'Invoices',
         id: 1,
-        tag: "download your invoices"
+        tag: "Download your invoices"
     },
     {
         name: 'My Ads',
         id: 1,
-        tag: "download your invoices"
+        tag: "Check your ads"
     },
     {
         name: 'Settings',

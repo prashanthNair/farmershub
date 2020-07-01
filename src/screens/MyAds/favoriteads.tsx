@@ -4,11 +4,9 @@ import { Card, Button, SearchBar } from 'react-native-elements';
 import { withNavigation, NavigationInjectedProps } from 'react-navigation';
 import { RecipeCard } from '../../appstyles';
 import { recipes } from '../../data/dataArrays';
-import { getCategoryName } from '../../data/MockDataAPI';
-import Categoryslider from './categoryslider';
+import { getCategoryName } from '../../data/MockDataAPI'; 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import LocationSearch from './locationsearch';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 interface Props {
     navigation: any
 }
@@ -25,50 +23,31 @@ class Home extends React.Component<Props>{
         return (
             <View style={styles.homeContainer}>
 
-                <View><LocationSearch></LocationSearch></View>
-                {/* <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                    <Text style={{ textAlign: "left" }}>
-                        <Image style={{
-                            height: 20,
-                            width: 20,
-                            marginRight: 4
-                        }} source={require('../../../assets/icons/location1.png')} />
-                Kakkanad, Kochi
-            </Text>
-                    <MaterialCommunityIcons name="chevron-down" color={'black'} size={22} />
-
-                </View> */}
-                <View style={styles.searchContainer}>
-                    <TextInput placeholder='Type Here' style={styles.searchInput}></TextInput>
-                </View>
+                {/* <View><LocationSearch></LocationSearch></View> */}
+               
+            
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View><Text style={{ margin: 10, fontWeight: 'bold', fontSize: 16,color:'#000930' }}>Browse All Category</Text></View>
+            
+                 
+                    <View style={{ backgroundColor: '#fafbff', marginBottom: 20 }}>
+                        <View><Text style={styles.headerTextColor}>Favorite Ads</Text></View>
 
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.sliderContainer}>
-                            <Categoryslider props={this.props}></Categoryslider>
-                        </View>
-                    </ScrollView>
-
-                    <View style={{ backgroundColor: '#fafbff', marginTop: 20, marginLeft: 5, marginRight: 5 }}>
-                        <View><Text style={{ margin: 10, fontSize: 20, fontWeight: 'bold',color:'#000930' }}>Nearby Ads</Text></View>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            numColumns={1}
+                            data={recipes}
+                            renderItem={this.renderRecommentedItems}
+                            keyExtractor={item => `${item.recipeId}`}
+                        />
+                    </View>
+                    <View style={{ backgroundColor: '#fafbff',marginTop:0, marginLeft: 5, marginRight: 5 }}>
+                        <View><Text style={{ fontSize: 20, fontWeight: 'bold',color:'#000930', marginBottom: 0 }}>Popular Ads</Text></View>
                         <FlatList
                             showsHorizontalScrollIndicator={false}
                             horizontal={true}
                             // numColumns={2}
                             data={recipes}
                             renderItem={this.renderNearbytItems}
-                            keyExtractor={item => `${item.recipeId}`}
-                        />
-                    </View>
-                    <View style={{ backgroundColor: '#fff', marginBottom: 50 }}>
-                        <View><Text style={{ margin: 10, fontSize: 20, fontWeight: 'bold' }}>Recommented Ads</Text></View>
-
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            numColumns={2}
-                            data={recipes}
-                            renderItem={this.renderRecommentedItems}
                             keyExtractor={item => `${item.recipeId}`}
                         />
                     </View>
@@ -86,8 +65,8 @@ class Home extends React.Component<Props>{
                 </View>
             </View>
             <View style={styles.favcontainer}>
-                {/* <MaterialCommunityIcons name="heart" color={'black'} size={22} /> */}
-                < MaterialCommunityIcons name="heart-outline" color={'black'} size={22} />
+                <MaterialCommunityIcons name="heart" color={'black'} size={22} />
+                {/* < MaterialCommunityIcons name="heart-outline" color={'black'} size={22} /> */}
             </View>
         </View >
     }
@@ -118,7 +97,7 @@ class Home extends React.Component<Props>{
         <TouchableHighlight underlayColor='#fafafa' onPress={() => this.goToDetails(item)}>
             <View>{this.renderHeader()}
                 <View style={styles.listcontainer}>
-                    <View><Image style={styles.highphoto} source={{ uri: item.photo_url }} /></View>
+                    <View style={{width:'100%'}}><Image style={styles.highphoto} source={{ uri: item.photo_url }} /></View>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
                         <Text style={styles.price}>{'$260000'}</Text>
                     </View>
@@ -137,48 +116,13 @@ class Home extends React.Component<Props>{
 
     goToDetails = (item) => {
         this.props.navigation.navigate('Details', { item });
-    }
+    } 
 
-    s3Upload() { }
-
-    postImage = () => {
-        const xhr = new XMLHttpRequest()
-        let presignedUrl = 'https://test-bucket-tutorial.s3.ap-south-1.amazonaws.com/images/myimage.jpg?Content-Type=image%2Fjpeg&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJG6UHCMETDTUJRWQ%2F20200621%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20200621T170158Z&X-Amz-Expires=900&X-Amz-Signature=37dabdf27a98dd33f4d84ac5924b28bedeb4cc381abdddf69a9c4762f2e37570&X-Amz-SignedHeaders=host';
-        xhr.open('PUT', presignedUrl)
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    console.log('Image successfully uploaded to S3')
-                } else {
-                    console.log('Error while sending the image to S3')
-                }
-            }
-        }
-        xhr.setRequestHeader('Content-Type', 'image/jpeg')
-        xhr.send({ uri: '../../assets/icons/', type: 'image/jpeg', name: 'cow.png' })
-    }
+    
 
 }
 
 
-const Search = () => {
-    const [searchState, setsearchState] = useState('');
-    let updateSearch = search => {
-        // setsearchState({ '' });
-    };
-
-
-    const { search } = searchState;
-    return (
-        <SearchBar
-            placeholder="Type Here..."
-            onChangeText={updateSearch}
-        //   value={search}
-        />
-    );
-
-
-}
 const styles = StyleSheet.create({
 
     premiumcontainer: {
@@ -187,19 +131,24 @@ const styles = StyleSheet.create({
         borderColor: '#ffffff',
         backgroundColor: '#fcf403',
         height: 30,
-        marginLeft: 1, 
+        marginLeft: 1,
+        // marginVertical: 10
     },
     favcontainer: {
         width: 40,
-        position: 'relative', 
-        top: 10, 
+        position: 'relative',
+        marginRight: 40,
+        top: 10,
+        left: 35,
+        // marginVertical: 10,
         marginLeft: 10,
         zIndex: 100
     },
+   
     sliderContainer: {
         width: 500,
         height: 200,
-        marginBottom: 10,   
+        marginBottom: 10,
         marginTop: 10
     },
 
@@ -224,16 +173,38 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 5
     },
-    listcontainer: RecipeCard.container,
+    listcontainer:  {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+         marginLeft: 0,
+        marginBottom: 0,
+        position: 'relative', bottom: 30,
+        margin: 10, 
+        height: 100 + 190,
+        
+        borderColor: 'black',
+        borderWidth: 0.5,
+      },
     horizonatalContainer: RecipeCard.horizonatalContainer,
     photo: RecipeCard.photo,
-    highphoto: RecipeCard.highphoto,
+    highphoto: { 
+        height: 155,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 15,
+        margin: 10,
+        marginTop:30,
+        marginBottom:30
+        // borderRadius: 10, 
+      },
     title: RecipeCard.title,
     price: RecipeCard.price,
     location: RecipeCard.location,
     locationimage: RecipeCard.locationimage,
     locationcontainer: RecipeCard.locationcontainer,
-    category: RecipeCard.category
+    category: RecipeCard.category,
+    headerTextColor:RecipeCard.headerTextColor
 
 
 })

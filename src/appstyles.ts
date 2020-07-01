@@ -16,34 +16,45 @@ export const RecipeCard = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-     marginLeft: ITEM_MARGIN,
+    marginLeft: ITEM_MARGIN,
     marginBottom: 0,
     margin: 10,
     width: (SCREEN_WIDTH - (recipeNumColums + 1) * (ITEM_MARGIN + 10)) / recipeNumColums,
-    height: NEAR_ITEM_HEIGHT + 190,
-    
+    height: NEAR_ITEM_HEIGHT + 195,
+    position: 'relative', bottom: 30,
     borderColor: 'black',
     borderWidth: 0.5,
   },
-
+  headerTextColor: {
+    margin: 15,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#038d91',
+    textAlign:'center'
+  },
   horizonatalContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    // paddingTop: 5,
+    height:185,
+    position: 'relative', bottom: 30,
     margin: 10,
     marginLeft: ITEM_MARGIN,
-    width: (SCREEN_WIDTH / recipeNumColums - 0.2),
+    width: (SCREEN_WIDTH / 1.5 ),
     borderColor: 'black',
     borderWidth: 0.5,
   },
 
   photo: {
     // width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
-    width: (SCREEN_WIDTH / 2.2),
-    height: NEAR_ITEM_HEIGHT,
-    marginBottom:10,
-    marginTop:40,
+    width: (SCREEN_WIDTH / 2),
+    height: 80,
+    // width:'100%',
+    // height:'100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginBottom: 10,
+     margin: 15,
     // borderRadius: 10,
     // borderBottomLeftRadius: 0,
     // borderBottomRightRadius: 0
@@ -56,8 +67,8 @@ export const RecipeCard = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 15,
     margin: 10,
-    marginTop:30,
-    marginBottom:30
+    marginTop: 30,
+    marginBottom: 30
     // borderRadius: 10, 
   },
   title: {
@@ -75,7 +86,9 @@ export const RecipeCard = StyleSheet.create({
     fontWeight: 'bold',
     // fontFamily: 'Helvetica Neue',
     textAlign: 'left',
-    color: '#091c42',
+    // color: '#091c42',
+    color: '#006db5',
+    fontSize: 18,
     marginRight: 5,
     marginLeft: 2,
     flexWrap: 'nowrap',
@@ -101,13 +114,13 @@ export const RecipeCard = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5
   },
-    locationcontainer: {
-      marginTop: 10,
-      backgroundColor: '#f0f0f0',
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      alignItems: 'flex-end',
-      paddingBottom:0,
-      marginBottom:0
-    }
+  locationcontainer: {
+    marginTop:10,
+    backgroundColor: '#f0f0f0',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    paddingBottom: 0,
+    marginBottom: 0
+  }
 });

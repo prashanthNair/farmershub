@@ -53,15 +53,15 @@ const accountDetails = [
     }
 ]
 
-const Profile = () => {
+const Profile = (props) => {
 
     return (
-        <View style={{height:1000}}>
+        <View style={{ height: 1000 }}>
             {/* <TouchableHighlight underlayColor='rgba(73,182,77,0.9)'> */}
             <View style={styles.header}>
                 <View style={styles.circle} ></View>
                 <View>
-                    <View style={{ marginTop: 10,marginLeft:15 }}>
+                    <View style={{ marginTop: 10, marginLeft: 15 }}>
                         <TextInput placeholder="Name" defaultValue='Prasanth' style={styles.loginFormTextInput}></TextInput>
 
                     </View>
@@ -69,7 +69,7 @@ const Profile = () => {
                 </View>
             </View>
             <ScrollView style={styles.container}>
-            {/* <View> */}
+                {/* <View> */}
                 <View style={styles.infoDetailsContainer}>
 
                 </View>
@@ -98,18 +98,22 @@ const Profile = () => {
                 <View style={styles.detailsRow}>
                     <TextInput placeholder="Breed" defaultValue='emailMe@wolhstand.com' style={styles.loginFormTextInput}></TextInput>
                 </View>
-                <View style={{ marginTop: 70, flexDirection: 'row', justifyContent: 'flex-end',  }}>
-                <Button title="Save" buttonStyle={{ width: 200, borderRadius: 0, backgroundColor: '#446ffc' }} onPress={() => {
-                        console.log('save')
-                    }} />
-                   
-                {/* </View> */}
+                <View style={{  justifyContent: 'flex-end', }}>
 
-            </View>
+                    <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: "center", backgroundColor: '#0a87f5' }}>
+                        <Button title="Next" buttonStyle={{ width: 200, borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
+                            props.navigation.navigate('Upload Images');
+                        }} />
+                    </View>
+
+                    </View>
+
+                {/* </View> */}
             </ScrollView>
+           
         </View>
-   
-   );
+
+    );
 }
 
 export default Profile

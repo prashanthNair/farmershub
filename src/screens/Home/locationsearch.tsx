@@ -10,7 +10,7 @@ const LocationSearch = () => {
     <View style={styles.container}>
       <GooglePlacesAutocomplete
         query={{
-          key: GOOGLE_PLACES_API_KEY,
+          key: 'AIzaSyCxz8NokiWeIdFxG8VF8PXK35NTWsdfVbg',
           language: 'en', // language of the results
         }}
         onPress={(data, details = null) => console.log(data)}

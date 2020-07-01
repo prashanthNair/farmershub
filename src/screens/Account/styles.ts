@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-between',
         marginTop: 15,
+        margin: 5,
         padding: 5,
         borderBottomColor: '#e8e8e8',
         borderBottomWidth: 1, 

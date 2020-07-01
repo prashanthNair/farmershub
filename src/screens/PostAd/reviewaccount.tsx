@@ -11,6 +11,7 @@ import {
     TextInput
 } from 'react-native';
 import styles from '../PostAd/styles';
+import { RecipeCard } from '../../appstyles';
 import Textarea from 'react-native-textarea';
 import { Button } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
@@ -51,7 +52,7 @@ class Review extends React.Component<Props>{
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: "flex-start" }}>
 
                         <View style={styles.lineheader}>
-                            <Text style={{ textAlign: "center", fontStyle: 'normal', color: 'black' }}>
+                        <Text style={RecipeCard.headerTextColor}>
                                 Profile Details
                             </Text>
                         </View>

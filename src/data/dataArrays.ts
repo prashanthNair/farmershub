@@ -705,25 +705,30 @@ export const allCategories =
   liveStocks:[{
     id: 1,
     title: 'Cow',
+    icon: 'cow',
     imageUrl: require('../../assets/icons/calendar1.png')
   },
   {
     id: 2,
     title: 'Goat',
+    icon: 'dog-side',
     imageUrl: require('../../assets/icons/calendar1.png')
   },
   {
     id: 3,
     title: 'Bull',
+    icon: 'bullseye',
     imageUrl: require('../../assets/icons/calendar1.png')
   },
   {
     id: 4,
     title: 'Pets',
+    icon: 'dog-side',
     imageUrl: require('../../assets/icons/calendar1.png')
   },
   {
     id: 5,
+    icon: 'ladybug',
     title: 'Poultry',
     imageUrl: require('../../assets/icons/calendar1.png')
   }
@@ -732,25 +737,30 @@ export const allCategories =
  farmItems:[{
   id: 1,
   title: 'Property',
+  icon: 'home-city-outline',
   imageUrl: require('../../assets/icons/calendar1.png')
 },
 {
   id: 2,
   title: 'Equipments',
+  icon:'hammer',
   imageUrl: require('../../assets/icons/calendar1.png')
 },
 {
   id: 3,
   title: 'Vehicle',
+  icon:'car',
   imageUrl: require('../../assets/icons/calendar1.png')
 },
 {
   id: 4,
   title: 'Feed',
+  icon:'food-variant',
   imageUrl: require('../../assets/icons/calendar1.png')
 },{
   id: 5,
   title: 'Job',
+  icon: 'toolbox-outline',
   imageUrl: require('../../assets/icons/calendar1.png')
 }
 ]

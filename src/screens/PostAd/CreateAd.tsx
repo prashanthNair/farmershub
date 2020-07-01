@@ -10,6 +10,8 @@ import {
     TouchableHighlight,
     TextInput
 } from 'react-native';
+
+import { RecipeCard } from '../../appstyles';
 import styles from '../PostAd/styles';
 import Textarea from 'react-native-textarea';
 import { Button } from 'react-native-elements';
@@ -50,13 +52,13 @@ class CreateAd extends React.Component<Props>{
                 <TouchableHighlight>
                     <View>
 
-                        <View style={styles.lineheader}>
-                            <Text style={{ textAlign: "center", fontStyle: 'normal', color: 'black' }}>
+                      <View style={styles.lineheader}>
+                            <Text style={RecipeCard.headerTextColor}>
                                 CATEGORY DETAILD
-                    </Text>
+                     </Text>
                         </View>
                         <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Category</Text>
+                            <Text style={styles.inputlabel} >Category</Text>
                             <TextInput placeholder="Category" style={styles.formTextInput}></TextInput>
                         </View>
                         <View style={styles.detailsRow}>
@@ -114,11 +116,11 @@ class CreateAd extends React.Component<Props>{
                                 marginBottom: 1,
                                 marginLeft: 10,
                                 marginRight: 10,
-                            
+
 
                             }}>
-                                <Dropdown containerStyle={{marginTop:0}}
-                                    label='Male'animationDuration={0}
+                                <Dropdown containerStyle={{ marginTop: 0 }}
+                                    label='Male' animationDuration={0}
                                     data={this.data}
                                 />
                             </View>
@@ -137,7 +139,7 @@ class CreateAd extends React.Component<Props>{
                             <Text style={styles.inputlabel}>Ad Tittle</Text>
                             <TextInput placeholder="Enter Ad tittle (Min 10 character)" style={styles.formTextInput}></TextInput>
                         </View>
-                        
+
                         <View style={styles.detailsRow}>
                             <Text style={styles.inputlabel}>Additional Information</Text>
                             <Textarea
@@ -152,8 +154,8 @@ class CreateAd extends React.Component<Props>{
                             />
                         </View>
 
-                        <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: "flex-end", backgroundColor: '#0a87f5' }}>
-                            <Button title="Next" buttonStyle={{ width: 200, borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
+                        <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: "center", backgroundColor: '#0a87f5' }}>
+                            <Button title="Next"buttonStyle={{width: 200, borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
                                 this.props.navigation.navigate('Upload Images');
                             }} />
                         </View>

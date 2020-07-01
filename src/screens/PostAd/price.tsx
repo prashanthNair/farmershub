@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
 
     }, formTextInput: {
-        width: '98%',
+        width: '95%',
         height: 50,
         fontSize: 14,
         borderRadius: 5,
@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
         borderColor: '#c7c7c7',
         backgroundColor: '#fafafa',
         marginLeft: 10,
-        marginRight: 10,
+        marginRight:10,
         padding:10
     },
     inputlabel: {
-        marginLeft: 10, color: '#878686', fontSize: 15,marginBottom:10,
-    }
+        marginLeft:10, color:'black',fontWeight:'bold', fontSize:14
+    },
 })
 export default withNavigation(SetPrice)

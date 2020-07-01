@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, Image, StyleSheet, RecyclerViewBackedScrollViewBase, ScrollView, TouchableHighlight, FlatList } from 'react-native'
-import { Card, Button, SearchBar } from 'react-native-elements'; 
+import { Card, Button, SearchBar } from 'react-native-elements';
 import { RecipeCard } from '../../appstyles';
 import { recipes, allCategories } from '../../data/dataArrays';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const data = [{
     id: 1,
     title: 'Cow',
     imageUrl: ''
 }]
-const Categoryslider = (props) => { 
-    const goToResult = (item) => { 
+const Categoryslider = (props) => {
+    const goToResult = (item) => {
         props.props.navigation.navigate('SearchResult', { item });
     }
     return (
@@ -19,8 +20,8 @@ const Categoryslider = (props) => {
                 <View style={styles.menuContainer}>
 
 
-                    {allCategories.liveStocks.map((value, index) => {
-                        return <TouchableHighlight onPress={() => goToResult(value)} >
+                    {allCategories.liveStocks.map((item, index) => {
+                        return <TouchableHighlight onPress={() => goToResult(item)} >
                             <View>
                                 <View style={{
                                     justifyContent: 'center', alignContent: 'center',
@@ -28,12 +29,13 @@ const Categoryslider = (props) => {
                                 }}>
 
                                     <View style={styles.circle} >
-
-                                        <Image style={{ marginLeft: 19 }} source={value.imageUrl}></Image>
-
+                                        <View>
+                                            <MaterialCommunityIcons name={item.icon} color={'#04bacf'} size={46} />
+                                            {/* <Image style={{ marginLeft: 19 }} source={item.imageUrl}></Image> */}
+                                        </View>
                                     </View>
                                 </View>
-                                <Text style={{ textAlign: 'center', justifyContent: 'center', marginTop: 10, fontWeight: 'bold' }}>{value.title}</Text>
+                                <Text style={{ textAlign: 'center', justifyContent: 'center', marginTop: 10, fontWeight: 'bold' }}>{item.title}</Text>
                             </View>
                         </TouchableHighlight>
                     })}
@@ -57,8 +59,11 @@ const Categoryslider = (props) => {
 
                                     <View style={styles.circle} >
 
-                                        <Image style={{ marginLeft: 19 }} source={item.imageUrl}></Image>
 
+                                        <View>
+                                            <MaterialCommunityIcons name={item.icon} color={'#04bacf'} size={46} />
+                                            {/* <Image style={{ marginLeft: 19 }} source={value.imageUrl}></Image> */}
+                                        </View>
                                     </View>
                                 </View>
                                 <Text style={{ textAlign: 'center', justifyContent: 'center', marginTop: 10, fontWeight: 'bold' }}>{item.title}</Text>
@@ -89,7 +94,7 @@ const styles = StyleSheet.create({
         height: 60,
         justifyContent: "center",
         alignContent: 'center',
-
+        alignItems: 'center'
         // padding:50
 
 

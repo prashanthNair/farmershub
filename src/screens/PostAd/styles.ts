@@ -11,15 +11,14 @@ const styles = StyleSheet.create({
     lineheader: {
         backgroundColor: '#f0f0f0',
         width: '100%',
-        paddingTop: 10,
-        paddingBottom: 10,
         marginTop: 0
     },
     detailsRow: {
         // flexDirection: 'row',
+        // height:50,
         width: '100%',
         justifyContent: 'space-between',
-        marginBottom: 1,
+        marginBottom: 10,
         padding: 5,
         fontSize: 22,
     },
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     inputlabel: {
-        marginLeft:10, color:'#878686', fontSize:15
+        marginLeft:10, color:'black',fontWeight:'bold', fontSize:14
     },
     alignCenter: {
         flex: 1,

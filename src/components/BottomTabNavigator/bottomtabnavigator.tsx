@@ -21,7 +21,8 @@ import MainNavigator from '../../appnavigator';
 import Review from '../../screens/PostAd/reviewaccount';
 import SetPrice from '../../screens/PostAd/price';
 import ImagePicker from '../../screens/PostAd/ImagePicker';
-import ImageBrowser from '../../screens/PostAd/ImageBrowse';
+import ImageBrowser from '../../screens/PostAd/ImageBrowse'; 
+import TabNavigator from '../../screens/MyAds/tabnavigator';
 const Stack = createStackNavigator();
 
 function HomeTab() {
@@ -106,11 +107,11 @@ function MyTabs() {
     />
     <Tab.Screen
       name="My Ads"
-      component={CameraPage}
+      component={TabNavigator}
       options={{
         tabBarLabel: 'Ads',
         tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcons name="camera" color={color} size={size} />
+          <MaterialCommunityIcons name="dropbox" color={color} size={size} />
         ),
       }}
     />
