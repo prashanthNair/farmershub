@@ -22,27 +22,37 @@ export const RecipeCard = StyleSheet.create({
     width: (SCREEN_WIDTH - (recipeNumColums + 1) * (ITEM_MARGIN + 10)) / recipeNumColums,
     height: NEAR_ITEM_HEIGHT + 195,
     position: 'relative', bottom: 30,
-    borderColor: 'black',
-    borderWidth: 0.5,
+    borderColor: '#038d91',
+    borderWidth: 0.75,
   },
+  lineheader: {
+    backgroundColor: '#edf0ee',
+    width: '100%',
+    marginTop:15,
+    marginBottom:5,
+    borderWidth:0.5,
+    paddingLeft:10,
+    paddingRight:10,
+    borderColor:'#ffffff'
+},
   headerTextColor: {
     margin: 15,
     fontSize: 18,
     fontWeight: 'bold',
     color: '#038d91',
-    textAlign:'center'
+    textAlign: 'center'
   },
   horizonatalContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#ffffff',
-    height:185,
+    height: 185,
     position: 'relative', bottom: 30,
     margin: 10,
     marginLeft: ITEM_MARGIN,
-    width: (SCREEN_WIDTH / 1.5 ),
-    borderColor: 'black',
-    borderWidth: 0.5,
+    width: (SCREEN_WIDTH / 1.5),
+    borderColor: '#038d91',
+    borderWidth: 0.75,
   },
 
   photo: {
@@ -53,8 +63,8 @@ export const RecipeCard = StyleSheet.create({
     // height:'100%',
     justifyContent: 'center',
     alignItems: 'center',
-    // marginBottom: 10,
-     margin: 15,
+    // \\marginBottom: 10,
+    margin: 15,
     // borderRadius: 10,
     // borderBottomLeftRadius: 0,
     // borderBottomRightRadius: 0
@@ -68,17 +78,25 @@ export const RecipeCard = StyleSheet.create({
     paddingTop: 15,
     margin: 10,
     marginTop: 30,
-    marginBottom: 30
+    marginBottom: 28
     // borderRadius: 10, 
   },
   title: {
     flex: 1,
     textAlign: 'left',
     color: '#091c42',
-    // fontWeight: 'bold',
-    // fontFamily: 'Helvetica Neue',
     marginRight: 1,
     marginLeft: 2,
+    width: '100%',
+    flexWrap: 'nowrap',
+    fontWeight:'bold'
+  },
+  hightitle: {
+    textAlign: 'left',
+    color: '#091c42',
+    marginRight: 1,
+    marginLeft: 2,
+    width: '100%',
     flexWrap: 'nowrap'
   },
   price: {
@@ -88,7 +106,7 @@ export const RecipeCard = StyleSheet.create({
     textAlign: 'left',
     // color: '#091c42',
     color: '#006db5',
-    fontSize: 18,
+    fontSize: 20,
     marginRight: 5,
     marginLeft: 2,
     flexWrap: 'nowrap',
@@ -96,14 +114,25 @@ export const RecipeCard = StyleSheet.create({
 
   },
   location: {
-    flex: 1,
+    flex: 2,
     fontSize: 11,
     // textAlign: 'left',fontFamily: 'Helvetica Neue',
     color: 'grey',
     marginRight: 1,
     marginLeft: 0,
     flexWrap: 'nowrap',
-    marginBottom: 5
+    marginBottom: 5,
+    alignItems: "center"
+  },
+  date: {
+    fontSize: 11,
+    // textAlign: 'left',fontFamily: 'Helvetica Neue',
+    color: 'grey',
+    marginRight: 5,
+    marginLeft: 0,
+    flexWrap: 'nowrap',
+    marginBottom: 5,
+    alignItems: "center"
   },
   locationimage: {
     height: 10,
@@ -115,11 +144,11 @@ export const RecipeCard = StyleSheet.create({
     marginBottom: 5
   },
   locationcontainer: {
-    marginTop:10,
+    marginTop: 5,
     backgroundColor: '#f0f0f0',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    justifyContent: 'space-around',
+
     paddingBottom: 0,
     marginBottom: 0
   }

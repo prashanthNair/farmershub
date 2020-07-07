@@ -9,9 +9,12 @@ const styles = StyleSheet.create({
     },
 
     lineheader: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#edf0ee',
         width: '100%',
-        marginTop: 0
+        marginTop:15,
+        marginBottom:5,
+        borderWidth:0.5,
+        borderColor:'#ffffff'
     },
     detailsRow: {
         // flexDirection: 'row',
@@ -21,6 +24,14 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         padding: 5,
         fontSize: 22,
+    },
+    priceRow: { 
+        marginTop:10, 
+        width: '100%',
+        justifyContent: 'space-between',
+        padding: 5,
+        fontSize: 22,
+
     },
     radioRow: {
         // flexDirection: 'row',
@@ -60,7 +71,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         marginBottom: 30,
         borderWidth:0.5,
-        marginTop:10,
+        marginTop:20,
         marginLeft:10,
         width:'97%'
     },
@@ -134,6 +145,18 @@ const styles = StyleSheet.create({
     galleryImage: {
         width: 75,
         height: 75
-    }
+    },
+    priceTextInput: {
+        width: '95%',
+        height: 50,
+        fontSize: 14,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#c7c7c7',
+        backgroundColor: '#fafafa',
+        marginLeft: 10,
+        marginRight:10,
+        padding:10
+    },
 });
 export default styles

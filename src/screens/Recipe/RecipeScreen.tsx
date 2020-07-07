@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  Linking,Platform,
+  Linking, Platform,
   TouchableHighlight
 } from 'react-native';
 import styles from './styles';
@@ -18,11 +18,12 @@ import BackButton from '../../components/BackButton/BackButton'
 // import { StackNavigationProp } from 'react-navigation-stack/lib/typescript/src/vendor/types';
 import { withNavigation } from 'react-navigation';
 import { Button } from 'react-native-elements';
+import { RecipeCard } from '../../appstyles';
 
 const { width: viewportWidth } = Dimensions.get('window');
 interface props {
   navigation: any;
-  route:any;
+  route: any;
 }
 class Details extends React.Component<props> {
 
@@ -63,16 +64,16 @@ class Details extends React.Component<props> {
   dialCall = (number) => {
     let phoneNumber = '';
     if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
-    else {phoneNumber = `telprompt:${number}`; }
+    else { phoneNumber = `telprompt:${number}`; }
     Linking.openURL(phoneNumber);
- };
+  };
 
 
   render() {
     const activeSlide = this.state['activeSlide'];
     const { navigation } = this.props;
-    const {item} = this.props.route.params;
-    const category = getCategoryById(item.categoryId);
+    const { item } = this.props.route.params;
+    const category = item.AdId //getCategoryById(item.categoryId);
     const title = getCategoryName(category.id);
 
     return (
@@ -83,7 +84,7 @@ class Details extends React.Component<props> {
               ref={c => {
                 this.slider1Ref = c;
               }}
-              data={item.photosArray}
+              data={[]}//item.photosArray
               renderItem={this.renderImage}
               sliderWidth={viewportWidth}
               itemWidth={viewportWidth}
@@ -97,7 +98,7 @@ class Details extends React.Component<props> {
               onSnapToItem={index => this.setState({ activeSlide: index })}
             />
             <Pagination
-              dotsLength={item.photosArray.length}
+              dotsLength={0}//item.photosArray.length
               activeDotIndex={activeSlide}
               containerStyle={styles.paginationContainer}
               dotColor="rgba(255, 255, 255, 0.92)"
@@ -126,12 +127,12 @@ class Details extends React.Component<props> {
           </View> */}
 
           <View style={styles.infoContainer}>
-            <Text style={styles.infoRecipeName}>$100000</Text>
+            <Text style={RecipeCard.price}>{`$ ${item.Price}`}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
+            <Text style={RecipeCard.title}>{item.Tittle}</Text>
           </View>
-          <View style={styles.detailsRow}>
+          <View style={styles.locationcontainer}>
             <View>
               <Text style={{ textAlign: "left" }}>
                 <Image style={styles.infoPhoto} source={require('../../../assets/icons/location1.png')} />
@@ -143,13 +144,15 @@ class Details extends React.Component<props> {
               <Text style={{ textAlign: "right" }}>04/04/2020</Text>
             </View>
           </View>
-          <View style={{ marginBottom: 10 }}>
+          <View style={{ marginBottom: 5 }}>
 
           </View>
-          <View>
-            <Text style={styles.infoRecipeName}>Details</Text>
-          </View>
 
+          <View style={RecipeCard.lineheader}>
+            <Text style={RecipeCard.headerTextColor}>
+              Details
+            </Text>
+          </View>
           <View style={styles.detailsRow}>
             <View >
               <Text style={{ textAlign: "left", fontWeight: 'bold' }}>
@@ -157,7 +160,7 @@ class Details extends React.Component<props> {
             </Text>
             </View>
             <View>
-              <Text style={{ textAlign: "right" }}>Goat</Text>
+              <Text style={styles.valueCol}>Goat</Text>
             </View>
           </View>
           <View style={styles.detailsRow}>
@@ -167,7 +170,7 @@ class Details extends React.Component<props> {
             </Text>
             </View>
             <View>
-              <Text style={{ textAlign: "right" }}>JP</Text>
+              <Text style={styles.valueCol}>JP</Text>
             </View>
           </View>
           <View style={styles.detailsRow}>
@@ -177,7 +180,7 @@ class Details extends React.Component<props> {
             </Text>
             </View>
             <View>
-              <Text style={{ textAlign: "right" }}>Male</Text>
+              <Text style={styles.valueCol}>Male</Text>
             </View>
           </View>
           <View style={styles.detailsRow}>
@@ -187,7 +190,7 @@ class Details extends React.Component<props> {
             </Text>
             </View>
             <View>
-              <Text style={{ textAlign: "right" }}>2</Text>
+              <Text style={styles.valueCol}>2</Text>
             </View>
           </View>
           <View style={styles.detailsRow}>
@@ -197,7 +200,7 @@ class Details extends React.Component<props> {
             </Text>
             </View>
             <View>
-              <Text style={{ textAlign: "right" }}>4</Text>
+              <Text style={styles.valueCol}>4</Text>
             </View>
           </View>
           <View style={styles.detailsRow}>
@@ -207,19 +210,21 @@ class Details extends React.Component<props> {
             </Text>
             </View>
             <View>
-              <Text style={{ textAlign: "right" }}>60</Text>
+              <Text style={styles.valueCol}>60</Text>
             </View>
           </View>
-          <View>
-            <Text style={styles.infoRecipeName}>Description</Text>
-          </View>
 
+          <View style={RecipeCard.lineheader}>
+            <Text style={RecipeCard.headerTextColor}>
+              Description
+            </Text>
+          </View>
           <View style={styles.infoContainer}>
             <View style={{
               borderBottomColor: '#e8e8e8',
               borderBottomWidth: 1
             }}>
-              <Text style={styles.infoDescriptionRecipe}>Start with cleaned and peeled russet potatoes that you have cut into 3/8-inch match sticks</Text>
+              <Text style={styles.infoDescriptionRecipe}>{item.Description}</Text>
             </View>
           </View>
         </View>
@@ -227,25 +232,40 @@ class Details extends React.Component<props> {
         <View style={styles.detailsRow}>
           <View>
             <Text style={{ textAlign: "left" }}>
-              Ad ID :
+              {`AD ID ${item.AdId}`}
             </Text>
-            <Text style={{ textAlign: "left" }}>
-              13244
-            </Text>
+
           </View>
           <View style={{ flexDirection: 'row' }}>
             {/* <Image style={styles.infoPhoto} source={require('../../../assets/icons/calendar1.png')} /> */}
+
+            {/* <Button title="See User Profile" textStyle={{ textAlign: "right", fontWeight: 'bold', color: '#446ffc' }}
+            buttonStyle={{backgroundColor:'#fff'}} onPress={() => {
+              this.props.navigation.navigate('Chat')}}/> */}
             <Text style={{ textAlign: "right", fontWeight: 'bold', color: '#446ffc' }}>See User Profile</Text>
           </View>
         </View>
-        <View style={{flexDirection:'row',justifyContent: 'space-between', backgroundColor:'#446ffc'}}>
-        <Button title="Chat" buttonStyle={{width:200}} onPress={() => {
-                   this.props.navigation.navigate('Chat')
-                }} />
-                 <Button title="Phone" buttonStyle={{width:200, borderRadius:0}} onPress={() => {
-                    this.dialCall(9497644904)
-                }} />
+
+
+        <View style={{ flexDirection: 'row', marginTop: 40, marginBottom: 20, width: "100%", justifyContent: 'space-between', flex: 1 }}>
+
+
+          <View style={{ flex: 1, margin: 5, flexDirection: 'row', borderRadius: 30, borderWidth: 2, borderColor: '#038d91', alignItems: 'center', justifyContent: "center" }}>
+            <Button title="Chat" style={{ borderRadius: 50 }} textStyle={{ color: '#038d91' }} buttonStyle={{ borderWidth: 0, width: '100%', backgroundColor: '#ffffff' }} onPress={() => {
+              this.props.navigation.navigate('Chat')
+            }} />
+
+          </View>
+
+          <View style={{ flex: 1, margin: 5, flexDirection: 'row', borderRadius: 30, borderWidth: 2, borderColor: '#038d91', alignItems: 'center', justifyContent: "center" }}>
+            <Button title="Call" style={{ borderRadius: 50 }} textStyle={{ color: '#038d91' }} buttonStyle={{ borderWidth: 0, width: '100%', backgroundColor: '#ffffff' }} onPress={() => {
+              this.dialCall(item.MobileNum)
+            }} />
+
+          </View>
         </View>
+
+
 
       </ScrollView>
     );

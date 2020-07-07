@@ -36,14 +36,19 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     marginHorizontal: 0
   },
+  valueCol:{
+    textAlign: "right",marginRight:10
+  },
   infoRecipeContainer: {
     flex: 1,
-    margin: 25,
+    marginBottom: 25,
     marginTop: 20,
     justifyContent: 'flex-start',
     alignItems: 'flex-start'
   },
   infoContainer: {
+    marginLeft:5,
+    marginBottom:15,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -94,6 +99,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomColor: '#e8e8e8',
     borderBottomWidth: 1
+  },
+  locationcontainer: {
+    
+    backgroundColor: '#fafcfc',
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between', 
+    marginTop:15,
+    padding: 5,
+    // borderBottomColor: '#e8e8e8',
+    // borderBottomWidth: 1
   }
 });
 

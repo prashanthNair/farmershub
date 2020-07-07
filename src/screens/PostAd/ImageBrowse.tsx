@@ -202,7 +202,7 @@ class ImageBrowser extends React.Component<Props> {
                 {this.renderHeader()}
                 {this.renderImages()}
                 <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
-                    this.props.navigation.navigate('Set a price');
+                    this.props.navigation.navigate('Review Details');
                 }} />
             </View>
         )

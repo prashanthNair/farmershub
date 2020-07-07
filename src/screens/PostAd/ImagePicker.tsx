@@ -10,8 +10,8 @@ import {
     Dimensions,
     TouchableOpacity
 } from 'react-native';
-// import { ImageBrowser } from 'expo-multiple-media-imagepicker';
-import ImageBrowser  from '../PostAd/ImageBrowse'
+import { ImageBrowser } from 'expo-multiple-media-imagepicker';
+
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import { Button } from 'react-native-elements';
@@ -199,8 +199,17 @@ class AddImages extends React.Component<Props>{
         }
     }
 
-    chooseImage = (info) => {
-       this.postImage(info)
+    chooseImage = () => {
+        let options = {
+            title: 'Select Image',
+            customButtons: [
+                { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+            ],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
     }
 
     
@@ -229,21 +238,21 @@ class AddImages extends React.Component<Props>{
 
                         <ImageBrowser
                             max={101} // Maximum number of pickable image. default is None
-                            headerCloseText={'Close'} // Close button text on header. default is 'Close'.
-                            headerDoneText={'Done'} // Done button text on header. default is 'Done'.
+                            headerCloseText={'キャンセル'} // Close button text on header. default is 'Close'.
+                            headerDoneText={'　　完了'} // Done button text on header. default is 'Done'.
                             headerButtonColor={'#E31676'} // Button color on header.
-                            headerSelectText={'0 Selected'} // Word when picking.  default is 'n selected'.
+                            headerSelectText={'枚の画像を選択中'} // Word when picking.  default is 'n selected'.
                             mediaSubtype={'screenshot'} // Only iOS, Filter by MediaSubtype. default is display all.
                             badgeColor={'#E31676'} // Badge color when picking.
-                            emptyText={'Empty'} // Empty Text
+                            emptyText={'選択できる画像がありません'} // Empty Text
                             callback={this.chooseImage}></ImageBrowser>
-                        {/* <TouchableOpacity onPress={this.launchCamera} style={styles.btnSection}  >
+                        <TouchableOpacity onPress={this.launchCamera} style={styles.btnSection}  >
                             <Text style={styles.btnText}>Directly Launch Camera</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={this.launchImageLibrary} style={styles.btnSection}  >
                             <Text style={styles.btnText}>Directly Launch Image Library</Text>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                     </View>
 
                     <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {

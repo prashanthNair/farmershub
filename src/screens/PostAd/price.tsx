@@ -15,6 +15,7 @@ import Constants from 'expo-constants';
 import { Button } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { Store } from '../../store/store';
 
 
 const SetPrice = (props) => {
@@ -23,7 +24,12 @@ const SetPrice = (props) => {
 
             <View style={styles.detailsRow}>
                 <Text style={styles.inputlabel}>Price</Text>
-                <TextInput placeholder="Price" style={styles.formTextInput}></TextInput>
+                <TextInput placeholder="Price" style={styles.formTextInput}
+                  onChangeText={
+                    (text) => {
+                        Store.postAdDateModel.Price = text;
+                    }}
+                ></TextInput>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'flex-end', justifyContent: "flex-end" }}>
                 <View style={{ flexDirection: 'row', backgroundColor: '#0a87f5', justifyContent: "flex-end", width: '100%' }}>
