@@ -16,6 +16,7 @@ import SafeAreaView from 'react-native-safe-area-view'
 
 import ImageTile from '../PostAd/ImageTitle'
 import { withNavigation } from 'react-navigation'
+import { Store } from '../../store/store';
 
 const { width } = Dimensions.get('window')
 
@@ -33,6 +34,8 @@ interface Props {
     emptyText
 }
 class ImageBrowser extends React.Component<Props> {
+    imageArray: [any];
+
     constructor(props: any) {
         super(props)
         this.state = {
@@ -113,7 +116,8 @@ class ImageBrowser extends React.Component<Props> {
         let photos = this.state['photos'];
         const selectedPhotos = selected.map(i => photos[i])
         const assetsInfo = Promise.all(selectedPhotos.map(i => MediaLibrary.getAssetInfoAsync(i)))
-        this.props.callback(assetsInfo)
+        Store.SetImageArray(assetsInfo)
+       // this.props.callback(assetsInfo)
     }
 
     renderHeader = () => {
@@ -202,6 +206,7 @@ class ImageBrowser extends React.Component<Props> {
                 {this.renderHeader()}
                 {this.renderImages()}
                 <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
+                    this.prepareCallback()
                     this.props.navigation.navigate('Review Details');
                 }} />
             </View>

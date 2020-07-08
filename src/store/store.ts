@@ -1,6 +1,6 @@
 import 'react-native-get-random-values';
 import { uuid } from 'uuidv4';
-import {WebView} from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 export class Store {
 
     private constructor() { }
@@ -33,14 +33,23 @@ export class Store {
         IsPremiumUser: '',
         SubscriptionDate: '',
         AdId: Math.random().toString(),// uuid(),
-        DisplayAdID:''
+        DisplayAdID: ''
     }
 
+    private static _imagesArray = [];
+
+    static async GetImageArray() {
+        return Store._imagesArray;
+    }
+    static SetImageArray(value) {
+        Store._imagesArray = value;
+    }
 
     static getPostData(): StoreModel {
         return Store._postAdDateModel;
     }
-    static setPostData(value) { 
+
+    static setPostData(value) {
         Store._postAdDateModel.Category = value.Category;
         Store._postAdDateModel.Breed = value.Breed;
         Store._postAdDateModel.Gender = value.Gender;
@@ -70,8 +79,8 @@ export class Store {
         Store._postAdDateModel.UserName = value.UserName
         Store._postAdDateModel.MobileNum = value.MobileNum
         Store._postAdDateModel.Email = value.Email
-        Store._postAdDateModel.UserId ="1";
-        Store._postAdDateModel.DisplayAdID= value.DisplayAdID;
+        Store._postAdDateModel.UserId = "1";
+        Store._postAdDateModel.DisplayAdID = value.DisplayAdID;
     }
 }
 
@@ -103,5 +112,5 @@ export interface StoreModel {
     IsActiveAd: 'true',
     IsPremiumUser: string,
     SubscriptionDate: string,
-    DisplayAdID:string
+    DisplayAdID: string
 }

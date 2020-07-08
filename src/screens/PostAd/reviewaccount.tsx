@@ -15,6 +15,7 @@ import { RecipeCard } from '../../appstyles';
 import { Button } from 'react-native-elements';
 import { Store } from '../../store/store';
 import { HomeService } from '../../services/homeservice';
+import { uploadFile, TestuploadFile } from './UploadToS3';
 
 interface Props {
     navigation: any
@@ -81,7 +82,15 @@ class Review extends React.Component<Props, State>{
         { label: 'I want to buy', value: 1 }
     ];
 
-    postAd = async () => {
+    postAd = async () => { 
+        Store.GetImageArray().then((data) => { 
+            data.forEach(async (element )=> { 
+                await uploadFile(this.generateRowId(4)+'/'+element.filename, element.uri);
+            });
+
+        })
+
+      
         this.postData.UserName = this.state.Name
         this.postData.Locality = this.state.Locality
         this.postData.MobileNum = this.state.MobileNum
@@ -89,7 +98,7 @@ class Review extends React.Component<Props, State>{
         this.postData.UserId = this.state.UserID;
         this.postData.State = this.state.State
         this.postData.District = this.state.District
-        this.postData.DisplayAdID='AD'+this.generateRowId(4)
+        this.postData.DisplayAdID = 'AD' + this.generateRowId(4)
         await Store.setContactData(this.postData);
         let inputModel: any = Store.getPostData();
         console.log(inputModel)

@@ -35,6 +35,7 @@
     "expo": "^37.0.0",
     "expo-camera": "~8.2.0",
     "expo-document-picker": "~8.1.0",
+    "expo-file-system": "^9.0.1",
     "expo-image-picker": "~8.1.0",
     "expo-location": "^8.2.1",
     "expo-multiple-media-imagepicker": "^1.2.1",
