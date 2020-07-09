@@ -17,11 +17,15 @@ import Textarea from 'react-native-textarea';
 import { Button } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
-import { Dropdown } from 'react-native-material-dropdown';
-import { Store, StoreModel } from '../../store/store';
+import { Dropdown } from 'react-native-material-dropdown'; 
+import LiveStock from '../LiveStock/LiveStock'; 
+import FarmEquipments from '../FarmEquipments/FarmEquipments';
+import PropertyAd from '../Property/property';
 
 interface Props {
     navigation: any;
+    route: any;
+
     Category: String;
     Breed: String;
     Gender: String;
@@ -71,19 +75,21 @@ class CreateAd extends React.Component<Props>{
     state = {
         value: 0
     }
-    postData={Category: "",
-    Breed: "",
-    Gender: '',
-    Age: '',
-    Weight: '',
-    Color: '',
-    Type: 'Male',
-    MilkingCapacity: '',
-    NoOfKids: '',
-    KidsWeight: '',
-    KidsDetails: '',
-    Tittle: '',
-    Description: '',}
+    postData = {
+        Category: "",
+        Breed: "",
+        Gender: '',
+        Age: '',
+        Weight: '',
+        Color: '',
+        Type: 'Male',
+        MilkingCapacity: '',
+        NoOfKids: '',
+        KidsWeight: '',
+        KidsDetails: '',
+        Tittle: '',
+        Description: '',
+    }
     data = [{
         value: 'MALE',
     }, {
@@ -108,164 +114,24 @@ class CreateAd extends React.Component<Props>{
         return (
             <ScrollView style={styles.scrollContainer}>
                 <TouchableHighlight>
-                    <View>
+                    <ScrollView style={styles.scrollContainer}>
+                        <TouchableHighlight>
+                            {
+                                (this.props.route == 'LiveStock') ?
+                                    <LiveStock navigation={this.props.navigation}></LiveStock> :
+                                    // (this.props.route == 'Property') ?
+                                        // <PropertyAd></PropertyAd> :
+                                        (this.props.route == 'FarmEquipments') ?
+                                            <FarmEquipments navigation={this.props.navigation}></FarmEquipments> :
+                                            (this.props.route == 'Feeds') ?
+                                                <LiveStock navigation={this.props.navigation}></LiveStock> :
+                                                (this.props.route == 'Traing') ?
+                                                    <LiveStock navigation={this.props}></LiveStock> :
+                                                    <LiveStock navigation={this.props}></LiveStock>
 
-                        <View style={styles.lineheader}>
-                            <Text style={RecipeCard.headerTextColor}>
-                                CATEGORY DETAIL
-                     </Text>
-                        </View>
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel} >Category</Text>
-                            <TextInput placeholder="Category" style={styles.formTextInput} onChangeText={
-                                (text) => {
-                                    this.postData.Category = text;
-                                }}></TextInput>
-                        </View>
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Breed</Text>
-                            <TextInput placeholder="Breed" style={styles.formTextInput} onChangeText={
-                                (text) => {
-                                    this.postData.Breed = text;
-                                }}></TextInput>
-                        </View>
-                        <View style={styles.radioRow}>
-                            <RadioForm
-                                formHorizontal={true}
-                                animation={true}
-                            >
-                                {/* To create radio buttons, loop through your array of options */}
-                                {
-                                    this.radio_props.map((obj, i) => (
-                                        <RadioButton labelHorizontal={true} key={i} onChangeText={
-                                            (text) => {
-                                                this.postData.Type = text;
-                                            }} >
-                                            <RadioButtonInput
-                                                obj={obj}
-                                                index={i}
-                                                isSelected={this.state.value === i}
-                                                onPress={(text) => {
-                                                    this.postData.Type = text;
-                                                    this.state.value =0
-                                                }}
-                                                borderWidth={1}
-                                                buttonInnerColor={'#0a87f5'}
-                                                buttonOuterColor={'#c7c7c7'}
-                                                buttonSize={15}
-                                                buttonOuterSize={20}
-                                                buttonInnerSize={20}
-                                                buttonStyle={{}}
-                                                buttonWrapStyle={{ marginLeft: 10 }}
-                                            />
-                                            <RadioButtonLabel
-                                                obj={obj}
-                                                index={i}
-                                                isSelected={this.state.value === i}
-                                                labelHorizontal={true}
-                                                onPress={(text) => {
-                                                    this.postData.Type = text;
-                                                    this.state.value =1
-                                                }}
-                                                labelStyle={{ color: 'black' }}
-                                                labelWrapStyle={{}}
-                                            />
-                                        </RadioButton>
-                                    ))
-                                }
-                            </RadioForm>
-
-                        </View>
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Age</Text>
-                            <TextInput placeholder="Age" style={styles.formTextInput} onChangeText={
-                                (text) => {
-                                    this.postData.Age = text;
-                                }}></TextInput>
-                        </View>
-
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Gender</Text>
-                            <View style={{
-                                width: '97%',
-                                justifyContent: 'space-between',
-                                marginBottom: 1,
-                                marginLeft: 10,
-                                marginRight: 10,
-
-
-                            }}>
-                                <Dropdown containerStyle={{ marginTop: 0 }}
-                                    label='Male' animationDuration={0}
-                                    data={this.data}
-                                    onChangeText={
-                                        (text) => {
-                                            this.postData.Gender = text;
-                                        }}
-                                />
-                            </View>
-                        </View>
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Weight</Text>
-                            <TextInput placeholder="Weight" style={styles.formTextInput} onChangeText={
-                                (text) => {
-                                    this.postData.Weight = text;
-                                }}></TextInput>
-                        </View>
-
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Milking Capacity</Text>
-                            <TextInput placeholder="Milking Capacity" style={styles.formTextInput} onChangeText={
-                                (text) => {
-                                    this.postData.MilkingCapacity = text;
-                                }}></TextInput>
-                        </View>
-                        <View style={styles.lineheader}>
-                            <Text style={RecipeCard.headerTextColor}>
-                                Ad DETAIL
-                     </Text>
-                     </View>
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Ad Tittle</Text>
-                            <TextInput placeholder="Enter Ad tittle (Min 10 character)" style={styles.formTextInput}
-                                onChangeText={
-                                    (text) => {
-                                        this.postData.Tittle = text;
-                                    }}></TextInput>
-                        </View>
-
-                        <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Additional Information</Text>
-                            <Textarea
-                                containerStyle={styles.textareaContainer}
-                                style={styles.textarea}
-                                // defaultValue={' Additional Information'}
-                                maxLength={120}
-                                placeholder={'Additional Information'}
-                                placeholderTextColor={'#c7c7c7'}
-                                underlineColorAndroid={'transparent'}
-                                onChangeText={
-                                    (text) => {
-                                        this.postData.Description = text;
-                                    }}
-                            />
-                        </View>
-
-                        {/* <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: "center", backgroundColor: '#0a87f5' }}>
-                            <Button title="Next" buttonStyle={{ width: 200, borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
-                                Store.setPostData(this.postData);
-                                this.props.navigation.navigate('Upload Images');
-                            }} />
-                        </View> */}
-                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, alignItems: 'center', justifyContent: "center" }}>
-                            <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 30, backgroundColor: '#038d91' }} onPress={() => {
-                                Store.setPostData(this.postData);
-                                this.props.navigation.navigate('Upload Images');
-                            }} />
-
-                        </View>
-
-                    </View>
+                            }
+                        </TouchableHighlight>
+                    </ScrollView>
                 </TouchableHighlight>
             </ScrollView>
         )
@@ -273,3 +139,5 @@ class CreateAd extends React.Component<Props>{
 }
 
 export default CreateAd
+
+

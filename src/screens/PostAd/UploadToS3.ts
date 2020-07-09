@@ -13,7 +13,7 @@ export async function uploadFile(filename, fileDirectoryPath) {
     let imageData = await fetch(fileDirectoryPath);
     let blobData = await imageData.blob();
 
-    await s3.putObject({
+   return await s3.putObject({
         Bucket: 'farmadsimagesbucket', //'' + process.env.S3_BUCKET_NAME,
         Key: filename,
         Body: blobData,

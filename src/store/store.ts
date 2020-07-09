@@ -1,90 +1,40 @@
 import 'react-native-get-random-values';
 import { uuid } from 'uuidv4';
 import { WebView } from 'react-native-webview';
-export class Store {
+class BaseModel {
 
-    private constructor() { }
-
-    private static _postAdDateModel: StoreModel = {
-        Category: "",
-        Breed: "",
-        Gender: '',
-        Age: '',
-        Weight: '',
-        Color: '',
-        Type: 'Male',
-        MilkingCapacity: '',
-        NoOfKids: '',
-        KidsWeight: '',
-        KidsDetails: '',
-        Tittle: '',
-        Description: '',
-        State: '',
-        District: '',
-        Locality: '',
-        Date: Date.now.toString(),
-        imageRef: '',
-        UserId: '',
-        Price: '',
-        UserName: '',
-        MobileNum: '',
-        Email: '',
-        IsActiveAd: 'true',
-        IsPremiumUser: '',
-        SubscriptionDate: '',
-        AdId: Math.random().toString(),// uuid(),
-        DisplayAdID: ''
-    }
-
-    private static _imagesArray = [];
-
-    static async GetImageArray() {
-        return Store._imagesArray;
-    }
-    static SetImageArray(value) {
-        Store._imagesArray = value;
-    }
-
-    static getPostData(): StoreModel {
-        return Store._postAdDateModel;
-    }
-
-    static setPostData(value) {
-        Store._postAdDateModel.Category = value.Category;
-        Store._postAdDateModel.Breed = value.Breed;
-        Store._postAdDateModel.Gender = value.Gender;
-        Store._postAdDateModel.Age = value.Age;
-        Store._postAdDateModel.Weight = value.Weight;
-        Store._postAdDateModel.Color = value.Color;
-        Store._postAdDateModel.Type = value.Type;
-        Store._postAdDateModel.MilkingCapacity = value.MilkingCapacity;
-        Store._postAdDateModel.NoOfKids = value.NoOfKids;
-        Store._postAdDateModel.KidsWeight = value.KidsWeight;
-        Store._postAdDateModel.KidsDetails = value.KidsDetails;
-        Store._postAdDateModel.Tittle = value.Tittle;
-        Store._postAdDateModel.Description = value.Description;
-    }
-
-    static getContactData(): StoreModel {
-        return Store._postAdDateModel;
-    }
-    static async setContactData(value: any) {
-        Store._postAdDateModel.State = value.State,
-            Store._postAdDateModel.District = value.District
-        Store._postAdDateModel.Locality = value.Locality
-        Store._postAdDateModel.Date = value.Date
-        Store._postAdDateModel.imageRef = value.imageRef
-        Store._postAdDateModel.UserId = value.UserId
-        Store._postAdDateModel.Price = value.Price
-        Store._postAdDateModel.UserName = value.UserName
-        Store._postAdDateModel.MobileNum = value.MobileNum
-        Store._postAdDateModel.Email = value.Email
-        Store._postAdDateModel.UserId = "1";
-        Store._postAdDateModel.DisplayAdID = value.DisplayAdID;
-    }
+    UserId: any | '';
+    AdId: string | '';
+    IsActiveAd: 'true';
+    IsPremiumUser: string | '';
+    SubscriptionDate: string | '';
+    DisplayAdID: string | '';
+    Tittle: string | '';
+    Description: string | '';   
+    buyOrSell: string | '';
+    sell: number | '';
+    buy: number | '';
+}
+class ContactModel{
+    State: string | '';
+    District: string | '';
+    Locality: string | '';
+    imageRef: string | '';
+    Date: string | '';
+    Price: string | '';
+    UserName: string | '';
+    MobileNum: string | '';
+    Email: string | '';
 }
 
-export interface StoreModel {
+
+class FarmEquipmets extends BaseModel {
+    ProductName: string
+    Brand: string
+
+}
+
+export class LiveStockModel extends BaseModel {
     Category: string;
     Breed: string;
     Gender: string;
@@ -98,19 +48,111 @@ export interface StoreModel {
     KidsDetails: string;
     Tittle: string;
     Description: string;
-    State: string;
-    District: string;
-    Locality: string;
-    Date: string;
-    imageRef: any;
-    UserId: any;
-    Price: any;
-    UserName: string;
-    MobileNum: string;
-    Email: string;
-    AdId: string;
-    IsActiveAd: 'true',
-    IsPremiumUser: string,
-    SubscriptionDate: string,
-    DisplayAdID: string
+    buyOrSell: string;
+    sell: number;
+    buy: number;
+}
+
+export class Store {
+
+    private constructor() { }
+
+    
+    private static _postAdDateModel:any={}
+
+    private static _liveStockModel: LiveStockModel = new LiveStockModel()
+    //  {
+    //     Category: "",
+    //     Breed: "",
+    //     Gender: '',
+    //     Age: '',
+    //     Weight: '',
+    //     Color: '',
+    //     Type: 'Male',
+    //     MilkingCapacity: '',
+    //     NoOfKids: '',
+    //     KidsWeight: '',
+    //     KidsDetails: '',
+    //     Tittle: '',
+    //     Description: '',
+    //     buyOrSell: '',
+    //     sell: 1,
+    //     buy: 0
+    // }
+
+    private static _imagesArray = [];
+
+    private static _propertyData = {
+        listedBy: '',
+        propertyType: '',
+        plotArea: '',
+        cents: '',
+        landType: '',
+        farmHouselength: '',
+        farmHouseSize: '',
+        adTitle: '',
+        adDiscription: '',
+        sell: 1,
+        buy: 0,
+        buyOrSell: ''
+    }
+
+    static GetPropertyData() {
+        return Store._propertyData;
+    }
+    static SetPropertyData(value) {
+        Store._propertyData.listedBy = value.listedBy,
+            Store._propertyData.propertyType = value.listedBy,
+            Store._propertyData.plotArea = value.listedBy,
+            Store._propertyData.cents = value.listedBy,
+            Store._propertyData.landType = value.listedBy,
+            Store._propertyData.farmHouselength = value.listedBy,
+            Store._propertyData.farmHouseSize = value.listedBy,
+            Store._propertyData.adTitle = value.listedBy,
+            Store._propertyData.adDiscription = value.listedBy,
+            Store._propertyData.sell = value.listedBy,
+            Store._propertyData.buy = value.listedBy,
+            Store._propertyData.buyOrSell = value.listedBy;
+    }
+
+    static async GetImageArray() {
+        return Store._imagesArray;
+    }
+    static SetImageArray(value) {
+        Store._imagesArray = value;
+    }
+
+    static setLiveStockData(value) {
+        Store._liveStockModel = value;
+    }
+
+    static getLiveStockData(): LiveStockModel {
+        return Store._liveStockModel;
+    }
+
+    static getPostData(): any {
+        return Store._postAdDateModel;
+    }
+
+    static setPostData(value) {
+        Store._postAdDateModel=value;
+    }
+
+    private static _contactModel:ContactModel=new ContactModel();
+    static getContactData() {
+        return Store._contactModel;
+    }
+    static async setContactData(value: ContactModel) {
+        Store._contactModel = value;  
+    }
+
+    private static _equipmentData: FarmEquipmets = new FarmEquipmets()
+    static getEquipmentData(): FarmEquipmets {
+        return Store._equipmentData;
+    }
+
+    static setEquipmentData(value: FarmEquipmets) {
+        Store._equipmentData = value
+    }
+
 }

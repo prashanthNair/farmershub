@@ -15,25 +15,20 @@ import { RecipeCard } from '../../appstyles';
 import { Button } from 'react-native-elements';
 import { Store } from '../../store/store';
 import { HomeService } from '../../services/homeservice';
-import { uploadFile, TestuploadFile } from './UploadToS3';
+import { uploadFile } from './UploadToS3';
 
 interface Props {
-    navigation: any
+    navigation: any;
+    route: any;
 }
 
-interface State {
-    Name: string,
-    Location: string,
-    MobileNum: string,
-    EMail: string,
-    UserID: number,
-    State: string,
-    District: string,
-    Locality: string,
-}
-class Review extends React.Component<Props, State>{
+class Review extends React.Component<Props>{
 
+    state = Store.getContactData()
     postData: any = {};
+
+    s3bucketUrl = "https://farmadsimagesbucket.s3.ap-south-1.amazonaws.com/";
+
     data = [{
         value: 'MALE',
     }, {
@@ -41,17 +36,7 @@ class Review extends React.Component<Props, State>{
     }];
     constructor(props) {
         super(props);
-        this.state = {
-            Name: "",
-            Location: '',
-            MobileNum: "",
-            EMail: "",
-            UserID: 0,
-            State: "",
-            District: "",
-            Locality: ''
-        }
-
+        this.state = Store.getContactData()
     }
 
     generateRowId(shardId /* range 0-64 for shard/slot */) {
@@ -82,26 +67,53 @@ class Review extends React.Component<Props, State>{
         { label: 'I want to buy', value: 1 }
     ];
 
-    postAd = async () => { 
-        Store.GetImageArray().then((data) => { 
-            data.forEach(async (element )=> { 
-                await uploadFile(this.generateRowId(4)+'/'+element.filename, element.uri);
+    private async postImagesToS3(): Promise<number> {
+        let index = -1;
+        let imageArray = [];
+        Store.GetImageArray().then((data) => {
+            data.forEach(async (element, index) => {
+                let uri = this.generateRowId(4) + '/' + element.filename;
+                let res = await uploadFile(uri, element.uri);
+                index = index;
+                imageArray.push(uri);
             });
-
         })
+        return index;
+    }
 
-      
-        this.postData.UserName = this.state.Name
-        this.postData.Locality = this.state.Locality
-        this.postData.MobileNum = this.state.MobileNum
-        this.postData.Email = this.state.EMail
-        this.postData.UserId = this.state.UserID;
-        this.postData.State = this.state.State
-        this.postData.District = this.state.District
-        this.postData.DisplayAdID = 'AD' + this.generateRowId(4)
-        await Store.setContactData(this.postData);
-        let inputModel: any = Store.getPostData();
-        console.log(inputModel)
+    buildData() {
+        let data;
+        if (this.props.route.name === 'Property') {
+            data = Store.GetPropertyData();
+        } else if (this.props.route.name === 'LiveStock') {
+            data = Store.getLiveStockData()
+        }
+        else if (this.props.route.name === 'Jobs') {
+
+        }
+        else if (this.props.route.name === 'Feeds') {
+
+        }
+        else if (this.props.route.name === 'Training') { }
+        else if (this.props.route.name === 'FarmEquipment') {
+            data = Store.getEquipmentData()
+        }
+
+        let contactData = Store.getContactData();
+        let keys = Object.keys(contactData);
+
+        keys.forEach((key, index) => {
+            if (key)
+                data[key] = contactData[key]
+        })
+        data.AdId = this.generateRowId(8)
+        data.UserId = 3
+        Store.setPostData(data);
+
+    }
+
+    private async postDataDynamo() {
+
         HomeService.getInstance().postAd(Store.getPostData())
             .then(response => response.json())
             .then((responseJson) => {
@@ -109,6 +121,26 @@ class Review extends React.Component<Props, State>{
                 this.props.navigation.navigate('Home')
             })
             .catch(error => console.log(error)) //to catch the errors if any
+    }
+
+    private postAd = async () => {
+        await Store.setContactData(this.state);
+        this.buildData()
+        await this.postImagesToS3().then(res => {
+            console.log("Image uploaded to S 3");
+        });
+
+        // this.postData.UserName = this.state.UserName
+        // this.postData.Locality = this.state.Locality
+        // this.postData.MobileNum = this.state.MobileNum
+        // this.postData.Email = this.state.Email
+        // this.postData.UserId = this.state.UserName;
+        // this.postData.State = this.state.State
+        // this.postData.District = this.state.District
+        //this.postData.DisplayAdID = 'AD' + this.generateRowId(4)
+        this.setState({ DisplayAdID: this.generateRowId(4) })
+        this.postDataDynamo();
+
     }
 
     render() {
@@ -127,7 +159,7 @@ class Review extends React.Component<Props, State>{
                             <TextInput placeholder="Price" style={styles.priceTextInput}
                                 onChangeText={
                                     (text) => {
-                                        this.postData.Price = text;
+                                        this.setState({ Price: text })
                                     }}
                             ></TextInput>
                         </View>
@@ -140,14 +172,14 @@ class Review extends React.Component<Props, State>{
 
                         <View style={styles.detailsRow}>
                             <Text style={styles.inputlabel}>Name</Text>
-                            <TextInput placeholder="Name" value={this.state.Name} onChangeText={
+                            <TextInput placeholder="Name" value={this.state.UserName} onChangeText={
                                 (text) => {
                                     this.setState({ Name: text })
                                 }} style={styles.formTextInput}></TextInput>
                         </View>
                         <View style={styles.detailsRow}>
                             <Text style={styles.inputlabel}>Location</Text>
-                            <TextInput placeholder="Location" value={this.state.Location} style={styles.formTextInput} onChangeText={
+                            <TextInput placeholder="Location" value={this.state.Locality} style={styles.formTextInput} onChangeText={
                                 (text) => {
                                     this.setState({ Location: text })
                                 }} ></TextInput>
@@ -161,7 +193,7 @@ class Review extends React.Component<Props, State>{
                         </View>
                         <View style={styles.detailsRow}>
                             <Text style={styles.inputlabel}>EMail</Text>
-                            <TextInput value={this.state.EMail} placeholder="Email" style={styles.formTextInput} onChangeText={
+                            <TextInput value={this.state.Email} placeholder="Email" style={styles.formTextInput} onChangeText={
                                 (text) => {
                                     this.setState({ EMail: text })
                                 }}></TextInput>
