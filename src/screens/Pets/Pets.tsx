@@ -25,32 +25,8 @@ interface Props {
     navigation;
     route: any;
 }
-
-interface State {
-    Category: String;
-    Breed: String;
-    Gender: String;
-    Age: any;
-    Weight: any;
-    Color: String;
-    Type: String;
-    MilkingCapacity: String;
-    NoOfKids: String;
-    KidsWeight: any;
-    KidsDetails: String;
-    tittle: String;
-    Description: String;
-    State: String;
-    District: String;
-    Locality: String;
-    Date: String;
-    imageRef: any;
-    UserId: any;
-    Price: any;
-    id
-}
-class LiveStock extends React.Component<Props> {
-    state = Store.getLiveStockData()
+class Pets extends React.Component<Props> {
+    state = Store.getPetData()
     postData = {
         Category: "",
         Breed: "",
@@ -72,10 +48,8 @@ class LiveStock extends React.Component<Props> {
         value: 'FEMALE',
     }];
 
-
     constructor(props) {
         super(props);
-
     }
 
 
@@ -93,25 +67,30 @@ class LiveStock extends React.Component<Props> {
         };
     };
 
-
     componentDidMount() {
         this.setState({ sell: 0 })
-        this.setState({ Category: this.props.route.params.name })
     }
-
 
     render() {
         return (
             <ScrollView style={styles.scrollContainer}>
                 <TouchableHighlight>
                     <View>
-
+                       
                         <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel} >Type</Text>
+                            <Text style={styles.inputlabel} >Category Type</Text>
                             <TextInput placeholder="Category" value=
                                 {this.props.route.params.name} style={styles.formTextInput} onChangeText={
                                     (text) => {
                                         this.setState({ Category: text })
+                                    }}></TextInput>
+                        </View>
+
+                        <View style={styles.detailsRow}>
+                            <Text style={styles.inputlabel} >Pet Type</Text>
+                            <TextInput placeholder="Example: Dog, Kitten etc"style={styles.formTextInput} onChangeText={
+                                    (text) => {
+                                        this.setState({ PetTye: text })
                                     }}></TextInput>
                         </View>
                         <View style={styles.detailsRow}>
@@ -131,15 +110,15 @@ class LiveStock extends React.Component<Props> {
                                     this.radio_props.map((obj, i) => (
                                         <RadioButton labelHorizontal={true} key={i} onChangeText={
                                             (text) => {
-                                                this.setState({ BuyOrSell: text })
+                                                this.setState({ buyOrSell: text })
                                             }} >
                                             <RadioButtonInput
                                                 obj={obj}
                                                 index={i}
-                                                isSelected={this.state.Sell == i}
+                                                isSelected={this.state.sell == i}
                                                 onPress={(text) => {
-                                                    this.setState({ Sell: 1 })
-                                                    this.setState({ Buy: 0 })
+                                                    this.setState({ sell: 1 })
+                                                    this.setState({ buy: 0 })
                                                 }}
                                                 borderWidth={1}
                                                 buttonInnerColor={'#0a87f5'}
@@ -153,12 +132,12 @@ class LiveStock extends React.Component<Props> {
                                             <RadioButtonLabel
                                                 obj={obj}
                                                 index={i}
-                                                isSelected={this.state.Buy == i}
+                                                isSelected={this.state.buy == i}
                                                 labelHorizontal={true}
                                                 onPress={(text) => {
-                                                    this.state.BuyOrSell = text;
-                                                    this.setState({ Sell: 0 })
-                                                    this.setState({ Buy: 1 })
+                                                    this.state.buyOrSell = text;
+                                                    this.setState({ sell: 0 })
+                                                    this.setState({ buy: 1 })
                                                 }}
                                                 labelStyle={{ color: 'black', fontWeight: 'bold' }}
                                                 labelWrapStyle={{}}
@@ -200,21 +179,13 @@ class LiveStock extends React.Component<Props> {
                             </View>
                         </View>
                         <View style={styles.detailsRow}>
-                            <Text style={styles.inputlabel}>Weight</Text>
-                            <TextInput placeholder="Weight" style={styles.formTextInput} onChangeText={
+                            <Text style={styles.inputlabel}>Color</Text>
+                            <TextInput placeholder="Red, Yellow" style={styles.formTextInput} onChangeText={
                                 (text) => {
                                     this.setState({ Weight: text })
                                 }}></TextInput>
                         </View>
-                        {((this.state.Gender != 'MALE' && this.props.route.params.name != 'Polutry')) ?
-                            <View style={styles.detailsRow}>
-                                <Text style={styles.inputlabel}>Milking Capacity</Text>
-                                <TextInput placeholder="Milking Capacity" style={styles.formTextInput} onChangeText={
-                                    (text) => {
-                                        this.setState({ MilkingCapacity: text })
-                                    }}></TextInput>
-                            </View> : <Text></Text>
-                        }
+                       
                         <View style={styles.lineheader}>
                             <Text style={RecipeCard.headerTextColor}>
                                 Ad Details
@@ -225,7 +196,7 @@ class LiveStock extends React.Component<Props> {
                             <TextInput placeholder="Enter Ad tittle (Min 10 character)" style={styles.formTextInput}
                                 onChangeText={
                                     (text) => {
-                                        this.setState({ Tittle: text })
+                                        this.postData.Tittle = text;
                                     }}></TextInput>
                         </View>
 
@@ -246,10 +217,10 @@ class LiveStock extends React.Component<Props> {
                             />
                         </View>
 
-                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 0, marginBottom: 20, alignItems: 'center', justifyContent: "center" }}>
+                        <View style={{ flex: 1, flexDirection: 'row', marginTop: 0, marginBottom:20,alignItems: 'center', justifyContent: "center" }}>
                             <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 30, backgroundColor: '#038d91' }} onPress={() => {
-                                Store.setLiveStockData(this.state);
-                                this.props.navigation.navigate('Upload Images', { 'routes': this.props.route.params });
+                                Store.setPetData(this.state);
+                                this.props.navigation.navigate('Upload Images');
                             }} />
 
                         </View>
@@ -261,4 +232,4 @@ class LiveStock extends React.Component<Props> {
     }
 }
 
-export default LiveStock
+export default Pets

@@ -22,6 +22,7 @@ const { width } = Dimensions.get('window')
 
 interface Props {
     navigation: any,
+    route:any,
     badgeColor: any,
     max: any,
     mediaSubtype: any,
@@ -116,7 +117,9 @@ class ImageBrowser extends React.Component<Props> {
         let photos = this.state['photos'];
         const selectedPhotos = selected.map(i => photos[i])
         const assetsInfo = Promise.all(selectedPhotos.map(i => MediaLibrary.getAssetInfoAsync(i)))
+        
         Store.SetImageArray(assetsInfo)
+        
        // this.props.callback(assetsInfo)
     }
 
@@ -146,7 +149,7 @@ class ImageBrowser extends React.Component<Props> {
                     />
 
                 </View>
-            </SafeAreaView>
+            </SafeAreaView> 
         )
     }
 
@@ -207,7 +210,7 @@ class ImageBrowser extends React.Component<Props> {
                 {this.renderImages()}
                 <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 0, backgroundColor: '#0a87f5' }} onPress={() => {
                     this.prepareCallback()
-                    this.props.navigation.navigate('Review Details');
+                    this.props.navigation.navigate('Review Details',{routeObj:this.props.route.params.routes});
                 }} />
             </View>
         )

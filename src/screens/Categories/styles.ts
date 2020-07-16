@@ -9,14 +9,22 @@ const styles = StyleSheet.create({
     height:height+100
   },
   detailsRow: {
-    flexDirection: 'row',
+    flexDirection: 'row', 
+    justifyContent:'space-between',
     width: '100%',
-    justifyContent: 'flex-start',
     margin: 5,
     padding: 10,
     borderBottomColor: '#e8e8e8',
     borderBottomWidth: 1,
     marginBottom:5
-  }
+  },
+  lineheader: {
+    backgroundColor: '#edf0ee',
+    width: '100%',
+    marginTop:0,
+    marginBottom:0,
+    borderWidth:0.5,
+    borderColor:'#ffffff'
+},
 });
 export default styles

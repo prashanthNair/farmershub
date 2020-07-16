@@ -10,7 +10,7 @@ import { Store } from '../../store/store';
 
 interface Props {
     navigation: any;
-    
+    route: any;
 }
 
 interface State {
@@ -27,10 +27,10 @@ interface State {
     buy: number;
 
 }
-class PropertyAd extends React.Component<Props> {
+class Property extends React.Component<Props> {
     //  state =this.props.data; 
 
-    state = Store.GetPropertyData()
+    state = Store.GetPropertyData() 
     data = [{
         value: 'MALE',
     }, {
@@ -38,7 +38,7 @@ class PropertyAd extends React.Component<Props> {
     }];
     constructor(props) {
         super(props);
-
+        console.log('route', this.props.route.name)
     }
 
 
@@ -51,15 +51,24 @@ class PropertyAd extends React.Component<Props> {
         //  this.setState({ value: value })
     }
 
+    componentDidMount() {
+        this.setState({ sell: 0 })
+    }
+
     render() {
+ 
         return (
 
-            <View>
+            <View style={styles.scrollContainer}>
 
-                <View style={styles.lineheader}>
-                    <Text style={RecipeCard.headerTextColor}>
-                        CATEGORY DETAIL
-                     </Text>
+                
+                <View style={styles.detailsRow}>
+                    <Text style={styles.inputlabel} >Type</Text>
+                    <TextInput placeholder="Category" value=
+                        {this.props.route.params.name} style={styles.formTextInput} onChangeText={
+                            (text) => {
+                                this.setState({ Category: text })
+                            }}></TextInput>
                 </View>
                 <View style={styles.detailsRow}>
                     <Text style={styles.inputlabel} >Plot Area</Text>
@@ -83,7 +92,7 @@ class PropertyAd extends React.Component<Props> {
                                     <RadioButtonInput
                                         obj={obj}
                                         index={i}
-                                        isSelected={this.state.sell === i}
+                                        isSelected={this.state.sell == i}
                                         onPress={(text) => {
                                             this.setState({ sell: 1 })
                                             this.setState({ buy: 0 })
@@ -100,7 +109,7 @@ class PropertyAd extends React.Component<Props> {
                                     <RadioButtonLabel
                                         obj={obj}
                                         index={i}
-                                        isSelected={this.state.buy === i}
+                                        isSelected={this.state.buy == i}
                                         labelHorizontal={true}
                                         onPress={(text) => {
                                             this.state.buyOrSell = text;
@@ -161,10 +170,10 @@ class PropertyAd extends React.Component<Props> {
                             }}
                     />
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', marginTop: 20, alignItems: 'center', justifyContent: "center" }}>
+                <View style={{ flex: 1, flexDirection: 'row',marginBottom:20, alignItems: 'center', justifyContent: "center" }}>
                     <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 30, backgroundColor: '#038d91' }} onPress={() => {
                         Store.SetPropertyData(this.state);
-                        this.props.navigation.navigate('Upload Images',{name:"Property"});
+                        this.props.navigation.navigate('Upload Images', { name: "Property" });
                     }} />
 
                 </View>
@@ -175,4 +184,4 @@ class PropertyAd extends React.Component<Props> {
     }
 }
 
-export default PropertyAd
+export default Property

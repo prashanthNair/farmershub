@@ -25,8 +25,8 @@ interface Props {
     navigation: any;
     route:any;
 }
-class FarmEquipments extends React.Component<Props>{
-    state = Store.getEquipmentData()
+class Job extends React.Component<Props>{
+    state = Store.getJobData()
     postData = {
         Category: "",
         Breed: "",
@@ -54,27 +54,25 @@ class FarmEquipments extends React.Component<Props>{
 
 
     radio_props: any = [
-        { label: 'I want to sell', value: 0 },
-        { label: 'I want to buy', value: 1 }
+        { label: 'I am an Employeer', value: 0 },
+        { label: 'I need a job', value: 1 }
     ];
 
     onPress = (value) => {
         this.setState({ value: value })
     }
 
-    
     componentDidMount() {
         this.setState({ sell: 0 })
     }
 
-    
     render() {
         return (
 
             <View>
                 
                 <View style={styles.detailsRow}>
-                    <Text style={styles.inputlabel} >Type</Text>
+                    <Text style={styles.inputlabel} >Category Type</Text>
                     <TextInput placeholder="Category" value=
                         {this.props.route.params.name} style={styles.formTextInput} onChangeText={
                             (text) => {
@@ -82,10 +80,10 @@ class FarmEquipments extends React.Component<Props>{
                             }}></TextInput>
                 </View>
                 <View style={styles.detailsRow}>
-                    <Text style={styles.inputlabel}>Product Name</Text>
-                    <TextInput placeholder="Product Name" style={styles.formTextInput} onChangeText={
+                    <Text style={styles.inputlabel}>Job Type</Text>
+                    <TextInput placeholder="Example: Farm keeper, Delivery Boy" style={styles.formTextInput} onChangeText={
                         (text) => {
-                            this.setState({ ProductName: text })
+                            this.setState({ JobType: text })
                         }}></TextInput>
                 </View>
                 <View style={styles.radioRow}>
@@ -138,10 +136,17 @@ class FarmEquipments extends React.Component<Props>{
                 </View>
 
                 <View style={styles.detailsRow}>
-                    <Text style={styles.inputlabel}>Brand</Text>
+                    <Text style={styles.inputlabel}>Min Salary</Text>
                     <TextInput placeholder="Brand" style={styles.formTextInput} onChangeText={
                         (text) => {
-                            this.setState({ Brand: text })
+                            this.setState({ MinSal: text })
+                        }}></TextInput>
+                </View>
+                <View style={styles.detailsRow}>
+                    <Text style={styles.inputlabel}>Max Salary</Text>
+                    <TextInput placeholder="Brand" style={styles.formTextInput} onChangeText={
+                        (text) => {
+                            this.setState({ MaxSal: text })
                         }}></TextInput>
                 </View>
                 <View style={styles.lineheader}>
@@ -174,10 +179,10 @@ class FarmEquipments extends React.Component<Props>{
                             }}
                     />
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', marginTop: 0,marginBottom:20, alignItems: 'center', justifyContent: "center" }}>
+                <View style={{ flex: 1, flexDirection: 'row',marginBottom:20, marginTop: 0, alignItems: 'center', justifyContent: "center" }}>
                     <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 30, backgroundColor: '#038d91' }} onPress={() => {
-                        Store.setEquipmentData(this.state);
-                        this.props.navigation.navigate('Upload Images', { name: 'FarmEquipment' });
+                        Store.setJobData(this.state);
+                        this.props.navigation.navigate('Review Details', { name: 'Job' });
                     }} />
 
                 </View>
@@ -187,4 +192,4 @@ class FarmEquipments extends React.Component<Props>{
     }
 }
 
-export default FarmEquipments
+export default Job

@@ -20,6 +20,9 @@ export class HomeService implements IHomeService {
 
     }
 
+    public async getAdById(id:any, userId:any){
+        return fetch(`http://192.168.43.210:3000/api/v1/ads/${id}/${userId}`)
+    }
     public async postAd(inputModel: any) {
         console.log("string",JSON.stringify({ inputModel }));
         return fetch("http://192.168.43.210:3000/api/v1/ads",

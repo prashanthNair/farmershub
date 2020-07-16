@@ -20,7 +20,7 @@ import { Store } from '../../store/store';
 
 const SetPrice = (props) => {
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: "flex-start" }}>
+        <View style={{ flex: 1,marginTop:30, alignItems: 'center', justifyContent: "flex-start" }}>
 
             <View style={styles.detailsRow}>
                 <Text style={styles.inputlabel}>Price</Text>

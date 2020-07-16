@@ -1,29 +1,43 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, Image, StyleSheet, RecyclerViewBackedScrollViewBase, ScrollView, TouchableHighlight, FlatList } from 'react-native'
-import { withNavigation } from 'react-navigation'
+// import { withNavigation } from 'react-navigation'
 import styles from '../Categories/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { withNavigation } from 'react-navigation';
+import { Store } from '../../store/store';
+import { RecipeCard } from '../../appstyles';
 
 export const categoryList = [
+
+
     {
+        id: 9,
+        icon: 'hammer',
+        routeName: "FarmEquipments",
+        name: "Farm Machinery",
+        subCategory: []
+    }, {
+        id: 8,
+        icon: 'home-city-outline',
+        routeName: "Property",
+        name: "Farm Property",
+    },
+
+    {
+        id: 11,
+        icon: 'food-variant',
+        routeName: "Feeds",
+        name: "Feeds",
+        subCategory: []
+    }, {
         id: 1,
         name: "Cow",
-        routeName:"LiveStock",
-        icon: 'cow',
-        subCategory: [{
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Jersy"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Vechoor"
-        }]
+        routeName: "LiveStock",
+        icon: 'cow'
     },
     {
         id: 2,
-        routeName:"LiveStock",
+        routeName: "LiveStock",
         icon: 'bullseye',
         name: "Bull",
         subCategory: []
@@ -31,167 +45,97 @@ export const categoryList = [
     {
         id: 3,
         icon: 'cow',
-        routeName:"LiveStock",
-        name: "Buffalo",
-        subCategory: [{
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Murrah"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Jafarabadi"
-        }]
+        routeName: "LiveStock",
+        name: "Buffalo"
     },
     {
         id: 4,
         icon: 'dog-side',
-        routeName:"LiveStock",
-        name: "Goat",
-        subCategory: [{
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Malabari"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Jamnapari"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Beetal"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Hyderabadi Beetal"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Panjab Beetal"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Shirohi"
-        }
-        ]
+        routeName: "LiveStock",
+        name: "Goat"
     },
     {
         id: 5,
 
         icon: 'ladybug',
-        name: "Birds",
-        routeName:"LiveStock",
-        subCategory: [{
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Karoli"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "GiriRajan"
-        }]
+        name: "Polutry",
+        routeName: "LiveStock",
     }, {
         id: 6,
         name: "Pets",
-        routeName:"LiveStock",
+        routeName: "Pets",
         icon: 'dog-side',
         subCategory: []
     },
     {
         id: 7,
         name: "Job",
-        routeName:"Job",
+        routeName: "Job",
         icon: 'toolbox-outline',
-        subCategory: []
-    },
-    {
-        id: 8,
-        icon: 'home-city-outline',
-        routeName:"Property",
-        name: "Property",
-        subCategory: [{
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "Lab"
-        },
-        {
-            categoryId: 1,
-            subCategoryId: 1,
-            name: "German"
-        }]
-    },
-    {
-        id: 9,
-        icon: 'hammer',
-        routeName:"FarmEquipments",
-        name: "Farm Equipments",
-        subCategory: []
-    },
-    {
-        id: 10,
-        icon: 'car',
-        name: "Car & Bike",
-        subCategory: []
-    },
-    {
-        id: 11,
-        icon: 'food-variant',
-        routeName:"Feeds",
-        name: "Feeds",
-        subCategory: []
-    },
-    {
-        id: 12,
-        icon: 'toolbox-outline',
-        routeName:"Traing",
-        name: "Training",
         subCategory: []
     }
+    // , {
+    //     id: 10,
+    //     icon: 'car',
+    //     name: "Farm Vehicles",
+    //     subCategory: []
+    // },
 
 ]
 
 
-const category = (props) => {
-     
-    let renderCategories = ({ item }) => (
-        <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => 
-            props.navigation.navigate('Ad Details', { name: item.routeName })
+interface Props {
+    navigation: any;
+    route: any;
+}
+class Category extends React.Component<Props>
+{
+    static navigationOptions = {
+        title: 'Ad Details',
+    };
+
+    renderCategories = ({ item }) => (
+        <TouchableHighlight underlayColor='grey' onPress={() => {
+
+            this.props.navigation.navigate('Ad Details', { 'tittle': item.routeName, name: item.name })
+        }
+            // this.props.navigation.navigate('Ad Details', { params: { name: 'Cow' } })
         }>
             <View style={styles.detailsRow}>
-                <View style={{ marginRight: 10 }}>
-                    <MaterialCommunityIcons name={item.icon} color={'#00ab83'} size={26} />
-                </View>
-                <View >
-                    <Text style={{ textAlign: "left", fontSize: 18, color: '#2e3030' }}>
+            
+                <View style={{alignItems:'flex-start', flexDirection:'row'}}>
+                <MaterialCommunityIcons name={item.icon} color={'#00ab83'} size={26} />
+                    <Text style={{marginLeft:15, textAlign: "left", fontSize: 18, color: '#2e3030' }}>
                         {item.name}
                     </Text>
                 </View>
-
+                <View style={{ marginRight: 10,alignItems:'flex-end',  }}>
+                    <MaterialCommunityIcons name={'chevron-right'} size={26} />
+                </View>
             </View>
         </TouchableHighlight>
     );
+    render() {
+        return (
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.lineheader}>
+                    <Text style={RecipeCard.headerTextColor}>
+                        ALL  CATEGORIES
+            </Text>
+                </View>
+                <View style={styles.container}>
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        numColumns={1}
+                        data={categoryList}
+                        renderItem={this.renderCategories}
+                        keyExtractor={item => `${item.id}`}
+                    />
+                </View>
+            </ScrollView>
 
-    return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.container}>
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    numColumns={1}
-                    data={categoryList}
-                    renderItem={renderCategories}
-                    keyExtractor={item => `${item.id}`}
-                />
-            </View>
-        </ScrollView>
-
-    )
+        )
+    }
 }
 
-export default withNavigation(category)
+export default withNavigation(Category)

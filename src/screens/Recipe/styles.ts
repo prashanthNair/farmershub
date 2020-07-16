@@ -1,6 +1,14 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { RecipeCard } from '../../appstyles';
 
 const { width: viewportWidth } = Dimensions.get('window');
+
+
+const ITEM_MARGIN = 0;
+// screen sizing
+const { width, height } = Dimensions.get('window');
+// orientation must fixed
+const SCREEN_WIDTH = width < height ? width : height;
 
 const styles = StyleSheet.create({
   container: {
@@ -110,7 +118,51 @@ const styles = StyleSheet.create({
     padding: 5,
     // borderBottomColor: '#e8e8e8',
     // borderBottomWidth: 1
-  }
+  },
+  premiumcontainer: {
+    width: 80,
+    maxHeight: 18,
+    borderColor: '#ffffff',
+    backgroundColor: '#fcf403',
+    height: 30,
+    marginLeft: 1,
+},
+favcontainer: {
+    width: 40,
+    position: 'relative',
+    top: 10,
+    marginLeft: 10,
+    zIndex: 100
+},
+photo: RecipeCard.photo,  
+listlocationcontainer:  {
+    
+  backgroundColor: '#fafcfc',
+  flexDirection: 'row',
+  width: '100%',
+  justifyContent: 'space-between', 
+  marginTop:0,
+  padding: 5,
+  // borderBottomColor: '#e8e8e8',
+  // borderBottomWidth: 1
+},
+locationimage: RecipeCard.locationimage,
+title: RecipeCard.title,
+hightitle: RecipeCard.hightitle,
+price: RecipeCard.price,
+location: RecipeCard.location,
+horizonatalContainer:  {
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  backgroundColor: '#ffffff',
+  height: 195,
+  position: 'relative', bottom: 30,
+  margin: 10,
+  marginLeft: ITEM_MARGIN,
+  width: (SCREEN_WIDTH / 1.5),
+  borderColor: '#038d91',
+  borderWidth: 0.75,
+},
 });
 
 export default styles;

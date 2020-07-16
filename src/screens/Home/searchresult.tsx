@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, Image, StyleSheet, RecyclerViewBackedScrollViewBase, ScrollView, TouchableHighlight, FlatList } from 'react-native'
 import { Card, Button, SearchBar } from 'react-native-elements';
-import { withNavigation, NavigationInjectedProps } from 'react-navigation';
+// import { withNavigation, NavigationInjectedProps } from 'react-navigation';
 import { RecipeCard } from '../../appstyles';
 import { recipes, recipesTemp } from '../../data/dataArrays';
 import { getCategoryName } from '../../data/MockDataAPI';
@@ -136,6 +136,7 @@ const Search = () => {
 
 }
 import { Dimensions } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 // screen sizing
 const { width, height } = Dimensions.get('window');
@@ -230,4 +231,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default withNavigation(SearchResult);
+ export default withNavigation(SearchResult);

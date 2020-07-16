@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     lineheader: {
         backgroundColor: '#edf0ee',
         width: '100%',
-        marginTop:15,
+        marginTop:0,
         marginBottom:5,
         borderWidth:0.5,
         borderColor:'#ffffff'
@@ -56,14 +56,17 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         backgroundColor: '#fcfcfc',
-        flex: 1
+        flex: 1,
+        // marginTop:0
     },
     container: {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         height: 120,
-        padding: 5
+        padding: 5,
+        // borderRadius:50,gvqp
+        paddingTop:5
     },
     textareaContainer: {
         height: 110,
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     formTextInput: {
-        width: '98%',
+        width: '100%',
         height: 30,
         fontSize: 14,
         borderRadius: 5,
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
         borderColor: '#c7c7c7',
         backgroundColor: '#fafafa',
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 50
     },
     inputlabel: {
         marginLeft:10, color:'black',fontWeight:'bold', fontSize:14

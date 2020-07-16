@@ -17,10 +17,15 @@ import Textarea from 'react-native-textarea';
 import { Button } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
-import { Dropdown } from 'react-native-material-dropdown'; 
-import LiveStock from '../LiveStock/LiveStock'; 
+import { Dropdown } from 'react-native-material-dropdown';
+import LiveStock from '../LiveStock/LiveStock';
 import FarmEquipments from '../FarmEquipments/FarmEquipments';
-import PropertyAd from '../Property/property';
+import Property from '../Property/Property';
+import Feed from '../Feeds/Feed';
+import Pet from '../Pets/Pets';
+import Job from '../Job/Job';
+
+
 
 interface Props {
     navigation: any;
@@ -111,27 +116,38 @@ class CreateAd extends React.Component<Props>{
     }
 
     render() {
+        console.log('route name', this.props.route.params);
         return (
+
+
             <ScrollView style={styles.scrollContainer}>
                 <TouchableHighlight>
-                    <ScrollView style={styles.scrollContainer}>
-                        <TouchableHighlight>
-                            {
-                                (this.props.route == 'LiveStock') ?
-                                    <LiveStock navigation={this.props.navigation}></LiveStock> :
-                                    // (this.props.route == 'Property') ?
-                                        // <PropertyAd></PropertyAd> :
-                                        (this.props.route == 'FarmEquipments') ?
-                                            <FarmEquipments navigation={this.props.navigation}></FarmEquipments> :
-                                            (this.props.route == 'Feeds') ?
-                                                <LiveStock navigation={this.props.navigation}></LiveStock> :
-                                                (this.props.route == 'Traing') ?
-                                                    <LiveStock navigation={this.props}></LiveStock> :
-                                                    <LiveStock navigation={this.props}></LiveStock>
+                    <View>
+                        <View style={styles.lineheader}>
+                            <Text style={RecipeCard.headerTextColor}>
+                                CATEGORY DETAIL
+            </Text>
+                        </View>
 
-                            }
-                        </TouchableHighlight>
-                    </ScrollView>
+                        {
+                            (this.props.route.params.tittle == 'LiveStock') ?
+                                <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock> :
+                                (this.props.route.params.tittle == 'Property') ?
+                                    <Property navigation={this.props.navigation} route={this.props.route}></Property> :
+                                    (this.props.route.params.tittle == 'FarmEquipments') ?
+                                        <FarmEquipments navigation={this.props.navigation} route={this.props.route}></FarmEquipments> :
+                                        (this.props.route.params.tittle == 'Feeds') ?
+                                            <Feed navigation={this.props.navigation} route={this.props.route}></Feed> :
+                                            (this.props.route.params.tittle == 'Pets') ?
+                                            <Pet navigation={this.props.navigation} route={this.props.route}></Pet> :
+                                            (this.props.route.params.tittle == 'Job') ?
+                                            <Job navigation={this.props.navigation} route={this.props.route}></Job> :
+                                         
+                                            (this.props.route.params.tittle == 'Training') ?
+                                                <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock> :
+                                                <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock>
+                        }
+                    </View>
                 </TouchableHighlight>
             </ScrollView>
         )

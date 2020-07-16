@@ -1,7 +1,8 @@
 
-export interface IHomeService {  
+export interface IHomeService {
     getallAds()
-    postAd(inputModel:any)
+    postAd(inputModel: any)
+    getAdById(id: any, userId: any)
     // getAdsByCategory(category:any)
     // getAdsById(id:any)
 }

@@ -25,28 +25,9 @@ interface Props {
     navigation: any;
     route:any;
 }
-class FarmEquipments extends React.Component<Props>{
-    state = Store.getEquipmentData()
-    postData = {
-        Category: "",
-        Breed: "",
-        Gender: '',
-        Age: '',
-        Weight: '',
-        Color: '',
-        Type: 'Male',
-        MilkingCapacity: '',
-        NoOfKids: '',
-        KidsWeight: '',
-        KidsDetails: '',
-        Tittle: '',
-        Description: '',
-    }
-    data = [{
-        value: 'MALE',
-    }, {
-        value: 'FEMALE',
-    }];
+class Feed extends React.Component<Props>{
+    state = Store.getFeedData()
+   
     constructor(props) {
         super(props);
 
@@ -61,13 +42,12 @@ class FarmEquipments extends React.Component<Props>{
     onPress = (value) => {
         this.setState({ value: value })
     }
-
     
     componentDidMount() {
         this.setState({ sell: 0 })
     }
 
-    
+
     render() {
         return (
 
@@ -86,6 +66,13 @@ class FarmEquipments extends React.Component<Props>{
                     <TextInput placeholder="Product Name" style={styles.formTextInput} onChangeText={
                         (text) => {
                             this.setState({ ProductName: text })
+                        }}></TextInput>
+                </View>
+                <View style={styles.detailsRow}>
+                    <Text style={styles.inputlabel}>Feed Type</Text>
+                    <TextInput placeholder="Exmple: For Cow, Goat etc" style={styles.formTextInput} onChangeText={
+                        (text) => {
+                            this.setState({ Brand: text })
                         }}></TextInput>
                 </View>
                 <View style={styles.radioRow}>
@@ -144,6 +131,14 @@ class FarmEquipments extends React.Component<Props>{
                             this.setState({ Brand: text })
                         }}></TextInput>
                 </View>
+                <View style={styles.detailsRow}>
+                    <Text style={styles.inputlabel}>Package Weight</Text>
+                    <TextInput placeholder="Example: 50 KG, 100 KG" style={styles.formTextInput} onChangeText={
+                        (text) => {
+                            this.setState({ Brand: text })
+                        }}></TextInput>
+                </View>
+              
                 <View style={styles.lineheader}>
                     <Text style={RecipeCard.headerTextColor}>
                         Ad DETAIL
@@ -174,9 +169,9 @@ class FarmEquipments extends React.Component<Props>{
                             }}
                     />
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', marginTop: 0,marginBottom:20, alignItems: 'center', justifyContent: "center" }}>
+                <View style={{ flex: 1, flexDirection: 'row', marginTop: 0, marginBottom:20,alignItems: 'center', justifyContent: "center" }}>
                     <Button title="Next" buttonStyle={{ width: '100%', borderRadius: 30, backgroundColor: '#038d91' }} onPress={() => {
-                        Store.setEquipmentData(this.state);
+                        Store.setFeedData(this.state);
                         this.props.navigation.navigate('Upload Images', { name: 'FarmEquipment' });
                     }} />
 
@@ -187,4 +182,4 @@ class FarmEquipments extends React.Component<Props>{
     }
 }
 
-export default FarmEquipments
+export default Feed
