@@ -97,7 +97,7 @@ class Category extends React.Component<Props>
     renderCategories = ({ item }) => (
         <TouchableHighlight underlayColor='grey' onPress={() => {
 
-            this.props.navigation.navigate('Ad Details', { 'tittle': item.routeName, name: item.name })
+            this.props.navigation.navigate('Ad Details', { 'tittle': item.routeName, name: item.name,data:null })
         }
             // this.props.navigation.navigate('Ad Details', { params: { name: 'Cow' } })
         }>

@@ -31,9 +31,9 @@ interface props {
 interface State {
   loading: false,
   dataSource: any,
-  activeSlide:number
+  activeSlide: number
 }
-class Details extends React.Component<props> {
+class Details extends React.Component<props, State> {
 
   slider1Ref = {}
   detailsObj = {};
@@ -63,16 +63,16 @@ class Details extends React.Component<props> {
 
   getAllAds = (() => {
     HomeService.getInstance().getallAds()
-        .then(response => response.json())
-        .then((responseJson) => {
-            console.log(responseJson.data.Items)
-            this.setState({
-                loading: false,
-                dataSource: responseJson.data.Items
-            })
+      .then(response => response.json())
+      .then((responseJson) => {
+        console.log(responseJson.data.Items)
+        this.setState({
+          loading: false,
+          dataSource: responseJson.data.Items
         })
-        .catch(error => console.log(error))
-})
+      })
+      .catch(error => console.log(error))
+  })
   renderImage = ({ item }) => (
     <TouchableHighlight>
       <View style={styles.imageContainer}>
@@ -147,7 +147,7 @@ class Details extends React.Component<props> {
             <Text ellipsizeMode='tail' numberOfLines={1} style={styles.title}>{item.Tittle}</Text>
           </View>
 
-          <View style={styles.listlocationcontainer}>
+          <View style={styles.locationcontainer}>
             <Text ellipsizeMode='tail' numberOfLines={1} style={styles.location}>
               <Image style={styles.locationimage} source={require('../../../assets/icons/location1.png')} /> {item.Locality}</Text>
             <Text ellipsizeMode='tail' numberOfLines={1} style={RecipeCard.date}> {"Jun 20"}</Text>
@@ -199,20 +199,6 @@ class Details extends React.Component<props> {
             </View>
           </View>
           <View style={styles.infoRecipeContainer}>
-            {/* <Text style={styles.infoRecipeName}>{item.title}</Text>
-          <View style={styles.infoContainer}>
-            <TouchableHighlight
-              onPress={() => navigation.navigate('RecipesList', { category, title })}
-            >
-              <Text style={styles.category}>{getCategoryName(item.categoryId).toUpperCase()}</Text>
-            </TouchableHighlight>
-          </View>
-
-          <View style={styles.infoContainer}>
-            <Image style={styles.infoPhoto} source={require('../../../assets/icons/time.png')} />
-            <Text style={styles.infoRecipe}>{item.time} minutes </Text>
-          </View> */}
-
             <View style={styles.infoContainer}>
               <Text style={RecipeCard.price}>{`$ ${AdDetailsModel.BasicDetails.Price}`}</Text>
             </View>
@@ -260,13 +246,13 @@ class Details extends React.Component<props> {
                 Description
             </Text>
             </View>
-            <View style={styles.infoContainer}>
-              <View style={{
+            <View style={styles.detailsRow}>
+              {/* <View style={{
                 borderBottomColor: '#e8e8e8',
                 borderBottomWidth: 1
-              }}>
+              }}> */}
                 <Text style={styles.infoDescriptionRecipe}>{AdDetailsModel.BasicDetails.Description}</Text>
-              </View>
+              {/* </View> */}
             </View>
           </View>
 
@@ -288,29 +274,29 @@ class Details extends React.Component<props> {
           </View>
 
           <View style={{ backgroundColor: '#fafbff', marginTop: 20, marginLeft: 5, marginRight: 5 }}>
-                            <View><Text style={{ margin: 10, fontSize: 20, fontWeight: 'bold', color: '#000930' }}>Nearby Ads</Text></View>
-                            <FlatList
-                                showsHorizontalScrollIndicator={false}
-                                horizontal={true}
-                                // numColumns={2}
-                                data={this.state.dataSource}
-                                renderItem={this.renderPopularItems}
-                                keyExtractor={item => `${item.recipeId}`}
-                            />
-                        </View>
+            <View><Text style={{ margin: 10, fontSize: 20, fontWeight: 'bold', color: '#000930' }}>Nearby Ads</Text></View>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              horizontal={true}
+              // numColumns={2}
+              data={this.state.dataSource}
+              renderItem={this.renderPopularItems}
+              keyExtractor={item => `${item.AdId}`}
+            />
+          </View>
         </ScrollView>
         <View style={{ flexDirection: 'row', marginTop: 60, marginBottom: 50, width: "100%", justifyContent: 'space-between', flex: 2 }}>
 
 
-          <View style={{ flex: 1, margin: 0, flexDirection: 'row', alignItems: 'center', justifyContent: "center" }}>
-            <Button title="Chat" textStyle={{ color: '#038d91' }} buttonStyle={{ borderWidth: 2, borderRadius: 50, height: 50, borderColor: '#038d91', width: '100%', backgroundColor: '#ffffff' }} onPress={() => {
+          <View style={{ flex: 1,  flexDirection: 'row',margin:10, alignItems: 'center', justifyContent: "center" }}>
+            <Button title="Chat"  titleStyle={{ color: '#038d91' }} buttonStyle={{ borderWidth: 2, borderRadius: 50, height: 50, borderColor: '#038d91', width: '100%', backgroundColor: '#ffffff' }} onPress={() => {
               this.props.navigation.navigate('Chat')
             }} />
 
           </View>
 
-          <View style={{ flex: 1, margin: 0, flexDirection: 'row', alignItems: 'center', justifyContent: "center" }}>
-            <Button title="Call" textStyle={{ color: '#038d91' }} buttonStyle={{ borderWidth: 2, borderRadius: 50, height: 50, borderColor: '#038d91', width: '100%', backgroundColor: '#ffffff' }} onPress={() => {
+          <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', margin:10,justifyContent: "center" }}>
+            <Button title="Call" titleStyle={{ color: '#038d91' }} buttonStyle={{ borderWidth: 2, borderRadius: 50, height: 50, borderColor: '#038d91', width: '100%', backgroundColor: '#ffffff' }} onPress={() => {
               this.dialCall(item.MobileNum)
             }} />
 

@@ -133,22 +133,9 @@ class ImageBrowser extends React.Component<Props> {
         const headerButtonColor = this.props.headerButtonColor ? this.props.headerButtonColor : '#007aff'
 
         return (
-            <SafeAreaView forceInset={{ top: 'always' }} style={{ height: 52 }}>
-                <View style={styles.header}>
-
-                    <Button
-                        color={headerButtonColor}
-                        title={headerCloseText}
-                        onPress={() => this.props.callback(Promise.resolve([]))}
-                    />
-                    <Text style={styles.headerText}>{headerText}</Text>
-                    <Button
-                        color={headerButtonColor}
-                        title={headerDoneText}
-                        onPress={() => this.prepareCallback()}
-                    />
-
-                </View>
+            <SafeAreaView forceInset={{ top: 'always' }} style={{ backgroundColor:'#fff'}}>
+               
+               <Text style={styles.headerText}>{headerText}</Text>
             </SafeAreaView> 
         )
     }
@@ -232,7 +219,8 @@ const styles = StyleSheet.create({
     headerText: {
         fontWeight: 'bold',
         fontSize: 16,
-        lineHeight: 19
+        lineHeight: 19,
+        textAlign:'center'
     },
     emptyContent: {
         flexGrow: 1,

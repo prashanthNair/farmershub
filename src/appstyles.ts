@@ -12,6 +12,9 @@ const ITEM_MARGIN = 0;
 const RECOMMENTED_ITEM_HEIGHT = 160;
 // 2 photos per width
 export const RecipeCard = StyleSheet.create({
+  spinnerTextStyle: {
+    color: '#FFF'
+  },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
@@ -86,7 +89,7 @@ export const RecipeCard = StyleSheet.create({
     textAlign: 'left',
     color: '#091c42',
     marginRight: 1,
-    marginLeft: 2,
+    marginLeft: 3,
     width: '100%',
     flexWrap: 'nowrap',
     fontWeight:'bold'
@@ -94,8 +97,9 @@ export const RecipeCard = StyleSheet.create({
   hightitle: {
     textAlign: 'left',
     color: '#091c42',
-    marginRight: 1,
-    marginLeft: 2,
+    fontWeight:'bold',
+    marginRight: 2,
+    marginLeft: 10,
     width: '100%',
     flexWrap: 'nowrap'
   },

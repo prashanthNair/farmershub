@@ -30,27 +30,8 @@ import Job from '../Job/Job';
 interface Props {
     navigation: any;
     route: any;
-
-    Category: String;
-    Breed: String;
-    Gender: String;
-    Age: any;
-    Weight: any;
-    Color: String;
-    Type: String;
-    MilkingCapacity: String;
-    NoOfKids: String;
-    KidsWeight: any;
-    KidsDetails: String;
-    Tittle: String;
-    Description: String;
-    State: String;
-    District: String;
-    Locality: String;
-    Date: String;
-    imageRef: any;
-    UserId: any;
-    Price: any
+    data:any;
+    
 }
 
 interface State {
@@ -131,7 +112,7 @@ class CreateAd extends React.Component<Props>{
 
                         {
                             (this.props.route.params.tittle == 'LiveStock') ?
-                                <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock> :
+                                <LiveStock data ={this.props.route.params.data} navigation={this.props.navigation} route={this.props.route}></LiveStock> :
                                 (this.props.route.params.tittle == 'Property') ?
                                     <Property navigation={this.props.navigation} route={this.props.route}></Property> :
                                     (this.props.route.params.tittle == 'FarmEquipments') ?

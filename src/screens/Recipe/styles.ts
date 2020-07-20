@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   image: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',
-    height: 250
+    height: 400
   },
   imageContainer: {
     flex: 1,
@@ -87,8 +87,9 @@ const styles = StyleSheet.create({
   infoDescriptionRecipe: {
     textAlign: 'left',
     fontSize: 16,
-    marginTop: 30,
-    margin: 15
+    marginTop: 10,
+    margin:2,
+    fontWeight: 'bold'
   },
   infoRecipeName: {
     fontSize: 18,
@@ -134,7 +135,13 @@ favcontainer: {
     marginLeft: 10,
     zIndex: 100
 },
-photo: RecipeCard.photo,  
+photo: {
+  width: (SCREEN_WIDTH / 2),
+  height: 100, 
+  justifyContent: 'center',
+  alignItems: 'center',  
+  margin: 15,
+},  
 listlocationcontainer:  {
     
   backgroundColor: '#fafcfc',
@@ -155,7 +162,7 @@ horizonatalContainer:  {
   justifyContent: 'flex-start',
   alignItems: 'center',
   backgroundColor: '#ffffff',
-  height: 195,
+  maxHeight: 230,
   position: 'relative', bottom: 30,
   margin: 10,
   marginLeft: ITEM_MARGIN,
