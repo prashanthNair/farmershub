@@ -17,7 +17,7 @@ import { RecipeCard } from "../../appstyles";
 import { Button } from "react-native-elements";
 import { Store } from "../../store/store";
 import { HomeService } from "../../services/homeservice";
-import { uploadFile } from "./UploadToS3";
+import { uploadFile } from "./uploadToS3";
 
 interface Props {
   navigation: any;
@@ -115,7 +115,7 @@ class Review extends React.Component<Props> {
     });
   }
 
-  buildData() {
+  buildData(): any {
     console.log(this.props.route.params.routeObj);
     let data;
     if (this.props.route.params.routeObj.tittle === "Property") {
@@ -137,21 +137,43 @@ class Review extends React.Component<Props> {
     keys.forEach((key, index) => {
       if (key) data[key] = contactData[key];
     });
-    data.ImgaeList = this.imageUriList;
-    data.MainImageUri = this.imageUriList[0];
-    data.AdId = "" + this.generateRowId(8);
-    data.UserId = "3";
-    Store.setPostData(data);
+    return data;
   }
 
-  private async postDataDynamo() {
+  private async updateAd() {
+    let data = Store.getPostData();
+    delete data.spinner;
+    delete data.HasError;
     HomeService.getInstance()
-      .postAd(Store.getPostData())
+      .UpdateAd(data)
       .then((response) => response.json())
       .then((responseJson) => {
         this.imageUriList = [];
-        console.log("Post Dynamo", Store.getPostData());
-        this.props.navigation.navigate.push("My Ads");
+        console.log("Update Dynamo", data);
+        this.props.navigation.navigate.push("Home");
+        this.setState({
+          spinner: false,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({
+          spinner: false,
+        });
+      }); //to catch the errors if any
+  }
+
+  private async postDataDynamo() {
+    let data = Store.getPostData();
+    delete data.spinner;
+    delete data.HasError;
+    HomeService.getInstance()
+      .postAd(data)
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.imageUriList = [];
+        console.log("Post Dynamo", data);
+        this.props.navigation.navigate.push("Home");
         this.setState({
           spinner: false,
         });
@@ -171,7 +193,7 @@ class Review extends React.Component<Props> {
           color: "#fa1c0c",
         },
       };
-      return
+      return;
     }
 
     setTimeout(() => {
@@ -185,9 +207,19 @@ class Review extends React.Component<Props> {
       console.log("Image uploaded to S 3");
 
       console.log("asasa", this.imageUriList);
-      this.buildData();
-      this.setState({ DisplayAdID: this.generateRowId(4) });
-      this.postDataDynamo();
+      let data = this.buildData();
+      data.ImgaeList = this.imageUriList;
+      data.MainImageUri = this.imageUriList[0];
+      if (data.AdId) {
+        Store.setPostData(data);
+        this.updateAd();
+      } else {
+        data.AdId = "" + this.generateRowId(8);
+        data.UserId = "3";
+        Store.setPostData(data);
+        this.setState({ DisplayAdID: this.generateRowId(4) });
+        this.postDataDynamo();
+      }
     });
   };
 
@@ -220,7 +252,7 @@ class Review extends React.Component<Props> {
                   <TextInput
                     placeholder="Price"
                     style={styles.priceTextInput}
-                    placeholderTextColor={this.inputValidation.price.color} 
+                    placeholderTextColor={this.inputValidation.price.color}
                     onChangeText={(text) => {
                       this.setState({ Price: text });
                     }}

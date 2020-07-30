@@ -4,9 +4,9 @@ import { Text, View, TouchableOpacity } from "react-native";
 import MyAds from "./myads";
 import FavAds from "./favoriteads";
 import { createStackNavigator } from "@react-navigation/stack";
-import Categories from "../Categories/Categories";
-import CreateAd from "../PostAd/CreateAd";
-import ImageBrowser from "../PostAd/ImageBrowse";
+import Categories from "../Categories/categories";
+import CreateAd from "../PostAd/createAd";
+import ImageBrowser from "../PostAd/imageBrowse";
 const Tab = createMaterialTopTabNavigator();
 
 const Stack = createStackNavigator();

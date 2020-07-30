@@ -4,7 +4,7 @@ export class HomeService implements IHomeService {
   private constructor() {}
 
   private static instance: IHomeService = null;
-
+  url = "https://vng4md3wo9.execute-api.ap-south-1.amazonaws.com/dev/";
   static getInstance() {
     if (!HomeService.instance) {
       HomeService.instance = new HomeService();
@@ -13,11 +13,11 @@ export class HomeService implements IHomeService {
   }
 
   public async getallAds() {
-    return fetch("http://192.168.43.210:3000/api/v1/ads");
+    return fetch(`${this.url}/ads`);
   }
 
-  public async search(search) {
-    return fetch(`http://192.168.43.210:3000/api/v1/ads/${search}`);
+  public async search(value) {
+    return fetch(`http://192.168.43.210:3000/api/v1/ads/search/${value}`);
   }
 
   public async getAdById(id: any, userId: any) {
@@ -25,11 +25,22 @@ export class HomeService implements IHomeService {
   }
 
   public async getAdByCategory(category) {
-    return fetch(`http://192.168.43.210:3000/api/v1/ads/category/${category}`);
+    return fetch(`http://192.168.43.210:3000/api/v1/ads/categories/${category}`);
   }
 
   public async postAd(inputModel: any) {
-    return fetch("http://192.168.43.210:3000/api/v1/ads", {
+    return fetch(`${this.url}postAds`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ inputModel }),
+    });
+  }
+
+  public async UpdateAd(inputModel: any) {
+    return fetch("http://192.168.43.210:3000/api/v1/ads/update", {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -12,18 +12,18 @@ import {
 } from 'react-native';
 
 import { RecipeCard } from '../../appstyles';
-import styles from '../PostAd/styles';
+import styles from './styles';
 import Textarea from 'react-native-textarea';
 import { Button } from 'react-native-elements';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 import { Dropdown } from 'react-native-material-dropdown';
-import LiveStock from '../LiveStock/LiveStock';
-import FarmEquipments from '../FarmEquipments/FarmEquipments';
-import Property from '../Property/Property';
-import Feed from '../Feeds/Feed';
-import Pet from '../Pets/Pets';
-import Job from '../Job/Job';
+import LiveStock from '../LiveStock/liveStock';
+import FarmEquipments from '../FarmEquipments/farmEquipments';
+import Property from '../Property/property';
+import Feed from '../Feeds/feed';
+import Pet from '../Pets/pets';
+import Job from '../Job/job';
 
 
 
@@ -122,8 +122,8 @@ class CreateAd extends React.Component<Props>{
                                             (this.props.route.params.tittle == 'Pets') ?
                                             <Pet navigation={this.props.navigation} route={this.props.route}></Pet> :
                                             (this.props.route.params.tittle == 'Job') ?
-                                            <Job navigation={this.props.navigation} route={this.props.route}></Job> :
-                                         
+                                            <Job  navigation={this.props.navigation} route={this.props.route}></Job> :
+                                         <Button></Button>
                                             (this.props.route.params.tittle == 'Training') ?
                                                 <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock> :
                                                 <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock>

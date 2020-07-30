@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, Image, StyleSheet, RecyclerViewBackedScrollViewBase, ScrollView, TouchableHighlight, FlatList } from 'react-native'
 // import { withNavigation } from 'react-navigation'
-import styles from '../Categories/styles';
+import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { withNavigation } from 'react-navigation';
 import { Store } from '../../store/store';

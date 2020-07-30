@@ -5,10 +5,10 @@ import { createAppContainer, withNavigation } from 'react-navigation';
 import Home from './screens/Home/home' 
 // import DrawerContainer from './components/DrawerContainer/DrawerContainer';
 import BottomNavigation from './components/BottomTabNavigator/bottomTabNavigator';
-import Recipe from './screens/Recipe/RecipeScreen'
+import Recipe from './screens/Recipe/recipeScreen'
 // import createAd from './components/PostAd/CreateAd';
 import App from '../App';
-import ChannelScreen from './screens/Chat/Chat';
+import ChannelScreen from './screens/Chat/chat';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 

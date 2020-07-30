@@ -14,7 +14,7 @@ import { Button } from 'react-native-elements';
 import * as MediaLibrary from 'expo-media-library'
 import SafeAreaView from 'react-native-safe-area-view'
 
-import ImageTile from '../PostAd/ImageTitle'
+import ImageTile from './ImageTitle'
 import { withNavigation } from 'react-navigation'
 import { Store } from '../../store/store';
 

@@ -63,7 +63,7 @@ class Job extends React.Component<Props> {
     this.setState({ sell: 0 });
   }
 
-  goNext = () => {
+  goNext= () => {
     this.setState({ HasError: false });
     Store.setJobData(this.state);
     this.inputValidation = {
@@ -117,7 +117,7 @@ class Job extends React.Component<Props> {
         };
       }
       this.setState({ HasError: true });
-    }
+    } 
   };
   render() {
     return (
