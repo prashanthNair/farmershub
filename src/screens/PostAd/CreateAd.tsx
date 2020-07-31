@@ -114,16 +114,16 @@ class CreateAd extends React.Component<Props>{
                             (this.props.route.params.tittle == 'LiveStock') ?
                                 <LiveStock data ={this.props.route.params.data} navigation={this.props.navigation} route={this.props.route}></LiveStock> :
                                 (this.props.route.params.tittle == 'Property') ?
-                                    <Property navigation={this.props.navigation} route={this.props.route}></Property> :
+                                    <Property data ={this.props.route.params.data} navigation={this.props.navigation} route={this.props.route}></Property> :
                                     (this.props.route.params.tittle == 'FarmEquipments') ?
-                                        <FarmEquipments navigation={this.props.navigation} route={this.props.route}></FarmEquipments> :
+                                        <FarmEquipments data ={this.props.route.params.data} navigation={this.props.navigation} route={this.props.route}></FarmEquipments> :
                                         (this.props.route.params.tittle == 'Feeds') ?
-                                            <Feed navigation={this.props.navigation} route={this.props.route}></Feed> :
+                                            <Feed data ={this.props.route.params.data} navigation={this.props.navigation} route={this.props.route}></Feed> :
                                             (this.props.route.params.tittle == 'Pets') ?
-                                            <Pet navigation={this.props.navigation} route={this.props.route}></Pet> :
+                                            <Pet data ={this.props.route.params.data} navigation={this.props.navigation} route={this.props.route}></Pet> :
                                             (this.props.route.params.tittle == 'Job') ?
-                                            <Job  navigation={this.props.navigation} route={this.props.route}></Job> :
-                                         <Button></Button>
+                                            <Job  data ={this.props.route.params.data} navigation={this.props.navigation} route={this.props.route}></Job> :
+                                         
                                             (this.props.route.params.tittle == 'Training') ?
                                                 <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock> :
                                                 <LiveStock navigation={this.props.navigation} route={this.props.route}></LiveStock>

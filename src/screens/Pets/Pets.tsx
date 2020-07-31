@@ -25,6 +25,7 @@ import { Store } from "../../store/store";
 interface Props {
   navigation;
   route: any;
+  data: any;
 }
 class Pets extends React.Component<Props> {
   state = Store.getPetData();
@@ -116,6 +117,13 @@ class Pets extends React.Component<Props> {
 
   componentDidMount() {
     this.setState({ sell: 0 });
+    if (this.props.data) {
+      console.log("data props", this.props.data);
+      this.setState({ Category: this.props.data.Category });
+      this.setState(this.props.data);
+    } else {
+      this.setState({ Category: this.props.route.params.name });
+    }
   }
 
   render() {
@@ -127,7 +135,7 @@ class Pets extends React.Component<Props> {
               <Text style={styles.inputlabel}>Category Type</Text>
               <TextInput
                 placeholder="Category"
-                value={this.props.route.params.name}
+                value={this.state.Category}
                 style={styles.formTextInput}
                 editable={false}
                 onChangeText={(text) => {

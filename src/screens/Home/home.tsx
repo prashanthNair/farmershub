@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { Card, Button, SearchBar } from "react-native-elements";
 import { withNavigation, NavigationInjectedProps } from "react-navigation";
-import { RecipeCard } from "../../appstyles"; 
+import { RecipeCard } from "../../appstyles";
 import Categoryslider from "./categoryslider";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -75,7 +75,7 @@ class Home extends React.Component<Props, State> {
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
-          dataSource: responseJson.data.Items,
+          dataSource: responseJson.body.data.Items,
           spinner: false,
         });
       })
@@ -129,23 +129,23 @@ class Home extends React.Component<Props, State> {
               <LocationSearch></LocationSearch>
             </View> */}
             <View
-              style={{ flexDirection: "row", marginTop: 35, marginBottom: 0 }}
+              style={{ flexDirection: "row", marginTop: 40, marginBottom: 0 }}
             >
-              <Text style={{ textAlign: "left", fontWeight: "bold" }}>
-                <Image
-                  style={{
-                    height: 20,
-                    width: 20,
-                    marginRight: 4,
-                    marginLeft: 5,
-                  }}
-                  source={require("../../../assets/icons/location1.png")}
-                />
+              <Image
+                style={{
+                  height: 20,
+                  width: 20,
+                  marginRight: 4,
+                  marginLeft: 5,
+                }}
+                source={require("../../../assets/icons/location1.png")}
+              />
+              <Text style={{ textAlign: "left", color: "#8a8787" }}>
                 Kakkanad, Kochi
               </Text>
               <MaterialCommunityIcons
                 name="chevron-down"
-                color={"black"}
+                color={"#8a8787"}
                 size={22}
               />
             </View>
@@ -156,11 +156,15 @@ class Home extends React.Component<Props, State> {
                 // cancelIcon={true}
                 platform="ios"
                 inputContainerStyle={{
-                  backgroundColor: "#fcffff",
-                  borderColor: "#dbdbdb",
-                  borderWidth: 1,
+                  // backgroundColor: "#fcffff",
+                  backgroundColor: "#ffffff",
+                  borderColor: "#e8e8e8",
+                  borderRightWidth: 0.5,
+                  borderLeftWidth: 0.5, 
+                  borderBottomColor: "black",
                 }}
-                containerStyle={{ backgroundColor: "#f0fcfa" }}
+                // containerStyle={{ backgroundColor: "#f0fcfa" }}
+                containerStyle={{ backgroundColor: "#fcfcfc"}}
                 onChangeText={(text) => {
                   this.updateSearch(text);
                 }}
@@ -176,19 +180,20 @@ class Home extends React.Component<Props, State> {
             >
               <View
                 style={{
-                  marginTop: 0,
-                  backgroundColor: "#f7fcfc",
+                  // backgroundColor: "#f7fcfc",
+                  backgroundColor: "#ffffff",
                   padding: 5,
-                  borderColor: "#f7fcfc",
+                  borderColor: "#ffffff",
                   borderTopWidth: 1,
                 }}
               >
                 <Text
                   style={{
                     fontWeight: "bold",
-                    fontSize: 16,
-                    color: "#000930",
+                    fontSize: 18,
                     marginLeft: 10,
+                    margin: 10,
+                    color: "#038d91",
                   }}
                 >
                   Browse All Category
@@ -204,9 +209,9 @@ class Home extends React.Component<Props, State> {
                 </View>
               </ScrollView>
 
-              <View
+              {/* <View
                 style={{
-                  backgroundColor: "#fafbff",
+                  backgroundColor: "#fffff",
                   marginTop: 10,
                   marginLeft: 5,
                   marginRight: 5,
@@ -235,27 +240,36 @@ class Home extends React.Component<Props, State> {
                   renderItem={this.renderPopularItems}
                   keyExtractor={(item) => `${item.AdId}`}
                 />
+              </View> */}
+              <View
+                style={{
+                  // marginBottom: 10,
+                  marginTop: 10,
+                  backgroundColor: "#ffffff",
+                }}
+              >
+                <Text
+                  style={{
+                    margin: 10,
+                    marginLeft: 15,
+                    fontWeight: "bold",
+                    fontSize: 18,
+                    color: "#038d91",
+                  }}
+                >
+                  Recommended Ads
+                </Text>
               </View>
               <View
                 style={{
-                  backgroundColor: "#f7fcfc",
-                  marginTop: 10,
+                  backgroundColor: "#ffffff",
+                   marginTop: 20,
+                  borderColor: "#fcfcfc",
+                  // borderTopWidth: 10,
                   marginBottom: 150,
                   width: "100%",
                 }}
               >
-                <View style={{ margin: 10 }}>
-                  <Text
-                    style={{
-                      marginRight: 10,
-                      fontSize: 20,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Recommended Ads
-                  </Text>
-                </View>
-
                 <FlatList
                   showsVerticalScrollIndicator={false}
                   numColumns={2}
@@ -304,7 +318,7 @@ class Home extends React.Component<Props, State> {
       onPress={() => this.goToDetails(item)}
     >
       <View>
-        {this.renderHeader()}
+        {/* {this.renderHeader()} */}
         <View style={styles.horizonatalContainer}>
           <View style={styles.photo}>
             <Image
@@ -369,8 +383,8 @@ class Home extends React.Component<Props, State> {
       underlayColor="#fafafa"
       onPress={() => this.goToDetails(item)}
     >
-      <View style={{ marginLeft: 5, marginRight: 5 }}>
-        {this.renderHeader()}
+      <View style={{justifyContent: "flex-start"}}>
+        {/* {this.renderHeader()} */}
         <View style={styles.listcontainer}>
           <View>
             <Image
@@ -478,22 +492,29 @@ const styles = StyleSheet.create({
   },
   sliderContainer: {
     width: 500,
-    height: 240,
-    // marginBottom: 10,
-    backgroundColor: "#fafcfb",
-    borderBottomWidth: 1,
-    borderColor: "#fafcfb",
+    // height: 40,
+    //  margin: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#ffffff",
+    borderColor: "#fcfcfc",
+    // borderTopWidth: 10,
+    borderBottomWidth: 10,
   },
 
   searchContainer: {
     marginTop: 10,
-    borderTopWidth: 1,
-    borderColor: "#befaec",
-    backgroundColor: "#cafaf0",
+    // borderTopWidth: 1,
+    // borderColor: "#befaec",
+    // backgroundColor: "#cafaf0",
+    backgroundColor: "#ffffff",
   },
   homeContainer: {
-    backgroundColor: "#d1fbeb",
+    // backgroundColor: "#d1fbeb",
+    backgroundColor: "#ffffff",
     // margin: 5,
+    borderColor: "#fcfcfc",
+    borderWidth:5,
     marginBottom: 350,
   },
 

@@ -25,8 +25,9 @@ import { Store } from "../../store/store";
 import PropertyAd from "../Property/property";
 
 interface Props {
-  navigation: any;
+  navigation;
   route: any;
+  data: any;
 }
 class Job extends React.Component<Props> {
   state = Store.getJobData();
@@ -61,6 +62,13 @@ class Job extends React.Component<Props> {
 
   componentDidMount() {
     this.setState({ sell: 0 });
+    if (this.props.data) {
+      console.log("data props", this.props.data);
+      this.setState({ Category: this.props.data.Category });
+      this.setState(this.props.data);
+    } else {
+      this.setState({ Category: this.props.route.params.name });
+    }
   }
 
   goNext= () => {

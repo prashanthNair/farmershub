@@ -51,7 +51,7 @@ class MyAds extends React.Component<Props, State> {
       .getallAds()
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({ dataSource: responseJson.data.Items });
+        this.setState({ dataSource: responseJson.body.data.Items });
         console.log(responseJson.data.Items);
       })
       .catch((error) => console.log(error));
@@ -114,7 +114,7 @@ class MyAds extends React.Component<Props, State> {
                     if (value == 0) {
                       this.props.navigation.navigate("Sell", {
                         screen: "Ad Details",
-                        params: { tittle: "LiveStock", data: item },
+                        params: { tittle: "FarmEquipments", data: item },
                       });
                     } else if (value == 1) {
                       this.deleteAd(item);

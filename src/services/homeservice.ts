@@ -28,19 +28,19 @@ export class HomeService implements IHomeService {
     return fetch(`http://192.168.43.210:3000/api/v1/ads/categories/${category}`);
   }
 
-  public async postAd(inputModel: any) {
-    return fetch(`${this.url}postAds`, {
+  public async postAd(data: any) {
+    return fetch(`${this.url}/ads`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ inputModel }),
+      body: JSON.stringify( data)
     });
   }
 
   public async UpdateAd(inputModel: any) {
-    return fetch("http://192.168.43.210:3000/api/v1/ads/update", {
+    return fetch(`${this.url}ads/update`, {
       method: "POST",
       headers: {
         Accept: "application/json",

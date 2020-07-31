@@ -150,13 +150,13 @@ class Review extends React.Component<Props> {
       .then((responseJson) => {
         this.imageUriList = [];
         console.log("Update Dynamo", data);
-        this.props.navigation.navigate.push("Home");
         this.setState({
           spinner: false,
         });
+        this.props.navigation.navigate.push("Home");
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
         this.setState({
           spinner: false,
         });
@@ -167,22 +167,31 @@ class Review extends React.Component<Props> {
     let data = Store.getPostData();
     delete data.spinner;
     delete data.HasError;
+    console.log("inputModel", data);
     HomeService.getInstance()
       .postAd(data)
       .then((response) => response.json())
       .then((responseJson) => {
         this.imageUriList = [];
         console.log("Post Dynamo", data);
-        this.props.navigation.navigate.push("Home");
-        this.setState({
-          spinner: false,
+        this.props.navigation.navigate("My Ads");
+        this.props.navigation.navigate("My Ads", {
+          screen: "My Ads",
+          params: { tittle: data.Category},
         });
+        setTimeout(() => {
+          this.setState({
+            spinner: false,
+          });
+        }, 1000);
       })
       .catch((error) => {
         console.log(error);
-        this.setState({
-          spinner: false,
-        });
+        setTimeout(() => {
+          this.setState({
+            spinner: false,
+          });
+        }, 1000);
       }); //to catch the errors if any
   }
 
@@ -198,28 +207,32 @@ class Review extends React.Component<Props> {
 
     setTimeout(() => {
       this.setState({
-        spinner: !this.state.spinner,
+        spinner: true,
       });
-    }, 3000);
+    }, 1000);
 
     await Store.setContactData(this.state);
     await this.postImagesToS3().then((res) => {
-      console.log("Image uploaded to S 3");
-
-      console.log("asasa", this.imageUriList);
       let data = this.buildData();
       data.ImgaeList = this.imageUriList;
       data.MainImageUri = this.imageUriList[0];
-      if (data.AdId) {
-        Store.setPostData(data);
-        this.updateAd();
-      } else {
-        data.AdId = "" + this.generateRowId(8);
-        data.UserId = "3";
-        Store.setPostData(data);
-        this.setState({ DisplayAdID: this.generateRowId(4) });
-        this.postDataDynamo();
-      }
+
+      data.AdId = "" + this.generateRowId(8);
+      data.UserId = "3";
+      Store.setPostData(data);
+      this.setState({ DisplayAdID: this.generateRowId(4) });
+      this.postDataDynamo();
+      // if (data.AdId) {
+      //   Store.setPostData(data);
+      //   console.log('data After Post',data)
+      //   this.updateAd();
+      // } else {
+      //   data.AdId = "" + this.generateRowId(8);
+      //   data.UserId = "3";
+      //   Store.setPostData(data);
+      //   this.setState({ DisplayAdID: this.generateRowId(4) });
+      //   this.postDataDynamo();
+      // }
     });
   };
 

@@ -17,10 +17,10 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-material-dropdown";
 import { Store } from "../../store/store";
-
 interface Props {
-  navigation: any;
+  navigation;
   route: any;
+  data: any;
 }
 
 class Property extends React.Component<Props> {
@@ -60,6 +60,13 @@ class Property extends React.Component<Props> {
 
   componentDidMount() {
     this.setState({ sell: 0 });
+    if (this.props.data) {
+      console.log("data props", this.props.data);
+      this.setState({ Category: this.props.data.Category });
+      this.setState(this.props.data);
+    } else {
+      this.setState({ Category: this.props.route.params.name });
+    }
   }
 
   goNext = () => {
@@ -117,7 +124,7 @@ class Property extends React.Component<Props> {
           <Text style={styles.inputlabel}>Type</Text>
           <TextInput
             placeholder="Category"
-            value={this.props.route.params.name}
+            value={this.state.Category}
             style={styles.formTextInput}
             editable={false}
             onChangeText={(text) => {
