@@ -134,7 +134,7 @@ class Job extends React.Component<Props> {
           <Text style={styles.inputlabel}>Category Type</Text>
           <TextInput
             placeholder="Category"
-            value={this.props.route.params.name}
+            value={this.state.Category}
             style={styles.formTextInput}
             onChangeText={(text) => {
               // this.setState({ Category: text });

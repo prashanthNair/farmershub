@@ -13,7 +13,7 @@ import {
 import { Card, Button, SearchBar } from "react-native-elements";
 import { RecipeCard } from "../../appstyles";
 import { recipes, allCategories } from "../../data/dataArrays";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons"; 
 
 const data = [
   {
@@ -44,7 +44,7 @@ const Categoryslider = (props) => {
                       style={{
                         borderRadius: 100,
                         // borderColor: "green",
-                        backgroundColor: '#f7f7f7',//"#f0f0f0", // item.color,  
+                        backgroundColor: '#ffffff',//'#f7f7f7',//"#f0f0f0", // item.color,  
                         width: 70,
                         height: 70,
                         justifyContent: "center",
@@ -53,12 +53,12 @@ const Categoryslider = (props) => {
                       }}
                     >
                       <View>
-                        <MaterialCommunityIcons
+                        {/* <MaterialCommunityIcons
                           name={item.icon}
                           color={item.color}
                           size={46}
-                        />
-                        {/* <Image style={{ marginLeft: 19 }} source={value.imageUrl}></Image> */}
+                        /> */}
+                        <Image style={{ marginLeft: 19,width:70,height:70,borderRadius:100}} source={item.imageUrl}></Image>
                       </View>
                     </View>
                   </View>
@@ -95,21 +95,21 @@ const Categoryslider = (props) => {
                       style={{
                         borderRadius: 100,
                         borderColor: "#fff",
-                        backgroundColor: '#f7f7f7',//"#f0f0f0", // item.color, 
+                        backgroundColor: '#ffffff',//'#f7f7f7',//"#f0f0f0", // item.color, 
                         width: 70,
                         height: 70,
                         justifyContent: "center",
                         alignContent: "center",
                         alignItems: "center",
                       }}
-                    >
-                      <View>
+                    ><View>
+                      {/* 
                         <MaterialCommunityIcons
                           name={item.icon}
                           color={item.color}
                           size={46}
-                        />
-                        {/* <Image style={{ marginLeft: 19 }} source={item.imageUrl}></Image> */}
+                        /> */}
+                        <Image style={{ marginLeft: 19,width:70,height:70,borderRadius:100}} source={item.imageUrl} source={item.imageUrl}></Image>
                       </View>
                     </View>
                   </View>

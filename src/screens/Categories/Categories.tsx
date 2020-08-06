@@ -104,7 +104,7 @@ class Category extends React.Component<Props>
             <View style={styles.detailsRow}>
             
                 <View style={{alignItems:'flex-start', flexDirection:'row'}}>
-                <MaterialCommunityIcons name={item.icon} color={'#00ab83'} size={26} />
+                <MaterialCommunityIcons name={item.icon} color={'#aeafb0'} size={26} />
                     <Text style={{marginLeft:15, textAlign: "left", fontSize: 18, color: '#2e3030' }}>
                         {item.name}
                     </Text>

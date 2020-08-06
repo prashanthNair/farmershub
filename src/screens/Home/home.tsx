@@ -20,6 +20,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LocationSearch from "./locationsearch";
 import { HomeService } from "../../services/homeservice";
 import Spinner from "react-native-loading-spinner-overlay";
+import {
+  getLocation,
+  geocodeLocationByCoords,
+} from "../../services/locationService";
 
 interface Props {
   navigation: any;
@@ -30,6 +34,8 @@ interface State {
   dataSource: any;
   spinner: any;
   search: "";
+  hasShowLocation: boolean;
+  location: any;
 }
 class Home extends React.Component<Props, State> {
   static navigationOptions = {
@@ -45,6 +51,8 @@ class Home extends React.Component<Props, State> {
       dataSource: [],
       spinner: false,
       search: "",
+      hasShowLocation: false,
+      location: "Search Location",
     };
   }
 
@@ -59,13 +67,28 @@ class Home extends React.Component<Props, State> {
     //   spinner: !this.state.spinner,
     // });
     //}, 1000);
-
+    this.getLocation();
     this.getAllAds();
     this.setState({
       spinner: false,
     });
   }
 
+  async getLocation() {
+    try {
+      let locationCords: any = await getLocation();
+      let locationObj: any = await geocodeLocationByCoords(
+        locationCords.latitude,
+        locationCords.longitude
+      );
+      this.setState({
+        location: (`${locationObj.address_components[1].long_name}, ${locationObj.address_components[2].long_name}`),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
   getAllAds = () => {
     // this.setState({
     //   spinner: true,
@@ -117,39 +140,61 @@ class Home extends React.Component<Props, State> {
 
   render() {
     return (
-      <View>
+      <View >
+        <View style={{ marginTop: 50, backgroundColor:'#038d91' }}>
+
+        </View>
         <Spinner
           visible={this.state.spinner}
           //   textContent={"Loading..."}
           textStyle={RecipeCard.spinnerTextStyle}
         />
+
         <TouchableHighlight>
           <View style={styles.homeContainer}>
-            {/* <View>
-              <LocationSearch></LocationSearch>
-            </View> */}
-            <View
-              style={{ flexDirection: "row", marginTop: 40, marginBottom: 0 }}
-            >
-              <Image
-                style={{
-                  height: 20,
-                  width: 20,
-                  marginRight: 4,
-                  marginLeft: 5,
+
+            {this.state.hasShowLocation ?
+              <View  style={{ marginBottom: 50}} >
+                <LocationSearch
+                  handler={(reg) => this.setState({ location: reg,hasShowLocation:false })}
+                ></LocationSearch>
+              </View>
+            : (
+              <TouchableHighlight
+                onPress={() => {
+                  this.setState({ hasShowLocation: true });
                 }}
-                source={require("../../../assets/icons/location1.png")}
-              />
-              <Text style={{ textAlign: "left", color: "#8a8787" }}>
-                Kakkanad, Kochi
-              </Text>
-              <MaterialCommunityIcons
-                name="chevron-down"
-                color={"#8a8787"}
-                size={22}
-              />
-            </View>
-            <View style={styles.searchContainer}>
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    // marginTop: 40,
+                    marginBottom: 30,
+                  }}
+                >
+                  <Image
+                    style={{
+                      height: 20,
+                      width: 20,
+                      marginRight: 4,
+                      marginLeft: 5,
+                    }}
+                    source={require("../../../assets/icons/location1.png")}
+                  />
+                  <Text style={{ textAlign: "left", color: "#8a8787" }}>
+                    {/* Kakkanad, Kochi */}
+                    {this.state.location}
+                  </Text>
+                  <MaterialCommunityIcons
+                    name="chevron-down"
+                    color={"#8a8787"}
+                    size={22}
+                  />
+                </View>
+              </TouchableHighlight>
+            )}
+
+            {/* <View style={styles.searchContainer}>
               <SearchBar
                 placeholder="Search Here..."
                 // lightTheme={true}
@@ -160,19 +205,20 @@ class Home extends React.Component<Props, State> {
                   backgroundColor: "#ffffff",
                   borderColor: "#e8e8e8",
                   borderRightWidth: 0.5,
-                  borderLeftWidth: 0.5, 
+                  borderLeftWidth: 0.5,
                   borderBottomColor: "black",
                 }}
                 // containerStyle={{ backgroundColor: "#f0fcfa" }}
-                containerStyle={{ backgroundColor: "#fcfcfc"}}
+                containerStyle={{ backgroundColor: "#fcfcfc" }}
                 onChangeText={(text) => {
                   this.updateSearch(text);
                 }}
                 value={this.state.search}
               />
-            </View>
+            </View> */}
             <ScrollView
               showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="always"
               onScroll={() => {
                 this.search();
               }}
@@ -259,14 +305,17 @@ class Home extends React.Component<Props, State> {
                 >
                   Recommended Ads
                 </Text>
+                {/* <LocationSearch
+                  handler={(reg) => this.setState({ location: reg })}
+                ></LocationSearch> */}
               </View>
               <View
                 style={{
                   backgroundColor: "#ffffff",
-                   marginTop: 20,
+                  marginTop: 20,
                   borderColor: "#fcfcfc",
                   // borderTopWidth: 10,
-                  marginBottom: 150,
+                  marginBottom: 350,
                   width: "100%",
                 }}
               >
@@ -278,6 +327,7 @@ class Home extends React.Component<Props, State> {
                   keyExtractor={(item) => `${item.AdId}`}
                 />
               </View>
+              <View></View>
             </ScrollView>
           </View>
         </TouchableHighlight>
@@ -383,7 +433,7 @@ class Home extends React.Component<Props, State> {
       underlayColor="#fafafa"
       onPress={() => this.goToDetails(item)}
     >
-      <View style={{justifyContent: "flex-start"}}>
+      <View style={{ justifyContent: "flex-start" }}>
         {/* {this.renderHeader()} */}
         <View style={styles.listcontainer}>
           <View>
@@ -514,8 +564,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     // margin: 5,
     borderColor: "#fcfcfc",
-    borderWidth:5,
-    marginBottom: 350,
+    borderWidth: 5,
+    marginBottom: 0,
   },
 
   container: {

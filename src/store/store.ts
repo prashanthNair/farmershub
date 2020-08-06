@@ -19,6 +19,9 @@ class BaseModel {
   ImgaeList: any;
   HasError: boolean | false;
   validation: any
+  Place:string|'';
+  Latitude:any|'';
+  Longitude:any|'';
 }
 class ContactModel {
   State: string | "";
@@ -59,6 +62,11 @@ class Pet extends BaseModel {
   Color: string;
 }
 
+class Location{
+  Place:string;
+  Latitude:string;
+  Longitude:string
+}
 export class LiveStockModel extends BaseModel {
   Breed: string;
   Gender: string;
@@ -168,5 +176,14 @@ export class Store {
 
   static setJobData(value: Job) {
     Store._jobData = value;
+  }
+
+  private static _location:Location=new Location()
+  static getLocation(){
+    return Store._location
+  }
+
+  static setLocation(value: any) {
+    Store._location = value;
   }
 }

@@ -18,6 +18,7 @@ import { Button } from "react-native-elements";
 import { Store } from "../../store/store";
 import { HomeService } from "../../services/homeservice";
 import { uploadFile } from "./uploadToS3";
+import LocationSearch from "../Home/locationsearch";
 
 interface Props {
   navigation: any;
@@ -156,7 +157,7 @@ class Review extends React.Component<Props> {
         this.props.navigation.navigate.push("Home");
       })
       .catch((error) => {
-        alert(error);
+        data['HasError']='Insert'
         this.setState({
           spinner: false,
         });
@@ -173,11 +174,11 @@ class Review extends React.Component<Props> {
       .then((response) => response.json())
       .then((responseJson) => {
         this.imageUriList = [];
-        console.log("Post Dynamo", data);
-        this.props.navigation.navigate("My Ads");
+        console.log("Post Dynamo", data); 
+        Store.setPostData({})
         this.props.navigation.navigate("My Ads", {
           screen: "My Ads",
-          params: { tittle: data.Category},
+          params: { tittle: data.Category },
         });
         setTimeout(() => {
           this.setState({
@@ -186,7 +187,7 @@ class Review extends React.Component<Props> {
         }, 1000);
       })
       .catch((error) => {
-        console.log(error);
+        data['HasError']='Update'
         setTimeout(() => {
           this.setState({
             spinner: false,
@@ -217,22 +218,28 @@ class Review extends React.Component<Props> {
       data.ImgaeList = this.imageUriList;
       data.MainImageUri = this.imageUriList[0];
 
-      data.AdId = "" + this.generateRowId(8);
       data.UserId = "3";
+      data.Place = Store.getLocation().Place;
+      data.Latitude = Store.getLocation().Latitude;
+      data.Longitude = Store.getLocation().Longitude;
       Store.setPostData(data);
       this.setState({ DisplayAdID: this.generateRowId(4) });
+
+      
+
       this.postDataDynamo();
-      // if (data.AdId) {
-      //   Store.setPostData(data);
-      //   console.log('data After Post',data)
-      //   this.updateAd();
-      // } else {
-      //   data.AdId = "" + this.generateRowId(8);
-      //   data.UserId = "3";
-      //   Store.setPostData(data);
-      //   this.setState({ DisplayAdID: this.generateRowId(4) });
-      //   this.postDataDynamo();
-      // }
+      if (data.AdId) {
+       
+        Store.setPostData(data);
+        console.log("data After Post", data); 
+        this.updateAd();
+      } else {
+        data.AdId = "" + this.generateRowId(8);
+        data.UserId = "3";
+        Store.setPostData(data);
+        this.setState({ DisplayAdID: this.generateRowId(4) });
+        this.postDataDynamo();
+      }
     });
   };
 
@@ -291,15 +298,16 @@ class Review extends React.Component<Props> {
               ></TextInput>
             </View>
             <View style={styles.detailsRow}>
-              <Text style={styles.inputlabel}>Location</Text>
-              <TextInput
+              {/* <Text style={styles.inputlabel}>Location</Text> */}
+              {/* <TextInput
                 placeholder="Location"
                 value={this.state.Locality}
                 style={styles.formTextInput}
                 onChangeText={(text) => {
                   this.setState({ Location: text });
                 }}
-              ></TextInput>
+              ></TextInput> */}
+              <LocationSearch></LocationSearch>
             </View>
             <View style={styles.detailsRow}>
               <Text style={styles.inputlabel}>Mobile Number</Text>
