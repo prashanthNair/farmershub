@@ -155,14 +155,20 @@ class Home extends React.Component<Props, State> {
 
             {this.state.hasShowLocation ?
               <View  style={{ marginBottom: 50}} >
-                <LocationSearch
+                {/* <LocationSearch
                   handler={(reg) => this.setState({ location: reg,hasShowLocation:false })}
-                ></LocationSearch>
+                ></LocationSearch> */}
+                
               </View>
             : (
               <TouchableHighlight
                 onPress={() => {
-                  this.setState({ hasShowLocation: true });
+                  // this.setState({ hasShowLocation: true });
+                  this.props.navigation.navigate("Location");
+
+                  // this.props.navigation.navigate("Home", {
+                  //   screen: "Location"
+                  // });
                 }}
               >
                 <View

@@ -24,6 +24,7 @@ import ImagePicker from "../../screens/PostAd/imagePicker";
 import ImageBrowser from "../../screens/PostAd/imageBrowse";
 import TabNavigator from "../../screens/MyAds/tabnavigator";
 import MyAds from "../../screens/MyAds/myads";
+import { GetLocation } from "../Location/location";
 const Stack = createStackNavigator();
 
 function HomeTab() {
@@ -38,6 +39,7 @@ function HomeTab() {
 
       <Stack.Screen name="Details" component={Details} />
       <Stack.Screen name="Chat" component={ChannelScreen} />
+      <Stack.Screen name="Location" component={GetLocation} />
       {/* <Stack.Screen name="Upload Images"  component={AddImages} /> */}
     </Stack.Navigator>
   );

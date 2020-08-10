@@ -18,7 +18,7 @@ class LocationSearch extends React.Component<Props> {
   }
   render() {
     return (
-      <View style={{ flex: 1, zIndex:1000}}>
+      <View style={{ flex: 1, zIndex:1000,marginBottom:280}}>
         <GooglePlacesAutocomplete
           placeholder="Search"
           minLength={2} // minimum length of text to search
@@ -42,7 +42,12 @@ class LocationSearch extends React.Component<Props> {
             predefinedPlacesDescription: {
               color: "#1faadb",
             },
-            
+            listView: {
+              color: 'black', //To see where exactly the list is
+              zIndex: 1000, //To popover the component outwards
+              position: 'absolute',
+              top: 45
+            },
           }}
           nearbyPlacesAPI="GooglePlacesSearch"
           debounce={300}
