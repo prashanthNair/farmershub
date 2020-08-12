@@ -24,9 +24,11 @@ import {
   getLocation,
   geocodeLocationByCoords,
 } from "../../services/locationService";
+import { GetLocation } from "../../components/Location/location";
 
 interface Props {
   navigation: any;
+  route: any;
 }
 
 interface State {
@@ -66,8 +68,17 @@ class Home extends React.Component<Props, State> {
     // this.setState({
     //   spinner: !this.state.spinner,
     // });
-    //}, 1000);
-    this.getLocation();
+    //}, 1000); 
+
+    // console.log(this.props.route.params.currentLocation)
+    // if (this.props.route.params&&this.props.route.params.currentLocation) {
+    //   this.setState({
+    //     location:this.props.route.params.currentLocation ,
+    //   });
+    // }else{
+    //   this.getLocation();
+    // }
+     this.getLocation();
     this.getAllAds();
     this.setState({
       spinner: false,
@@ -82,12 +93,11 @@ class Home extends React.Component<Props, State> {
         locationCords.longitude
       );
       this.setState({
-        location: (`${locationObj.address_components[1].long_name}, ${locationObj.address_components[2].long_name}`),
+        location: `${locationObj.address_components[1].long_name}, ${locationObj.address_components[2].long_name}`,
       });
     } catch (err) {
       console.log(err);
     }
-
   }
   getAllAds = () => {
     // this.setState({
@@ -140,10 +150,8 @@ class Home extends React.Component<Props, State> {
 
   render() {
     return (
-      <View >
-        <View style={{ marginTop: 50, backgroundColor:'#038d91' }}>
-
-        </View>
+      <View>
+        <View style={{ marginTop: 50, backgroundColor: "#038d91" }}></View>
         <Spinner
           visible={this.state.spinner}
           //   textContent={"Loading..."}
@@ -152,30 +160,29 @@ class Home extends React.Component<Props, State> {
 
         <TouchableHighlight>
           <View style={styles.homeContainer}>
-
-            {this.state.hasShowLocation ?
-              <View  style={{ marginBottom: 50}} >
-                {/* <LocationSearch
-                  handler={(reg) => this.setState({ location: reg,hasShowLocation:false })}
-                ></LocationSearch> */}
-                
+            {this.state.hasShowLocation ? (
+              <View style={{ marginBottom: 50 }}>
+                <GetLocation
+                currentLocation={this.state.location}
+                  handler={(reg) =>
+                    this.setState({ location: reg, hasShowLocation: false })
+                  }
+                ></GetLocation>
               </View>
-            : (
+            ) : (
               <TouchableHighlight
                 onPress={() => {
-                  // this.setState({ hasShowLocation: true });
-                  this.props.navigation.navigate("Location");
-
-                  // this.props.navigation.navigate("Home", {
-                  //   screen: "Location"
+                  // this.props.navigation.navigate("Location", {
+                  //   currentLocation: this.state.location,
                   // });
+                  this.setState({ hasShowLocation: true }); 
                 }}
               >
                 <View
                   style={{
                     flexDirection: "row",
                     // marginTop: 40,
-                    marginBottom: 30,
+                    // marginBottom: 30,
                   }}
                 >
                   <Image
@@ -188,7 +195,6 @@ class Home extends React.Component<Props, State> {
                     source={require("../../../assets/icons/location1.png")}
                   />
                   <Text style={{ textAlign: "left", color: "#8a8787" }}>
-                    {/* Kakkanad, Kochi */}
                     {this.state.location}
                   </Text>
                   <MaterialCommunityIcons
@@ -200,7 +206,7 @@ class Home extends React.Component<Props, State> {
               </TouchableHighlight>
             )}
 
-            {/* <View style={styles.searchContainer}>
+            <View style={styles.searchContainer}>
               <SearchBar
                 placeholder="Search Here..."
                 // lightTheme={true}
@@ -221,7 +227,8 @@ class Home extends React.Component<Props, State> {
                 }}
                 value={this.state.search}
               />
-            </View> */}
+            </View>
+          { !this.state.hasShowLocation ?
             <ScrollView
               showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="always"
@@ -335,6 +342,7 @@ class Home extends React.Component<Props, State> {
               </View>
               <View></View>
             </ScrollView>
+          :<View></View>}
           </View>
         </TouchableHighlight>
       </View>
