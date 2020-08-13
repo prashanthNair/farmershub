@@ -146,7 +146,7 @@ export const GetLocation = (props) => {
                   >
                     <Text
                       style={{
-                        marginLeft: 30,
+                        marginLeft: 25,
                         textAlign: "left",
                         fontSize: 16,
                         color: "#03718c",

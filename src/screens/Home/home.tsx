@@ -68,7 +68,7 @@ class Home extends React.Component<Props, State> {
     // this.setState({
     //   spinner: !this.state.spinner,
     // });
-    //}, 1000); 
+    //}, 1000);
 
     // console.log(this.props.route.params.currentLocation)
     // if (this.props.route.params&&this.props.route.params.currentLocation) {
@@ -78,7 +78,7 @@ class Home extends React.Component<Props, State> {
     // }else{
     //   this.getLocation();
     // }
-     this.getLocation();
+    this.getLocation();
     this.getAllAds();
     this.setState({
       spinner: false,
@@ -151,84 +151,96 @@ class Home extends React.Component<Props, State> {
   render() {
     return (
       <View>
-        <View style={{ marginTop: 50, backgroundColor: "#038d91" }}></View>
+        <View style={{ marginTop: 40 }}></View>
         <Spinner
           visible={this.state.spinner}
           //   textContent={"Loading..."}
           textStyle={RecipeCard.spinnerTextStyle}
         />
-
-        <TouchableHighlight>
-          <View style={styles.homeContainer}>
-            {this.state.hasShowLocation ? (
-              <View style={{ marginBottom: 50 }}>
-                <GetLocation
-                currentLocation={this.state.location}
-                  handler={(reg) =>
-                    this.setState({ location: reg, hasShowLocation: false })
-                  }
-                ></GetLocation>
-              </View>
-            ) : (
-              <TouchableHighlight
-                onPress={() => {
-                  // this.props.navigation.navigate("Location", {
-                  //   currentLocation: this.state.location,
-                  // });
-                  this.setState({ hasShowLocation: true }); 
+        {this.state.hasShowLocation ? (
+          <View style={{ marginBottom: 50 }}>
+            <GetLocation
+              currentLocation={this.state.location}
+              handler={(reg) =>
+                this.setState({ location: reg, hasShowLocation: false })
+              }
+            ></GetLocation>
+          </View>
+        ) : (
+          <TouchableHighlight
+            onPress={() => {
+              // this.props.navigation.navigate("Location", {
+              //   currentLocation: this.state.location,
+              // });
+              this.setState({ hasShowLocation: true });
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                borderTopColor: "#e6e8e8",
+                borderTopWidth: 1,
+                backgroundColor: "#e6e8e8",
+                // marginBottom: 30,
+              }}
+            >
+              <MaterialCommunityIcons
+                // name="chevron-down"
+                name="map-marker-outline"
+                color={"black"}
+                style={{ marginLeft: 5, marginTop: 5 }}
+                size={22}
+              />
+              <Text
+                style={{
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  marginTop: 5,
+                  color: "#038d91",
                 }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    // marginTop: 40,
-                    // marginBottom: 30,
-                  }}
-                >
-                  <Image
-                    style={{
-                      height: 20,
-                      width: 20,
-                      marginRight: 4,
-                      marginLeft: 5,
-                    }}
-                    source={require("../../../assets/icons/location1.png")}
-                  />
-                  <Text style={{ textAlign: "left", color: "#8a8787" }}>
-                    {this.state.location}
-                  </Text>
-                  <MaterialCommunityIcons
-                    name="chevron-down"
-                    color={"#8a8787"}
-                    size={22}
-                  />
-                </View>
-              </TouchableHighlight>
-            )}
-
-            <View style={styles.searchContainer}>
-              <SearchBar
-                placeholder="Search Here..."
-                // lightTheme={true}
-                // cancelIcon={true}
-                platform="ios"
-                inputContainerStyle={{
-                  // backgroundColor: "#fcffff",
-                  backgroundColor: "#ffffff",
-                  borderColor: "#e8e8e8",
-                  borderRightWidth: 0.5,
-                  borderLeftWidth: 0.5,
-                  borderBottomColor: "black",
-                }}
-                // containerStyle={{ backgroundColor: "#f0fcfa" }}
-                containerStyle={{ backgroundColor: "#fcfcfc" }}
-                onChangeText={(text) => {
-                  this.updateSearch(text);
-                }}
-                value={this.state.search}
+                {this.state.location}
+              </Text>
+              <MaterialCommunityIcons
+                name="chevron-down"
+                color={"black"}
+                style={{ marginTop: 5 }}
+                size={22}
               />
             </View>
-          { !this.state.hasShowLocation ?
+          </TouchableHighlight>
+        )}
+
+        <View style={styles.searchContainer}>
+          <SearchBar
+            placeholder="Cow, Goat"
+            // lightTheme={true}
+            // cancelIcon={true}
+            platform="ios"
+            inputContainerStyle={{
+              // backgroundColor: "#fcffff",
+              padding: 0,
+              height: 10,
+              backgroundColor: "#ffffff",
+              borderColor: "#e8e8e8",
+              borderRightWidth: 0.5,
+              borderLeftWidth: 0.5,
+              borderBottomColor: "black",
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+            containerStyle={{ backgroundColor: "#e6e8e8" }}
+            // containerStyle={{ backgroundColor: "#fcfcfc" }} f0fcfa
+            onChangeText={(text) => {
+              this.updateSearch(text);
+            }}
+            value={this.state.search}
+          />
+        </View>
+
+        {/* <TouchableHighlight> */}
+        <View style={styles.homeContainer}>
+          {!this.state.hasShowLocation ? (
             <ScrollView
               showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="always"
@@ -241,7 +253,7 @@ class Home extends React.Component<Props, State> {
                 style={{
                   // backgroundColor: "#f7fcfc",
                   backgroundColor: "#ffffff",
-                  padding: 5,
+                  // padding: 5,
                   borderColor: "#ffffff",
                   borderTopWidth: 1,
                 }}
@@ -251,14 +263,24 @@ class Home extends React.Component<Props, State> {
                     fontWeight: "bold",
                     fontSize: 18,
                     marginLeft: 10,
-                    margin: 10,
+                    marginRight: 20,
+                    marginTop: 20,
+                    marginBottom: 0,
                     color: "#038d91",
                   }}
                 >
                   Browse All Category
                 </Text>
               </View>
-
+              <View
+                    style={{
+                      backgroundColor: "#038d91",
+                      height: 5,
+                      marginLeft: 10,
+                      width: "40%",
+                      marginTop: 1,
+                    }}
+                  ></View>
               <ScrollView
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
@@ -302,49 +324,70 @@ class Home extends React.Component<Props, State> {
               </View> */}
               <View
                 style={{
-                  // marginBottom: 10,
-                  marginTop: 10,
-                  backgroundColor: "#ffffff",
+                   marginBottom: 10, 
+                  borderTopColor:'#e8e8e8',
+                  // borderTopWidth:1,
                 }}
               >
-                <Text
+                <View
                   style={{
-                    margin: 10,
-                    marginLeft: 15,
-                    fontWeight: "bold",
-                    fontSize: 18,
-                    color: "#038d91",
+                    // marginBottom: 10,
+                    marginTop: 10,
+                    backgroundColor: "#ffffff",
                   }}
                 >
-                  Recommended Ads
-                </Text>
-                {/* <LocationSearch
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      marginLeft: 10,
+                      marginRight: 10,
+                      marginBottom: 1,
+                      fontWeight: "bold",
+                      fontSize: 18,
+                      color: "#038d91",
+                    }}
+                  >
+                    Recommended Ads
+                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: "#038d91",
+                      height: 5,
+                      marginLeft: 10,
+                      width: "40%",
+                      marginTop: 0,
+                    }}
+                  ></View>
+                  {/* <LocationSearch
                   handler={(reg) => this.setState({ location: reg })}
                 ></LocationSearch> */}
+                </View>
+                <View
+                  style={{
+                    backgroundColor: "#ffffff",
+                    marginTop: 20,
+                    borderColor: "#fcfcfc",
+                    // borderTopWidth: 10,
+                    marginBottom: 350,
+                    width: "100%",
+                  }}
+                >
+                  <FlatList
+                    showsVerticalScrollIndicator={false}
+                    numColumns={2}
+                    data={this.state.dataSource}
+                    renderItem={this.renderRecommendedItems}
+                    keyExtractor={(item) => `${item.AdId}`}
+                  />
+                </View>
+                <View></View>
               </View>
-              <View
-                style={{
-                  backgroundColor: "#ffffff",
-                  marginTop: 20,
-                  borderColor: "#fcfcfc",
-                  // borderTopWidth: 10,
-                  marginBottom: 350,
-                  width: "100%",
-                }}
-              >
-                <FlatList
-                  showsVerticalScrollIndicator={false}
-                  numColumns={2}
-                  data={this.state.dataSource}
-                  renderItem={this.renderRecommendedItems}
-                  keyExtractor={(item) => `${item.AdId}`}
-                />
-              </View>
-              <View></View>
             </ScrollView>
-          :<View></View>}
-          </View>
-        </TouchableHighlight>
+          ) : (
+            <View></View>
+          )}
+        </View>
+        {/* </TouchableHighlight> */}
       </View>
     );
   }
@@ -561,13 +604,13 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     backgroundColor: "#ffffff",
-    borderColor: "#fcfcfc",
-    // borderTopWidth: 10,
-    borderBottomWidth: 10,
+    borderColor: "#f7f5f5",
+    borderTopWidth: 0,
+    borderBottomWidth: 30,
   },
 
   searchContainer: {
-    marginTop: 10,
+    // marginTop: 10,
     // borderTopWidth: 1,
     // borderColor: "#befaec",
     // backgroundColor: "#cafaf0",

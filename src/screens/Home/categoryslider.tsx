@@ -28,7 +28,7 @@ const Categoryslider = (props) => {
   };
   return (
     <View>
-      <View style={{ justifyContent: "space-around", alignContent: "center" }}>
+      <View style={{marginBottom:10,marginTop:10, justifyContent: "space-around", alignContent: "center" }}>
         <View style={styles.menuContainer}>
           {allCategories.farmItems.map((item, index) => {
             return (
@@ -43,7 +43,8 @@ const Categoryslider = (props) => {
                     <View
                       style={{
                         borderRadius: 100,
-                        // borderColor: "green",
+                         borderColor: "#f0f0f0",
+                         borderWidth:1,
                         backgroundColor: '#ffffff',//'#f7f7f7',//"#f0f0f0", // item.color,  
                         width: 70,
                         height: 70,
@@ -58,7 +59,7 @@ const Categoryslider = (props) => {
                           color={item.color}
                           size={46}
                         /> */}
-                        <Image style={{ marginLeft: 19,width:70,height:70,borderRadius:100}} source={item.imageUrl}></Image>
+                        <Image style={{ width:80,height:80,borderRadius:100}} source={item.imageUrl}></Image>
                       </View>
                     </View>
                   </View>
@@ -79,7 +80,7 @@ const Categoryslider = (props) => {
         </View>
       </View>
 
-      <View style={{ justifyContent: "space-around", alignContent: "center" }}>
+      <View style={{marginBottom:10,marginTop:10, justifyContent: "space-around", alignContent: "center" }}>
         <View style={styles.menuContainer}>
           {allCategories.liveStocks.map((item, index) => {
             return (
@@ -94,10 +95,11 @@ const Categoryslider = (props) => {
                     <View
                       style={{
                         borderRadius: 100,
-                        borderColor: "#fff",
+                        borderColor: "#f0f0f0",
+                        borderWidth:2,
                         backgroundColor: '#ffffff',//'#f7f7f7',//"#f0f0f0", // item.color, 
-                        width: 70,
-                        height: 70,
+                        width: 80,
+                        height: 80,
                         justifyContent: "center",
                         alignContent: "center",
                         alignItems: "center",
@@ -109,7 +111,7 @@ const Categoryslider = (props) => {
                           color={item.color}
                           size={46}
                         /> */}
-                        <Image style={{ marginLeft: 19,width:70,height:70,borderRadius:100}} source={item.imageUrl} source={item.imageUrl}></Image>
+                        <Image style={{ width:80,height:80,borderRadius:100}} source={item.imageUrl} ></Image>
                       </View>
                     </View>
                   </View>
