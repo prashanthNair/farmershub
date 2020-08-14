@@ -71,7 +71,7 @@ class Job extends React.Component<Props> {
     }
   }
 
-  goNext= () => {
+  goNext = () => {
     this.setState({ HasError: false });
     Store.setJobData(this.state);
     this.inputValidation = {
@@ -102,30 +102,19 @@ class Job extends React.Component<Props> {
             color: "#fa1c0c",
           },
         };
-      } else if (!this.state.Tittle || this.state.Tittle.length <= 10) {
-        this.inputValidation = {
-          tittle: {
-            color: "#fa1c0c",
-          },
-          discription: {
-            color: "#c7c7c7",
-          },
+      }
+      if (!this.state.Tittle || this.state.Tittle.length <= 10) {
+        this.inputValidation.tittle = {
+          color: "#fa1c0c",
         };
-      } else if (
-        !this.state.Description ||
-        this.state.Description.length <= 30
-      ) {
-        this.inputValidation = {
-          tittle: {
-            color: "#c7c7c7",
-          },
-          discription: {
-            color: "#fa1c0c",
-          },
+      }
+      if (!this.state.Description || this.state.Description.length <= 30) {
+        this.inputValidation.discription = {
+          color: "#fa1c0c",
         };
       }
       this.setState({ HasError: true });
-    } 
+    }
   };
   render() {
     return (

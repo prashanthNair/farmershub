@@ -43,7 +43,6 @@ class FarmEquipments extends React.Component<Props> {
   constructor(props) {
     super(props);
     Store.setEquipmentData({}); 
-    this.setState({ Sell: 1 });
   }
 
   radio_props: any = [
@@ -63,9 +62,20 @@ class FarmEquipments extends React.Component<Props> {
   };
 
   goNext = () => {
-    Store.setEquipmentData(this.state);
-    if (
-      !this.state.HasError &&
+    Store.setEquipmentData(this.state); 
+    this.setState({HasError:false}) 
+    this.inputValidation = {
+      tittle: {
+        color: "#c7c7c7",
+      },
+      discription: {
+        color: "#c7c7c7",
+      },
+      productName: {
+        color: "#c7c7c7",
+      },
+    };
+    if ( 
       this.state.Tittle &&
       this.state.Description &&
       this.state.Category &&
@@ -93,56 +103,32 @@ class FarmEquipments extends React.Component<Props> {
             color: "#fa1c0c",
           },
         };
-      } else if (!this.state.Tittle || this.state.Tittle.length <= 10) {
-        this.inputValidation = {
-          tittle: {
-            color: "#fa1c0c",
-          },
-          discription: {
-            color: "#c7c7c7",
-          },
-          productName: {
-            color: "#c7c7c7",
-          },
-        };
-      } else if (!this.state.ProductName) {
-        this.inputValidation = {
-          tittle: {
-            color: "#c7c7c7",
-          },
-          discription: {
-            color: "#c7c7c7",
-          },
-          productName: {
-            color: "#fa1c0c",
-          },
-        };
-      } else if (
+      }  if (!this.state.Tittle || this.state.Tittle.length <= 10) {
+        this.inputValidation.tittle= {
+          color: "#fa1c0c",
+        }
+      }  if (!this.state.ProductName) {
+        this.inputValidation.productName= {
+          color: "#fa1c0c",
+        } 
+      }  if (
         !this.state.Description ||
-        this.state.Description.length <= 10
+        this.state.Description.length <= 30
       ) {
-        this.inputValidation = {
-          tittle: {
-            color: "#c7c7c7",
-          },
-          discription: {
-            color: "#fa1c0c",
-          },
-          productName: {
-            color: "#c7c7c7",
-          },
-        };
+        this.inputValidation.discription= {
+          color: "#fa1c0c",
+        }
       }
       this.setState({ HasError: true });
-    }
+    } 
   };
 
   onPress = (value) => {
     this.setState({ value: value });
   };
 
-  componentDidMount() {
-    this.setState({ sell: 0 });
+  componentDidMount() { 
+    this.setState({ Sell: 0 });
     if (this.props.data) {
       console.log("data props", this.props.data);
       this.setState({ Category: this.props.data.Category });
@@ -198,7 +184,7 @@ class FarmEquipments extends React.Component<Props> {
                 labelHorizontal={true}
                 key={i}
                 onChangeText={(text) => {
-                  this.setState({ BuyOrSell: text });
+                  // this.setState({ Sell: text });
                 }}
               >
                 <RadioButtonInput
@@ -206,8 +192,8 @@ class FarmEquipments extends React.Component<Props> {
                   index={i}
                   isSelected={this.state.Sell == i}
                   onPress={(text) => {
-                    this.setState({ Sell: 1 });
-                    this.setState({ Buy: 0 });
+                    this.state.Sell = text;
+                    this.setState({ Sell: text });
                   }}
                   borderWidth={1}
                   buttonInnerColor={"#0a87f5"}
@@ -223,11 +209,9 @@ class FarmEquipments extends React.Component<Props> {
                   index={i}
                   isSelected={this.state.Buy == i}
                   labelHorizontal={true}
-                  value={this.state.BuyOrSell}
-                  onPress={(text) => {
-                    this.state.BuyOrSell = text;
-                    this.setState({ Sell: 0 });
-                    this.setState({ Buy: 1 });
+                  value={this.state.Buy}
+                  onPress={(text) => { 
+                    this.setState({ Buy: text});
                   }}
                   labelStyle={{ color: "black", fontWeight: "bold" }}
                   labelWrapStyle={{}}
@@ -302,11 +286,13 @@ class FarmEquipments extends React.Component<Props> {
             }}
             // defaultValue={' Additional Information'}
 
-            maxLength={120}
+            maxLength={220}
+            
             placeholder={"Additional Information (Min 30 characters)"}
             placeholderTextColor={this.inputValidation.discription.color}
             underlineColorAndroid={"transparent"}
             ref={"Description"}
+            
             onChangeText={(text) => {
               this.setState({ Description: text });
             }}
@@ -331,7 +317,12 @@ class FarmEquipments extends React.Component<Props> {
               backgroundColor: "#038d91",
             }}
             onPress={() => {
-              this.goNext();
+               this.goNext();
+              // Store.clearStore();
+              // this.props.navigation.reset({
+              //   index: 0,
+              //  routes: [{ name: 'My Ads' }],
+              // });
             }}
           />
         </View>

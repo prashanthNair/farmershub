@@ -18,17 +18,16 @@ class BaseModel {
   MainImageUri: any;
   ImgaeList: any;
   HasError: boolean | false;
-  validation: any
-  Place:string|'';
-  Latitude:any|'';
-  Longitude:any|'';
+  validation: any;
+  Place: string | "";
+  Latitude: any | "";
+  Longitude: any | "";
+  Date: string | "";
 }
 class ContactModel {
   State: string | "";
   District: string | "";
   Locality: string | "";
-  imageRef: string | "";
-  Date: string | "";
   Price: string | "";
   UserName: string | "";
   MobileNum: string | "";
@@ -62,10 +61,10 @@ class Pet extends BaseModel {
   Color: string;
 }
 
-class Location{
-  Place:string;
-  Latitude:string;
-  Longitude:string
+class Location {
+  Place: string;
+  Latitude: string;
+  Longitude: string;
 }
 export class LiveStockModel extends BaseModel {
   Breed: string;
@@ -86,6 +85,10 @@ class Property extends BaseModel {
   PlotArea: any;
   Length: any;
   Size: any;
+}
+class UserDetails {
+  UserName: string;
+  MobileNum: string;
 }
 export class Store {
   private constructor() {}
@@ -178,12 +181,31 @@ export class Store {
     Store._jobData = value;
   }
 
-  private static _location:Location=new Location()
-  static getLocation(){
-    return Store._location
+  private static _location: Location = new Location();
+  static getLocation() {
+    return Store._location;
   }
 
   static setLocation(value: any) {
     Store._location = value;
+  }
+  private static _userdetails:UserDetails =new UserDetails()
+  static setUserDetails(data) {
+    Store._userdetails = data;
+  }
+
+  static getUserDetails() {
+    return Store._userdetails;
+  }
+  static clearStore() {
+    Store.setEquipmentData({});
+    Store.setFeedData(new Feed());
+    Store.setJobData(new Job());
+    Store.setLiveStockData(new LiveStockModel());
+    Store.setPetData(new Pet());
+    Store.SetPropertyData(new Property());
+    Store.SetImageArray({});
+    Store.SetImageUriArray({});
+    Store.setPostData({});
   }
 }

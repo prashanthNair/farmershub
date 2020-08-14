@@ -59,7 +59,7 @@ class Property extends React.Component<Props> {
   };
 
   componentDidMount() {
-    this.setState({ sell: 0 });
+    this.setState({ Sell: 0 });
     if (this.props.data) {
       console.log("data props", this.props.data);
       this.setState({ Category: this.props.data.Category });
@@ -70,7 +70,16 @@ class Property extends React.Component<Props> {
   }
 
   goNext = () => {
-    Store.SetPropertyData(this.state);
+    Store.SetPropertyData(this.state); 
+    this.setState({HasError:false}) 
+    this.inputValidation = {
+      tittle: {
+        color: "#c7c7c7",
+      },
+      discription: {
+        color: "#c7c7c7",
+      },
+    };
     if (
       this.state.Tittle &&
       this.state.Description &&
@@ -78,6 +87,7 @@ class Property extends React.Component<Props> {
       this.state.Description.length >= 30 &&
       this.state.Tittle.length >= 10
     ) {
+      
       this.props.navigation.navigate("Upload Images", {
         routes: this.props.route.params,
       });
@@ -91,27 +101,17 @@ class Property extends React.Component<Props> {
             color: "#fa1c0c",
           },
         };
-      } else if (!this.state.Tittle || this.state.Tittle.length <= 10) {
-        this.inputValidation = {
-          tittle: {
-            color: "#fa1c0c",
-          },
-          discription: {
-            color: "#c7c7c7",
-          },
-        };
-      } else if (
+      } if (!this.state.Tittle || this.state.Tittle.length <= 10) {
+        this.inputValidation.tittle={
+          color: "#fa1c0c",
+        }
+      }  if (
         !this.state.Description ||
-        this.state.Description.length <= 10
+        this.state.Description.length <= 30
       ) {
-        this.inputValidation = {
-          tittle: {
-            color: "#c7c7c7",
-          },
-          discription: {
-            color: "#fa1c0c",
-          },
-        };
+        this.inputValidation.discription= {
+          color: "#fa1c0c",
+        }
       }
       this.setState({ HasError: true });
     }
@@ -154,7 +154,7 @@ class Property extends React.Component<Props> {
                 labelHorizontal={true}
                 key={i}
                 onChangeText={(text) => {
-                  this.state.BuyOrSell = text;
+                  // this.state.BuyOrSell = text;
                 }}
               >
                 <RadioButtonInput
@@ -162,8 +162,7 @@ class Property extends React.Component<Props> {
                   index={i}
                   isSelected={this.state.Sell == i}
                   onPress={(text) => {
-                    this.setState({ Sell: 1 });
-                    this.setState({ Buy: 0 });
+                    this.setState({ Sell: text}); 
                   }}
                   borderWidth={1}
                   buttonInnerColor={"#0a87f5"}
@@ -180,9 +179,8 @@ class Property extends React.Component<Props> {
                   isSelected={this.state.Buy == i}
                   labelHorizontal={true}
                   onPress={(text) => {
-                    this.state.BuyOrSell = text;
-                    this.setState({ Sell: 0 });
-                    this.setState({ Buy: 1 });
+                    this.state.BuyOrSell = text; 
+                    this.setState({ Buy: text });
                   }}
                   labelStyle={{ color: "black" }}
                   labelWrapStyle={{}}

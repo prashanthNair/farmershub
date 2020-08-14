@@ -13,7 +13,7 @@ import {
 import { Card, Button, SearchBar } from "react-native-elements";
 import { RecipeCard } from "../../appstyles";
 import { recipes, allCategories } from "../../data/dataArrays";
-import { MaterialCommunityIcons } from "@expo/vector-icons"; 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const data = [
   {
@@ -28,11 +28,21 @@ const Categoryslider = (props) => {
   };
   return (
     <View>
-      <View style={{marginBottom:10,marginTop:10, justifyContent: "space-around", alignContent: "center" }}>
+      <View
+        style={{
+          marginBottom: 10,
+          marginTop: 10,
+          justifyContent: "space-between",
+          alignContent: "center",
+        }}
+      >
         <View style={styles.menuContainer}>
           {allCategories.farmItems.map((item, index) => {
             return (
-              <TouchableHighlight onPress={() => goToResult(item)}>
+              <TouchableHighlight
+                key={item.id}
+                onPress={() => goToResult(item)}
+              >
                 <View>
                   <View
                     style={{
@@ -43,12 +53,12 @@ const Categoryslider = (props) => {
                     <View
                       style={{
                         borderRadius: 100,
-                         borderColor: "#f0f0f0",
-                         borderWidth:1,
-                        backgroundColor: '#ffffff',//'#f7f7f7',//"#f0f0f0", // item.color,  
-                        width: 70,
-                        height: 70,
-                        justifyContent: "center",
+                        borderColor: "#f0f0f0",
+                        borderWidth: 1,
+                        backgroundColor: "#f0f0f0", //'#f7f7f7',//"#f0f0f0", // item.color,
+                        width: 80,
+                        height: 80,
+                        justifyContent: "space-between",
                         alignContent: "center",
                         alignItems: "center",
                       }}
@@ -59,7 +69,10 @@ const Categoryslider = (props) => {
                           color={item.color}
                           size={46}
                         /> */}
-                        <Image style={{ width:80,height:80,borderRadius:100}} source={item.imageUrl}></Image>
+                        <Image
+                          style={{ width: 80, height: 80, borderRadius: 100 }}
+                          source={item.imageUrl}
+                        ></Image>
                       </View>
                     </View>
                   </View>
@@ -80,11 +93,21 @@ const Categoryslider = (props) => {
         </View>
       </View>
 
-      <View style={{marginBottom:10,marginTop:10, justifyContent: "space-around", alignContent: "center" }}>
+      <View
+        style={{
+          marginBottom: 10,
+          marginTop: 10,
+          justifyContent: "space-between",
+          alignContent: "center",
+        }}
+      >
         <View style={styles.menuContainer}>
           {allCategories.liveStocks.map((item, index) => {
             return (
-              <TouchableHighlight onPress={() => goToResult(item)}>
+              <TouchableHighlight
+                key={item.id}
+                onPress={() => goToResult(item)}
+              >
                 <View>
                   <View
                     style={{
@@ -96,22 +119,26 @@ const Categoryslider = (props) => {
                       style={{
                         borderRadius: 100,
                         borderColor: "#f0f0f0",
-                        borderWidth:2,
-                        backgroundColor: '#ffffff',//'#f7f7f7',//"#f0f0f0", // item.color, 
+                        borderWidth: 2,
+                        backgroundColor: "#ffffff", //'#f7f7f7',//"#f0f0f0", // item.color,
                         width: 80,
                         height: 80,
-                        justifyContent: "center",
+                        justifyContent: "space-between",
                         alignContent: "center",
                         alignItems: "center",
                       }}
-                    ><View>
-                      {/* 
+                    >
+                      <View>
+                        {/* 
                         <MaterialCommunityIcons
                           name={item.icon}
                           color={item.color}
                           size={46}
                         /> */}
-                        <Image style={{ width:80,height:80,borderRadius:100}} source={item.imageUrl} ></Image>
+                        <Image
+                          style={{ width: 80, height: 80, borderRadius: 100 }}
+                          source={item.imageUrl}
+                        ></Image>
                       </View>
                     </View>
                   </View>

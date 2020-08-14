@@ -79,7 +79,7 @@ export const GetLocation = (props) => {
         />
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View>
+        <View> 
           <TouchableHighlight
             onPress={() => {
               props.handler(props.currentLocation);

@@ -1,4 +1,5 @@
 import { IHomeService } from "./Ihomeservice";
+import { AsyncStorage } from "react-native";
 
 export class HomeService implements IHomeService {
   private constructor() {}
@@ -17,15 +18,15 @@ export class HomeService implements IHomeService {
   }
 
   public async search(value) {
-    return fetch(`http://192.168.43.210:3000/api/v1/ads/search/${value}`);
+    return fetch(`${this.url}/${value}`);
   }
 
   public async getAdById(id: any, userId: any) {
-    return fetch(`http://192.168.43.210:3000/api/v1/ads/${id}/${userId}`);
+    return fetch(`${this.url}/${id}/${userId}`);
   }
 
   public async getAdByCategory(category) {
-    return fetch(`http://192.168.43.210:3000/api/v1/ads/categories/${category}`);
+    return fetch(`${this.url}/${category}`);
   }
 
   public async postAd(data: any) {
@@ -35,7 +36,7 @@ export class HomeService implements IHomeService {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify( data)
+      body: JSON.stringify(data),
     });
   }
 
@@ -51,12 +52,25 @@ export class HomeService implements IHomeService {
   }
 
   public async deleteAd(id: any, userId: any) {
-    return fetch(`http://192.168.43.210:3000/api/v1/ads/${id}/${userId}`, {
+    return fetch(`${this.url}/${id}/${userId}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
     });
+  }
+
+  public _retrieveData = async () => {
+    try {
+      const userName = await AsyncStorage.getItem("userName");
+      const mobileNum = await AsyncStorage.getItem("mobileNum");
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  getUserData(){
+    
   }
 }

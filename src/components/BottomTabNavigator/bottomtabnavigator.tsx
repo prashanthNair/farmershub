@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { Text, View } from "react-native"; 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -48,10 +47,21 @@ function HomeTab() {
 function PostAdTab() {
   return (
     <Stack.Navigator
-    // screenOptions={{
-    //   headerShown: false }}
+      initialRouteName={"Select Category"}
+      // screenOptions={{
+      //   headerShown: false }}  <Tab.Screen name="My Ads" component={MyAds} />
     >
-      <Stack.Screen name="Select Category" component={Categories} />
+      {/* <Tab.Screen
+        name="My Ads"
+        component={TabNavigator}
+        options={{
+          tabBarLabel: "Ads",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="dropbox" color={color} size={size} />
+          ),
+        }}
+      /> */}
+      <Stack.Screen name="Select Category" component={Categories} /> 
       <Stack.Screen name="Ad Details" component={CreateAd} />
       <Stack.Screen name="Review Details" component={Review} />
       <Stack.Screen name="Set a price" component={SetPrice} />
@@ -90,10 +100,10 @@ function MyTabs() {
       initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: "#038d91",
-        activeBackgroundColor:'#e6e8e8',
-        
-        inactiveTintColor:'#038d91',
-        style: { backgroundColor: "#f0f0f0" },
+        activeBackgroundColor: "#b7dedd",
+
+        inactiveTintColor: "#038d91",
+        style: { backgroundColor: "#b7dedd" },//b7dedd //f0f0f0
       }}
     >
       <Tab.Screen

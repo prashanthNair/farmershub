@@ -71,7 +71,7 @@ class LiveStock extends React.Component<Props> {
   };
 
   componentDidMount() {
-    this.setState({ sell: 0 });
+    this.setState({ Sell: 0 });
     this.setState({ HasError: false });
     if (this.props.data) {
       console.log("data props", this.props.data);
@@ -84,9 +84,16 @@ class LiveStock extends React.Component<Props> {
 
   goNext = () => {
     Store.setLiveStockData(this.state);
-
+    this.setState({ HasError: false });
+    this.inputValidation = {
+      tittle: {
+        color: "#c7c7c7",
+      },
+      discription: {
+        color: "#c7c7c7",
+      },
+    };
     if (
-      !this.state.HasError &&
       this.state.Tittle &&
       this.state.Description &&
       this.state.Category &&
@@ -106,26 +113,15 @@ class LiveStock extends React.Component<Props> {
             color: "#fa1c0c",
           },
         };
-      } else if (!this.state.Tittle || this.state.Tittle.length <= 10) {
-        this.inputValidation = {
-          tittle: {
-            color: "#fa1c0c",
-          },
-          discription: {
-            color: "#c7c7c7",
-          },
+      }
+      if (!this.state.Tittle || this.state.Tittle.length <= 10) {
+        this.inputValidation.tittle = {
+          color: "#fa1c0c",
         };
-      } else if (
-        !this.state.Description ||
-        this.state.Description.length <= 10
-      ) {
-        this.inputValidation = {
-          tittle: {
-            color: "#c7c7c7",
-          },
-          discription: {
-            color: "#fa1c0c",
-          },
+      }
+      if (!this.state.Description || this.state.Description.length <= 30) {
+        this.inputValidation.discription = {
+          color: "#fa1c0c",
         };
       }
       this.setState({ HasError: true });
@@ -173,7 +169,7 @@ class LiveStock extends React.Component<Props> {
                     labelHorizontal={true}
                     key={i}
                     onChangeText={(text) => {
-                      this.setState({ BuyOrSell: text });
+                      // this.setState({ BuyOrSell: text });
                     }}
                   >
                     <RadioButtonInput
@@ -181,8 +177,7 @@ class LiveStock extends React.Component<Props> {
                       index={i}
                       isSelected={this.state.Sell == i}
                       onPress={(text) => {
-                        this.setState({ Sell: 1 });
-                        this.setState({ Buy: 0 });
+                        this.setState({ Sell: text });
                       }}
                       borderWidth={1}
                       buttonInnerColor={"#0a87f5"}
@@ -200,9 +195,7 @@ class LiveStock extends React.Component<Props> {
                       labelHorizontal={true}
                       value={this.state.BuyOrSell}
                       onPress={(text) => {
-                        this.state.BuyOrSell = text;
-                        this.setState({ Sell: 0 });
-                        this.setState({ Buy: 1 });
+                        this.setState({ Buy: text });
                       }}
                       labelStyle={{ color: "black", fontWeight: "bold" }}
                       labelWrapStyle={{}}
@@ -238,7 +231,8 @@ class LiveStock extends React.Component<Props> {
               >
                 <Dropdown
                   containerStyle={{ marginTop: 0 }}
-                  label="Male"
+                  label="eg: Male, Female"
+                  
                   animationDuration={0}
                   data={this.data}
                   value={this.state.Gender}

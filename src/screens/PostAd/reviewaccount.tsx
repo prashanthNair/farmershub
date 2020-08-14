@@ -19,14 +19,56 @@ import { Store } from "../../store/store";
 import { HomeService } from "../../services/homeservice";
 import { uploadFile } from "./uploadToS3";
 import LocationSearch from "../Home/locationsearch";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { GetLocation } from "../../components/Location/location";
+import {
+  getLocation,
+  geocodeLocationByCoords,
+} from "../../services/locationService";
+import Dialog, {
+  SlideAnimation,
+  DialogContent,
+  DialogTitle,
+  DialogFooter,
+  DialogButton,
+  FadeAnimation,
+} from "react-native-popup-dialog";
+import { StackActions, NavigationActions } from "react-navigation";
 
 interface Props {
   navigation: any;
   route: any;
 }
 
-class Review extends React.Component<Props> {
-  state = Store.getContactData();
+interface state {
+  hasShowLocation: boolean;
+  State: string;
+  District: string;
+  Locality: string;
+  Price: string;
+  UserName: string;
+  MobileNum: string;
+  Email: string;
+  spinner: boolean;
+  HasError: boolean;
+  hasShowAlert: boolean;
+  status: string;
+}
+class Review extends React.Component<Props, state> {
+  state = {
+    UserName: "Prasanth",
+    MobileNum: "9037463199",
+    Email: "prashanthmsktm@gmail.com",
+    State: "Kerala",
+    District: "Kochi",
+    Price: "",
+    Locality: "Location",
+    spinner: false,
+    hasShowLocation: false,
+    HasError: false,
+    hasShowAlert: false,
+    status: "",
+  };
   postData: any = {};
   mainImage = "";
   imageUriList;
@@ -43,8 +85,16 @@ class Review extends React.Component<Props> {
     },
   ];
 
+  radio_props: any = [
+    { label: "I want to sell", value: 0 },
+    { label: "I want to buy", value: 1 },
+  ];
+
   inputValidation = {
     price: {
+      color: "#c7c7c7",
+    },
+    MobileNum: {
       color: "#c7c7c7",
     },
   };
@@ -62,11 +112,33 @@ class Review extends React.Component<Props> {
     ts = ts + shardId;
     return ts * 512 + (randid % 512);
   }
-  // var newPrimaryHashKey = "obj_name:" + generateRowId(4);
-  componentDidMount() {
+
+  async getLocation() {
+    try {
+      let locationCords: any = await getLocation();
+      let locationObj: any = await geocodeLocationByCoords(
+        locationCords.latitude,
+        locationCords.longitude
+      );
+      this.setState({
+        Locality: `${locationObj.address_components[1].long_name}, ${locationObj.address_components[2].long_name}`,
+        District: locationObj.address_components[2].long_name,
+        State: locationObj.address_components[0].long_name,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async componentDidMount() {
+    this.setState({
+      hasShowAlert: false,
+    });
+    this.getUserDetails();
+    await this.getLocation();
     this.imageUriList = [];
     this.imageList = [];
-    this.setState(this.getUserDetails());
+    // this.setState(this.getUserDetails());
     Store.GetImageArray().then((data) => {
       data.forEach(async (element, index) => {
         let filename = "3" + "/" + element.filename;
@@ -86,20 +158,17 @@ class Review extends React.Component<Props> {
       spinner: false,
     });
   }
+
   getUserDetails() {
-    return {
-      Name: "Prasanth",
+    this.setState({
+      UserName: "Prasanth",
       MobileNum: "9037463199",
-      EMail: "prashanthmsktm@gmail.com",
+      Email: "prashanthmsktm@gmail.com",
       State: "Kerala",
       District: "Kochi",
-      Locality: "Pallikkara",
-    };
+      Locality: "Location",
+    });
   }
-  radio_props: any = [
-    { label: "I want to sell", value: 0 },
-    { label: "I want to buy", value: 1 },
-  ];
 
   private async postImagesToS3() {
     let arr = [];
@@ -153,13 +222,16 @@ class Review extends React.Component<Props> {
         console.log("Update Dynamo", data);
         this.setState({
           spinner: false,
+          hasShowAlert: true,
+          status: "Your Ad has been posted",
         });
-        this.props.navigation.navigate.push("Home");
       })
       .catch((error) => {
-        data['HasError']='Insert'
+        data["HasError"] = "Insert";
         this.setState({
           spinner: false,
+          hasShowAlert: true,
+          status: "An error occured",
         });
       }); //to catch the errors if any
   }
@@ -174,43 +246,47 @@ class Review extends React.Component<Props> {
       .then((response) => response.json())
       .then((responseJson) => {
         this.imageUriList = [];
-        console.log("Post Dynamo", data); 
-        Store.setPostData({})
-        this.props.navigation.navigate("My Ads", {
-          screen: "My Ads",
-          params: { tittle: data.Category },
+        console.log("Post Dynamo", data);
+        // this.props.navigation.navigate("My Ads", {
+        //   screen: "My Ads",
+        //   params: { tittle: data.Category },
+        // });
+        this.setState({
+          spinner: false,
+          hasShowAlert: true,
+          status: "Your Ad has been posted",
         });
-        setTimeout(() => {
-          this.setState({
-            spinner: false,
-          });
-        }, 1000);
       })
       .catch((error) => {
-        data['HasError']='Update'
-        setTimeout(() => {
-          this.setState({
-            spinner: false,
-          });
-        }, 1000);
+        data["HasError"] = "Update";
+        this.setState({
+          spinner: false,
+          hasShowAlert: true,
+          status: "An error occured",
+        });
       }); //to catch the errors if any
   }
 
   private postAd = async () => {
     if (!this.state.Price) {
-      this.inputValidation = {
-        price: {
-          color: "#fa1c0c",
-        },
+      this.inputValidation.price = {
+        color: "#fa1c0c",
       };
+      this.setState({ HasError: true });
+      return;
+    } else if (!this.state.MobileNum) {
+      this.inputValidation.MobileNum = {
+        color: "#fa1c0c",
+      };
+      this.setState({ HasError: true });
       return;
     }
 
-    setTimeout(() => {
-      this.setState({
-        spinner: true,
-      });
-    }, 1000);
+    //  setTimeout(() => {
+    this.setState({
+      spinner: true,
+    });
+    // }, 1000);
 
     await Store.setContactData(this.state);
     await this.postImagesToS3().then((res) => {
@@ -222,24 +298,28 @@ class Review extends React.Component<Props> {
       data.Place = Store.getLocation().Place;
       data.Latitude = Store.getLocation().Latitude;
       data.Longitude = Store.getLocation().Longitude;
-      Store.setPostData(data);
-      this.setState({ DisplayAdID: this.generateRowId(4) });
-
-      
-
-      this.postDataDynamo();
+      //  Store.setPostData(data);
+      // this.setState({ DisplayAdID: this.generateRowId(4) });
+      // this.postDataDynamo();
       if (data.AdId) {
-       
         Store.setPostData(data);
-        console.log("data After Post", data); 
+        console.log("data After Post", data);
         this.updateAd();
       } else {
         data.AdId = "" + this.generateRowId(8);
         data.UserId = "3";
         Store.setPostData(data);
-        this.setState({ DisplayAdID: this.generateRowId(4) });
+        // this.setState({ DisplayAdID: this.generateRowId(4) });
         this.postDataDynamo();
       }
+    });
+  };
+
+  resetHandler = (category) => {
+    Store.clearStore();
+    this.props.navigation.reset({
+      index: 0,
+      routes: [{ name: "My Ads" }],
     });
   };
 
@@ -248,12 +328,13 @@ class Review extends React.Component<Props> {
       <ScrollView
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
         <TouchableHighlight>
           <View>
             <Spinner
               visible={this.state.spinner}
-              textContent={"Loading..."}
+              textContent={"Processing..."}
               textStyle={RecipeCard.spinnerTextStyle}
             />
             {this.props.route.params.name != "Job" ? (
@@ -292,22 +373,58 @@ class Review extends React.Component<Props> {
                 placeholder="Name"
                 value={this.state.UserName}
                 onChangeText={(text) => {
-                  this.setState({ Name: text });
+                  this.setState({ UserName: text });
                 }}
                 style={styles.formTextInput}
               ></TextInput>
             </View>
             <View style={styles.detailsRow}>
-              {/* <Text style={styles.inputlabel}>Location</Text> */}
-              {/* <TextInput
-                placeholder="Location"
-                value={this.state.Locality}
-                style={styles.formTextInput}
-                onChangeText={(text) => {
-                  this.setState({ Location: text });
-                }}
-              ></TextInput> */}
-              <LocationSearch></LocationSearch>
+              <Text style={styles.inputlabel}>Location</Text>
+
+              {this.state.hasShowLocation ? (
+                <View style={{ marginBottom: 50 }}>
+                  <GetLocation
+                    currentLocation={this.state.Locality}
+                    handler={(reg) =>
+                      this.setState({ Locality: reg, hasShowLocation: false })
+                    }
+                  ></GetLocation>
+                </View>
+              ) : (
+                <TouchableHighlight
+                  onPress={() => {
+                    this.setState({ hasShowLocation: true });
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      borderBottomColor: "#e6e8e8",
+                      borderBottomWidth: 1,
+                      marginLeft: 5,
+                      // backgroundColor: "#e6e8e8",
+                      // marginBottom: 30,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: "left",
+                        // fontWeight: "bold",
+                        margin: 5,
+                        // color: "#038d91",
+                      }}
+                    >
+                      {this.state.Locality}
+                    </Text>
+                    <MaterialCommunityIcons
+                      name="chevron-down"
+                      color={"black"}
+                      style={{ marginTop: 5 }}
+                      size={22}
+                    />
+                  </View>
+                </TouchableHighlight>
+              )}
             </View>
             <View style={styles.detailsRow}>
               <Text style={styles.inputlabel}>Mobile Number</Text>
@@ -315,6 +432,7 @@ class Review extends React.Component<Props> {
                 value={this.state.MobileNum}
                 placeholder="Mobile Number"
                 style={styles.formTextInput}
+                placeholderTextColor={this.inputValidation.price.color}
                 onChangeText={(text) => {
                   this.setState({ MobileNum: text });
                 }}
@@ -327,7 +445,7 @@ class Review extends React.Component<Props> {
                 placeholder="Email"
                 style={styles.formTextInput}
                 onChangeText={(text) => {
-                  this.setState({ EMail: text });
+                  this.setState({ Email: text });
                 }}
               ></TextInput>
             </View>
@@ -351,6 +469,92 @@ class Review extends React.Component<Props> {
                   this.postAd();
                 }}
               />
+            </View>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+                height: 120,
+                width: "100%",
+                padding: 5,
+                paddingTop: 5,
+              }}
+            >
+              {/* {this.state.hasShowAlert ? ( */}
+              <Dialog
+                visible={this.state.hasShowAlert}
+                opacity={1}
+                style={{width:'99%'}}
+                dialogAnimation={
+                  new FadeAnimation({
+                    initialValue: 0, // optional
+                    animationDuration: 150, // optional
+                    useNativeDriver: true, // optional
+                  })
+                }
+                dialogTitle={
+                  <DialogTitle
+                    title="Status"
+                    style={{
+                      backgroundColor: "#007272",
+                      color: "#007272",
+                    }}
+                  />
+                }
+                hasOverlay={true}
+                onDismiss={() => {
+                  let category = Store.getPostData().Category;
+                  Store.setPostData({});
+                  // this.resetHandler(category);
+                  // this.props.navigation.navigate("My Ads", {
+                  //   screen: "My Ads",
+                  //   params: { tittle: category },
+                  // });
+                  this.props.navigation.reset({
+                    index: 0,
+                    routes: [{ name: "My Ads" }],
+                  });
+                }}
+                footer={
+                  <DialogFooter>
+                    <DialogButton
+                      text="OK"
+                      buttonStyle={{
+                        flexDirection: "row",
+                        backgroundColor: "#b7dedd",
+                        borderWidth: 1,
+                        borderColor: "#007272",
+                        borderRadius: 5,
+                        width: 100,
+                        marginTop: 20,
+                      }}
+                      textStyle={{color:'#007272'}}
+                      onPress={async () => {
+                        console.log(this.state.hasShowAlert);
+                        this.setState({ hasShowAlert: false });
+                      }}
+                      key="button-1"
+                    />
+                  </DialogFooter>
+                }
+              >
+                <DialogContent style={{width:'90%'}}>
+                  <View >
+                    <Text
+                      style={{
+                        color: "#007272",
+                        fontSize: 16, 
+                      }}
+                    >
+                      {this.state.status}
+                    </Text>
+                  </View>
+                </DialogContent>
+              </Dialog>
+              {/* ) : (
+              <View></View>
+              )} */}
             </View>
           </View>
         </TouchableHighlight>

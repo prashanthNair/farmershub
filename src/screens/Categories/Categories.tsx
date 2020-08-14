@@ -93,6 +93,12 @@ class Category extends React.Component<Props>
     static navigationOptions = {
         title: 'Ad Details',
     };
+    resetHandler = () => {
+        Store.clearStore(); 
+      };
+    componentDidMount(){
+        this.resetHandler();
+    }
 
     renderCategories = ({ item }) => (
         <TouchableHighlight underlayColor='grey' onPress={() => {

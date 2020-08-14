@@ -231,13 +231,13 @@ class MyAds extends React.Component<Props, State> {
             <Text style={RecipeCard.headerTextColor}>My Ads</Text>
           </View> */}
 
-            <FlatList
+            {/* <FlatList
               showsVerticalScrollIndicator={false}
               numColumns={1}
               data={this.state.dataSource}
               renderItem={this.renderMyAds}
               keyExtractor={(item) => `${item.AdId}`}
-            />
+            /> */}
           </View>
         </ScrollView>
       </View>
