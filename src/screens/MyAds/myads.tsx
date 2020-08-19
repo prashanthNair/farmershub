@@ -10,8 +10,8 @@ import {
   ScrollView,
   FlatList,
   TouchableHighlight,
+  Dimensions,
 } from "react-native";
-import ModalDropdown from "react-native-modal-dropdown";
 import { RecipeCard } from "../../appstyles";
 import { getCategoryName } from "../../data/MockDataAPI";
 import { HomeService } from "../../services/homeservice";
@@ -28,14 +28,13 @@ interface State {
   hasVisible: any;
 }
 class MyAds extends React.Component<Props, State> {
-  state ={
-    dataSource:[],
-    hasMenu:false,
-    hasVisible:false
-  }
+  state = {
+    dataSource: [],
+    hasMenu: false,
+    hasVisible: false,
+  };
   constructor(props) {
     super(props);
-  
   }
 
   goToDetails = (item) => {
@@ -100,7 +99,7 @@ class MyAds extends React.Component<Props, State> {
               >
                 <Text style={{ marginRight: 10, fontWeight: "bold" }}>...</Text>
               </TouchableHighlight>
-              {this.state.hasMenu ? (
+              {/* {this.state.hasMenu ? (
                 <ModalDropdown
                   style={{ width: 100, zIndex: 100, backgroundColor: "grey" }}
                   dropdownStyle={{
@@ -123,7 +122,7 @@ class MyAds extends React.Component<Props, State> {
                 />
               ) : (
                 <Text></Text>
-              )}
+              )} */}
             </View>
           </View>
           <View
@@ -139,13 +138,21 @@ class MyAds extends React.Component<Props, State> {
           >
             <View style={{ width: "35%" }}>
               <Image
-                style={styles.highphoto}
+                resizeMode={"contain"}
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 10,
+                  width: "100%",
+                  height: "100%",
+                  resizeMode: "contain",
+                }}
                 source={{ uri: item.MainImageUri }}
               />
             </View>
             <View style={{ width: "65%", marginLeft: 15 }}>
               <View style={{ height: 90 }}>
-                <Text style={styles.title}>{item.Tittle}</Text>
+                <Text style={styles.title} numberOfLines={2}>{item.Tittle}</Text>
                 <Text style={styles.price}>{item.Price}</Text>
                 {/* <Text style={styles.title}>{item.title}</Text> */}
               </View>
@@ -175,7 +182,17 @@ class MyAds extends React.Component<Props, State> {
       <View>
         <View style={styles.horizonatalContainer}>
           <View>
-            <Image style={styles.photo} source={{ uri: item.photo_url }} />
+            <Image
+              resizeMode={"contain"} style={styles.photo} source={{ uri: item.photo_url }} />
+            resizeMode={"contain"}
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  margin: 10,
+                  width: "100%",
+                  height: "100%",
+                  resizeMode: "contain",
+                }}
           </View>
           <View
             style={{
@@ -220,7 +237,7 @@ class MyAds extends React.Component<Props, State> {
           overlayBackgroundColor="red"
           width="auto"
           height="auto"
-          onBackdropPress={() => this.setState({hasVisible:true})}
+          onBackdropPress={() => this.setState({ hasVisible: true })}
         >
           <Text>Your Ad has been deleted!</Text>
         </Overlay>
@@ -231,13 +248,13 @@ class MyAds extends React.Component<Props, State> {
             <Text style={RecipeCard.headerTextColor}>My Ads</Text>
           </View> */}
 
-            {/* <FlatList
+            <FlatList
               showsVerticalScrollIndicator={false}
               numColumns={1}
               data={this.state.dataSource}
               renderItem={this.renderMyAds}
               keyExtractor={(item) => `${item.AdId}`}
-            /> */}
+            />
           </View>
         </ScrollView>
       </View>
@@ -245,6 +262,10 @@ class MyAds extends React.Component<Props, State> {
   }
 }
 
+// screen sizing
+const { width, height } = Dimensions.get('window');
+// orientation must fixed
+const SCREEN_WIDTH = width < height ? width : height;
 const styles = StyleSheet.create({
   premiumcontainer: {
     width: 80,
@@ -311,7 +332,14 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   horizonatalContainer: RecipeCard.horizonatalContainer,
-  photo: RecipeCard.photo,
+  photo: {
+    width: (SCREEN_WIDTH / 2),
+    height: 80, 
+    justifyContent: 'center',
+    alignItems: 'center', 
+    margin: 15, 
+    resizeMode: "contain" 
+  },
   title: RecipeCard.title,
   price: RecipeCard.price,
   location: RecipeCard.location,

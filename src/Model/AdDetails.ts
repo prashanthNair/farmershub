@@ -12,7 +12,7 @@ const AdDetailsModel = {
         buyOrSell: '',
         Price: '',
         MainImageUri: '',
-        ImgaeList: ''
+        ImgaeList: []
     },
     ProductDetails: {
         ProductName: '',

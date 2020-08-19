@@ -111,12 +111,12 @@ class Category extends React.Component<Props>
             
                 <View style={{alignItems:'flex-start', flexDirection:'row'}}>
                 <MaterialCommunityIcons name={item.icon} color={'#aeafb0'} size={26} />
-                    <Text style={{marginLeft:15, textAlign: "left", fontSize: 18, color: '#2e3030' }}>
+                    <Text style={{marginLeft:15, textAlign: "left", fontSize: 16 }}>
                         {item.name}
                     </Text>
                 </View>
                 <View style={{ marginRight: 10,alignItems:'flex-end',  }}>
-                    <MaterialCommunityIcons name={'chevron-right'} size={26} />
+                    <MaterialCommunityIcons name={'chevron-right'} color={"#aeafb0"} size={26} />
                 </View>
             </View>
         </TouchableHighlight>

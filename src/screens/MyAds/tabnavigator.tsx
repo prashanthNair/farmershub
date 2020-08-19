@@ -18,7 +18,7 @@ function TabNavigator() {
       }}
     >
       <Tab.Screen name="My Ads" component={MyAds} />
-      <Tab.Screen name="Favorite" component={FavAds} />
+      {/* <Tab.Screen name="Favorite" component={FavAds} /> */}
     </Tab.Navigator>
   );
 }

@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     width: '100%',
     margin: 5,
     padding: 10,
-    borderBottomColor: '#e8e8e8',
-    borderBottomWidth: 1,
+    borderBottomColor: '#038d91',
+    borderBottomWidth: 0.5, 
     marginBottom:5
   },
   lineheader: {

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     header: { 
         justifyContent:'center',
         height:180, 
-        backgroundColor: '#03a0a8',
+        backgroundColor: '#b7dedd',
         alignContent:'center',
         alignItems:'center'
     },
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     },
 
     loginFormTextInput: {
+        color:'#007272',
         width: '99%',
         height: 43,
         fontSize: 14,

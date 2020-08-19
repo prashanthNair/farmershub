@@ -58,7 +58,7 @@ const Account = (props) => {
         <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => props.navigation.navigate('Ad Details')}>
             <View style={styles.detailsRow}>
                 <View >
-                    <Text style={{ textAlign: "left", fontWeight: 'bold' }}>
+                    <Text style={{ textAlign: "left", fontWeight: 'bold',color:'#007272' }}>
                         {item.name}
                     </Text>
                     <Text>{item.tag}</Text>
@@ -77,13 +77,13 @@ const Account = (props) => {
 
             <View style={styles.header}>
                 <View style={{ marginTop: 50 }}>
-                    <Text style={{color:'#fff', fontSize:22, fontWeight:'bold'}}>My Account</Text>
+                    <Text style={{color:'#008', fontSize:22, fontWeight:'bold'}}>My Account</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginVertical: 20, justifyContent: 'space-around' }}>
                     <View style={styles.circle} ></View>
                     <View>
-                        <View style={{ margin: 20, }}><Text style={{ fontWeight: 'bold',color:'#fff' }}>Welcome Prasanth</Text>
-                            <Text style={{ color: 'blue' }}
+                        <View style={{ margin: 20, }}><Text style={{ fontWeight: 'bold',color:'#009' }}>Welcome Prasanth</Text>
+                            <Text style={{ color: '#007272',}}
                                 onPress={() => props.navigation.navigate('Profile')}>
                                 Edit Profile
                     </Text>

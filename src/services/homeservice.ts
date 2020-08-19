@@ -5,7 +5,7 @@ export class HomeService implements IHomeService {
   private constructor() {}
 
   private static instance: IHomeService = null;
-  url = "https://vng4md3wo9.execute-api.ap-south-1.amazonaws.com/dev/";
+  url = "https://vng4md3wo9.execute-api.ap-south-1.amazonaws.com/dev";
   static getInstance() {
     if (!HomeService.instance) {
       HomeService.instance = new HomeService();
@@ -18,15 +18,14 @@ export class HomeService implements IHomeService {
   }
 
   public async search(value) {
-    return fetch(`${this.url}/${value}`);
+    return fetch(`${this.url}/ads/search/${value}`);
   }
 
   public async getAdById(id: any, userId: any) {
-    return fetch(`${this.url}/${id}/${userId}`);
-  }
-
+    return fetch(`${this.url}/ads/${id}/${userId}`);
+  } 
   public async getAdByCategory(category) {
-    return fetch(`${this.url}/${category}`);
+    return fetch(`${this.url}/ads/categories/${category}`);
   }
 
   public async postAd(data: any) {
@@ -41,7 +40,7 @@ export class HomeService implements IHomeService {
   }
 
   public async UpdateAd(inputModel: any) {
-    return fetch(`${this.url}ads/update`, {
+    return fetch(`${this.url}/ads/update`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -52,7 +51,7 @@ export class HomeService implements IHomeService {
   }
 
   public async deleteAd(id: any, userId: any) {
-    return fetch(`${this.url}/${id}/${userId}`, {
+    return fetch(`${this.url}/ads/${id}/${userId}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -61,16 +60,4 @@ export class HomeService implements IHomeService {
     });
   }
 
-  public _retrieveData = async () => {
-    try {
-      const userName = await AsyncStorage.getItem("userName");
-      const mobileNum = await AsyncStorage.getItem("mobileNum");
-    } catch (error) {
-      // Error retrieving data
-    }
-  };
-
-  getUserData(){
-    
-  }
 }

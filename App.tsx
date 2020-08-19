@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View, AsyncStorage } from "react-native";
 
 import { withAuthenticator } from "aws-amplify-react-native";
@@ -21,11 +21,27 @@ Amplify.configure({
 interface Props {
   navigation: any;
 }
+
 function App(props) {
+  useEffect(() => {
+    _retrieveData()
+    .then((data) => {
+     
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  });
   const _retrieveData = async () => {
     try {
       const userName = await AsyncStorage.getItem("userName");
+      console.log(userName)
       const mobileNum = await AsyncStorage.getItem("mobileNum");
+      console.log(mobileNum)
+      Store.setUserDetails({
+        userName,
+        mobileNum,
+      });
       return {
         userName,
         mobileNum,
@@ -34,22 +50,9 @@ function App(props) {
       // Error retrieving data
     }
   };
-  _retrieveData()
-    .then((data) => {
-      if (data) {
-        Store.setUserDetails(data);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  
 
-  return (
-    <NavigationContainer>
-      {/* <Login navigation={props.navigation}/> */}
-      <AppNavigator></AppNavigator>
-    </NavigationContainer>
-  );
+  return <AppNavigator></AppNavigator>;
 }
 
 //export default withAuthenticator(App, { includeGreetings: true })

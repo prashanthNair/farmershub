@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlignVertical: "center",
     marginTop: 20,
+    marginBottom:10
   },
   loginFormTextInput: {
     width: "90%",
@@ -83,5 +84,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: 100,
     marginTop: 20,
+    marginBottom:10 
   },
 });

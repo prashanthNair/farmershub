@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableHighlight,
   TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
 
 import { RecipeCard } from "../../appstyles";
@@ -140,7 +141,7 @@ class FarmEquipments extends React.Component<Props> {
 
   render() {
     return (
-      <View>
+     <KeyboardAvoidingView ><View>
         <View style={styles.detailsRow}>
           <Text style={styles.inputlabel}>Type</Text>
           <TextInput
@@ -327,6 +328,7 @@ class FarmEquipments extends React.Component<Props> {
           />
         </View>
       </View>
+      </KeyboardAvoidingView>
     );
   }
 }

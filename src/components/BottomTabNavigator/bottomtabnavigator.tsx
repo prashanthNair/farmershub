@@ -22,7 +22,7 @@ import SetPrice from "../../screens/PostAd/price";
 import ImagePicker from "../../screens/PostAd/imagePicker";
 import ImageBrowser from "../../screens/PostAd/imageBrowse";
 import TabNavigator from "../../screens/MyAds/tabnavigator";
-import MyAds from "../../screens/MyAds/myads";
+import FavAds from "../../screens/MyAds/favoriteads";
 import { GetLocation } from "../Location/location";
 const Stack = createStackNavigator();
 

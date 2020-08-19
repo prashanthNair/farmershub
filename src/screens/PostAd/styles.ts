@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
 
     lineheader: {
-        backgroundColor: '#007272',
+        backgroundColor: '#edf0ee',
         width: '100%',
         marginTop:0,
         marginBottom:5,

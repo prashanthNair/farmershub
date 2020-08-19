@@ -742,7 +742,7 @@ export const allCategories = {
       title: "Goat",
       color: "#a1cbff",
       icon: "dog-side",
-      imageUrl: require("../../assets/new/goat.png"),
+      imageUrl: require("../../assets/new/goat.jpg"),
     },
     {
       id: 3,

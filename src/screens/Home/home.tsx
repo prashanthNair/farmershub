@@ -10,12 +10,13 @@ import {
   ScrollView,
   TouchableHighlight,
   FlatList,
+  Platform,
+  ActivityIndicator,
 } from "react-native";
 import { Card, Button, SearchBar } from "react-native-elements";
 import { withNavigation, NavigationInjectedProps } from "react-navigation";
 import { RecipeCard } from "../../appstyles";
 import Categoryslider from "./categoryslider";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LocationSearch from "./locationsearch";
 import { HomeService } from "../../services/homeservice";
@@ -25,14 +26,18 @@ import {
   geocodeLocationByCoords,
 } from "../../services/locationService";
 import { GetLocation } from "../../components/Location/location";
+import { Store } from "../../store/store";
 
 interface Props {
   navigation: any;
   route: any;
 }
 
-interface State { 
+interface State {
+  page: any;
+  refreshing: boolean;
   dataSource: any;
+  loadingMore: boolean;
   spinner: any;
   search: "";
   hasShowLocation: boolean;
@@ -43,12 +48,15 @@ class Home extends React.Component<Props, State> {
     //To hide the NavigationBar from current Screen
     header: null,
   };
-
+  _isMounted = false;
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
+      page: 1,
+      refreshing: false,
       dataSource: [],
+      loadingMore: false,
       spinner: false,
       search: "",
       hasShowLocation: false,
@@ -57,18 +65,47 @@ class Home extends React.Component<Props, State> {
   }
 
   updateSearch = (search) => {
-    this.setState({ search });
-    this.search();
+    if (this._isMounted) {
+      this.setState({ search });
+    }
+    this._search();
   };
 
   componentDidMount() {
-     
+    console.log(Store.getUserDetails())
+    this._isMounted = true;
     this.getLocation();
-    this.getAllAds();
-    this.setState({
-      spinner: false,
-    });
+    this._getAllAds();
+    if (this._isMounted) {
+      this.setState({
+        spinner: false,
+      });
+    }
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  _renderFooter = () => {
+    if (!this.state.loadingMore) return null;
+
+    return (
+      <View
+        style={{
+          position: "relative",
+          width: "100%",
+          height: 100,
+          paddingVertical: 20,
+          // borderTopWidth: 1,
+          marginTop: 10,
+          marginBottom: 10,
+        }}
+      >
+        <ActivityIndicator animating size="large" />
+      </View>
+    );
+  };
 
   async getLocation() {
     try {
@@ -77,14 +114,16 @@ class Home extends React.Component<Props, State> {
         locationCords.latitude,
         locationCords.longitude
       );
-      this.setState({
-        location: `${locationObj.address_components[1].long_name}, ${locationObj.address_components[2].long_name}`,
-      });
+      if (this._isMounted) {
+        this.setState({
+          location: `${locationObj.address_components[1].long_name}, ${locationObj.address_components[2].long_name}`,
+        });
+      }
     } catch (err) {
       console.log(err);
     }
   }
-  getAllAds = () => {
+  _getAllAds = () => {
     // this.setState({
     //   spinner: true,
     // });
@@ -92,10 +131,13 @@ class Home extends React.Component<Props, State> {
       .getallAds()
       .then((response) => response.json())
       .then((responseJson) => {
-        this.setState({
-          dataSource: responseJson.body.data.Items,
-          spinner: false,
-        });
+        if (this._isMounted) {
+          this.setState({
+            dataSource: responseJson.body.data.Items,
+            spinner: false,
+            refreshing: false,
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -105,9 +147,9 @@ class Home extends React.Component<Props, State> {
       });
   };
 
-  search = () => {
+  _search = () => {
     if (this.state.search == "") {
-      this.getAllAds();
+      this._getAllAds();
     } else if (this.state.search.length >= 2) {
       // this.setState({
       //   spinner: true,
@@ -117,26 +159,54 @@ class Home extends React.Component<Props, State> {
         .then((response) => response.json())
         .then((responseJson) => {
           console.log("Seraching Done", responseJson);
-          this.setState({
-            spinner: false,
-            dataSource: responseJson.data.Items,
-          });
+          if (this._isMounted) {
+            this.setState({
+              spinner: false,
+              dataSource: responseJson.body.data.Items,
+              refreshing: false,
+            });
+          }
         })
         .catch((error) => {
-          this.setState({
-            spinner: false,
-          });
+          if (this._isMounted) {
+            this.setState({
+              spinner: false,
+            });
+          }
           console.log(error);
         });
     } else {
-      this.getAllAds();
+      this._getAllAds();
     }
   };
 
+  _handleRefresh = () => {
+    this.setState(
+      {
+        page: 1,
+        refreshing: true,
+      },
+      () => {
+        this._search();
+      }
+    );
+  };
+
+  _handleLoadMore = () => {
+    this.setState(
+      (prevState, nextProps) => ({
+        page: prevState.page + 1,
+        loadingMore: true,
+      }),
+      () => {
+        this._search();
+      }
+    );
+  };
   render() {
     return (
-      <View style={{backgroundColor:'#b7dedd' }}>
-        <View style={{ marginTop:40,backgroundColor:'#b7dedd' }}></View>
+      <View style={{ backgroundColor: "#b7dedd" }}>
+        <View style={{ marginTop: "10%", backgroundColor: "#b7dedd" }}></View>
         <Spinner
           visible={this.state.spinner}
           //   textContent={"Loading..."}
@@ -212,7 +282,7 @@ class Home extends React.Component<Props, State> {
               marginBottom: 10,
             }}
             containerStyle={{ backgroundColor: "#b7dedd" }}
-           // containerStyle={{ backgroundColor: "#e6e8e8" }}
+            // containerStyle={{ backgroundColor: "#e6e8e8" }}
             // containerStyle={{ backgroundColor: "#fcfcfc" }} 038d91
             onChangeText={(text) => {
               this.updateSearch(text);
@@ -225,17 +295,17 @@ class Home extends React.Component<Props, State> {
         <View style={styles.homeContainer}>
           {!this.state.hasShowLocation ? (
             <ScrollView
-              showsVerticalScrollIndicator={false}
-              keyboardShouldPersistTaps="always"
-              onScroll={() => {
-                this.search();
-              }}
-              style={{ backgroundColor: "#fff" }}
+              //      showsVerticalScrollIndicator={false}
+              //     keyboardShouldPersistTaps="always"
+              //    onScroll={() => {
+              //     this.search();
+              //// }}
+              style={{ backgroundColor: "#ffffff" }}
             >
               <View style={styles.sliderContainer}>
                 <View
                   style={{
-                    backgroundColor: "#f4fdfd",//"#f4fdfd",edf0ee
+                    backgroundColor: "#f4fdfd", //"#f4fdfd",edf0ee
                     borderColor: "#ffffff",
                     flexDirection: "row",
                   }}
@@ -248,7 +318,7 @@ class Home extends React.Component<Props, State> {
                       marginRight: 20,
                       marginTop: 10,
                       marginBottom: 10,
-                      color:'#038d91' //"#007272",
+                      color: "#038d91", //"#007272",
                     }}
                   >
                     Browse All Category
@@ -266,38 +336,6 @@ class Home extends React.Component<Props, State> {
                 </View>
               </View>
 
-              {/* <View
-                style={{
-                  backgroundColor: "#fffff",
-                  marginTop: 10,
-                  marginLeft: 5,
-                  marginRight: 5,
-                }}
-              >
-                <View>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginRight: 10,
-                      marginTop: 0,
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      color: "#000930",
-                    }}
-                  >
-                    Popular Ads
-                  </Text>
-                </View>
-                <FlatList
-                  style={{ marginTop: 15 }}
-                  showsHorizontalScrollIndicator={false}
-                  horizontal={true}
-                  // numColumns={2}
-                  data={this.state.dataSource}
-                  renderItem={this.renderPopularItems}
-                  keyExtractor={(item) => `${item.AdId}`}
-                />
-              </View> */}
               <View
                 style={{
                   marginBottom: 10,
@@ -309,7 +347,7 @@ class Home extends React.Component<Props, State> {
                   style={{
                     // marginBottom: 10,
                     // marginTop: 10,
-                    backgroundColor: "#f4fdfd"//"#edf0ee",
+                    backgroundColor: "#f4fdfd", //"#edf0ee",
                   }}
                 >
                   <Text
@@ -320,7 +358,7 @@ class Home extends React.Component<Props, State> {
                       marginBottom: 10,
                       fontWeight: "bold",
                       fontSize: 18,
-                      color: '#038d91'//"#038d91",
+                      color: "#038d91", //"#038d91",
                     }}
                   >
                     Recommended Ads
@@ -328,23 +366,33 @@ class Home extends React.Component<Props, State> {
                 </View>
                 <View
                   style={{
-                    backgroundColor: "#ffffff", 
+                    backgroundColor: "#ffffff",
                     borderColor: "#fcfcfc",
                     // borderTopWidth: 10,
                     marginBottom: 350,
-                    margin:5,  
+                    margin: 5,
                     width: "100%",
                   }}
                 >
                   <FlatList
+                    ListFooterComponent={this._renderFooter}
+                    onRefresh={this._handleRefresh}
+                    refreshing={this.state.refreshing}
+                    // onEndReached={this._handleLoadMore}
+                    onEndReachedThreshold={0.5}
+                    initialNumToRender={2}
+                    removeClippedSubviews={true}
                     showsVerticalScrollIndicator={false}
                     numColumns={2}
-                    data={this.state.dataSource}
+                    data={this.state.dataSource} 
+                    legacyImplementation={true}
+                    disableVirtualization={true}
                     renderItem={this.renderRecommendedItems}
+                    key={Math.random()}
                     keyExtractor={(item) => `${item.AdId}`}
                   />
                 </View>
-                <View></View>
+                <View style={{ marginTop: 50 }}></View>
               </View>
             </ScrollView>
           ) : (
@@ -394,7 +442,8 @@ class Home extends React.Component<Props, State> {
         <View style={styles.horizonatalContainer}>
           <View style={styles.photo}>
             <Image
-              style={{ width: "100%", height: "100%" }}
+              resizeMode={"contain"}
+              style={{ width: "100%", height: "100%", resizeMode: "contain" }}
               source={{ uri: item.MainImageUri }}
             />
           </View>
@@ -459,10 +508,22 @@ class Home extends React.Component<Props, State> {
       <View style={{ justifyContent: "flex-start" }}>
         {/* {this.renderHeader()} */}
         <View style={styles.listcontainer}>
-          <View>
+          <View style={styles.highphoto}>
             <Image
-              style={styles.highphoto}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                resizeMode: "contain",
+                paddingTop: 15,
+                height: "100%",
+                width: "100%",
+              }}
+              resizeMode={"contain"}
               source={{ uri: item.MainImageUri }}
+              // source={{
+              //   uri:
+              //     "http://images.media-allrecipes.com/userphotos/960x960/3758635.jpg",
+              // }}
             />
           </View>
           <View
@@ -575,7 +636,7 @@ const styles = StyleSheet.create({
     // borderTopWidth: 30,
   },
 
-  searchContainer: { 
+  searchContainer: {
     backgroundColor: "#ffffff",
   },
   homeContainer: {

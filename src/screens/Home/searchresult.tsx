@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableHighlight,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import { Card, Button, SearchBar } from "react-native-elements";
 // import { withNavigation, NavigationInjectedProps } from 'react-navigation';
@@ -43,18 +44,21 @@ class SearchResult extends React.Component<Props, State> {
     };
   }
   componentDidMount() {
-    this.getAllAds();
+    this.getAdByCategory();
   }
 
-  getAllAds = () => {
+  getAdByCategory = () => {
     HomeService.getInstance()
       .getAdByCategory(this.props.route.params.tittle)
       .then((response) => response.json())
       .then((responseJson) => {
         this.setState({
           loading: false,
-          dataSource: responseJson.data.Items,
+          dataSource: responseJson.body.data.Items,
         });
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -89,12 +93,23 @@ class SearchResult extends React.Component<Props, State> {
     );
   }
 
-  renderImage= ({ item }) => (
-      <View>
-        <Image style={styles.highphoto} source={{ uri: item }} />
-      </View> 
-  );
+  // renderImage = ({ el }) => (
+  //   <TouchableOpacity>
+  //   <View>
+  //     <Text>{el}</Text>
+  //   </View>
+  //   </TouchableOpacity>
+  // );
 
+  renderImage = ({ item }) => (
+    <View style={styles.highphoto}>
+      <Image
+        resizeMode={"contain"}
+        style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+        source={{ uri: item }}
+      />
+    </View>
+  );
   renderHeader() {
     return (
       <View
@@ -133,11 +148,21 @@ class SearchResult extends React.Component<Props, State> {
             underlayColor="#fafafa"
             onPress={() => this.goToDetails(item)}
           >
-            {/* <View style={styles.sliderContainer}>{this.renderImage(item)}</View> */}
-            <View>
+            <View
+              style={{
+                width: 800,
+                height: 270,
+                marginBottom: 0,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "center",
+              }}
+            >
+              {/* {this.renderImage(item)} */}
+
               <FlatList
                 showsHorizontalScrollIndicator={false}
-                // numColumns={1}
+                numColumns={1}
                 horizontal={true}
                 data={item.ImgaeList}
                 renderItem={this.renderImage}
@@ -154,7 +179,12 @@ class SearchResult extends React.Component<Props, State> {
             alignItems: "flex-start",
           }}
         >
-          <Text style={styles.price}>{item.Price}</Text>
+          <TouchableHighlight
+            underlayColor="#fafafa"
+            onPress={() => this.goToDetails(item)}
+          >
+            <Text style={styles.price}>{item.Price}</Text>
+          </TouchableHighlight>
           <View style={{ marginRight: 10 }}>
             <Button
               title={"Chat"}
@@ -183,25 +213,30 @@ class SearchResult extends React.Component<Props, State> {
             style={{
               flex: 1,
               marginBottom: 10,
+              marginTop: 10,
               justifyContent: "flex-start",
               alignItems: "flex-start",
             }}
           >
-            <Text numberOfLines={1} style={styles.title}>{item.Tittle}</Text>
+            <Text numberOfLines={1} style={styles.title}>
+              {item.Tittle}
+            </Text>
             {/* <Text style={styles.location}>
               {item.Locality}
             </Text> */}
           </View>
         </TouchableHighlight>
         <View style={styles.locationcontainer}>
-          <Text style={styles.location}>
+          <Text style={styles.location} ellipsizeMode="tail" numberOfLines={1}>
             <Image
               style={styles.locationimage}
               source={require("../../../assets/icons/location1.png")}
             />{" "}
             {item.Locality}
           </Text>
-          <Text style={styles.location}>{"04/05/2020"}</Text>
+          <Text ellipsizeMode="tail" numberOfLines={1} style={styles.location}>
+            {"04/05/2020"}
+          </Text>
         </View>
       </View>
     </View>
@@ -255,7 +290,7 @@ const styles = StyleSheet.create({
   listcontainer: {
     // justifyContent: 'flex-start',
     // alignItems: 'flex-start',
-     marginBottom: 10,
+    marginBottom: 10,
     marginTop: 10,
     backgroundColor: "#ffffff",
     // width: 400,
@@ -267,13 +302,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   highphoto: {
-    width: SCREEN_WIDTH -20,
+    // width: SCREEN_WIDTH / 1.5,
+    // height: 250,
+    // justifyContent: "flex-start",
+    // alignItems: "flex-start",
+    // margin: 5,
+    // paddingBottom: 0,
+    width: SCREEN_WIDTH - 20,
     height: 250,
     justifyContent: "flex-start",
     alignItems: "flex-start",
     margin: 5,
     paddingBottom: 0,
-    // borderRadius: 10,
   },
   locationcontainer: {
     marginTop: 10,
@@ -312,6 +352,7 @@ const styles = StyleSheet.create({
     marginRight: 50,
     marginLeft: 5,
     flexWrap: "nowrap",
+    width: "75%",
     marginBottom: 5,
   },
   title: RecipeCard.title,

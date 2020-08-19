@@ -14,6 +14,7 @@ import Login from "./screens/Login/Login";
 import { LoginWithOutSSO } from "./screens/Login/LoginWithOutSSO";
 import BottomNavigation from "./components/BottomTabNavigator/bottomtabnavigator";
 
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Store } from "./store/store";
 const Stack = createStackNavigator();
@@ -31,9 +32,25 @@ function LoginNavigator() {
   );
 }
 export default function AppNavigator() {
-  if (Store.getUserDetails().MobileNum) {
-    return BottomNavigation();
-  } else {
-    return <LoginNavigator />;
-  }
+  // if (Store.getUserDetails().MobileNum) {
+  //   return BottomNavigation();
+  // } else {
+  //   return <LoginNavigator />;
+  // }
+  return (
+   
+    <NavigationContainer>
+      {/* <View
+        style={{
+          backgroundColor: "#b7dedd",
+          height: 40,
+        }}
+      ></View> */}
+      {Store.getUserDetails().MobileNum ? (
+        <BottomNavigation></BottomNavigation>
+      ) : (
+        <BottomNavigation></BottomNavigation>
+      )}
+    </NavigationContainer>
+  );
 }

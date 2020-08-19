@@ -13,23 +13,25 @@ const SCREEN_WIDTH = width < height ? width : height;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    flex: 1
+    flex: 1, 
   },
   carouselContainer: {
-    minHeight: 250
+    minHeight: 500
   },
   carousel: {},
 
   image: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',
-    height: 400
+    height: '100%',
+    resizeMode: 'contain',
   },
   imageContainer: {
     flex: 1,
     justifyContent: 'center',
     width: viewportWidth,
-    height: 250
+    marginTop:20,
+    height: 500
   },
   paginationContainer: {
     flex: 1,

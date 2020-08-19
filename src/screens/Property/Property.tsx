@@ -138,6 +138,7 @@ class Property extends React.Component<Props> {
             placeholder="In Cents/Acers"
             style={styles.formTextInput}
             value={this.state.PlotArea}
+            maxLength={25}
             onChangeText={(text) => {
               this.setState({
                 PlotArea: text,
@@ -196,6 +197,7 @@ class Property extends React.Component<Props> {
             placeholder="Length"
             keyboardType={"number-pad"}
             style={styles.formTextInput}
+            maxLength={25}
             onChangeText={(text) => {
               this.setState({ Length: text });
             }}
@@ -208,6 +210,7 @@ class Property extends React.Component<Props> {
           <TextInput
             placeholder="Size"
             keyboardType={"number-pad"}
+            maxLength={25}
             style={styles.formTextInput}
             onChangeText={(text) => {
               this.setState({ Size: text });
