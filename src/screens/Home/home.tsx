@@ -14,7 +14,7 @@ import {
 import { Card, Button, SearchBar } from "react-native-elements";
 import { withNavigation, NavigationInjectedProps } from "react-navigation";
 import { RecipeCard } from "../../appstyles";
-import Categoryslider from "./categoryslider";
+import Categoryslider, { FarmPropertiesCategoryslider } from "./categoryslider";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import LocationSearch from "./locationsearch";
@@ -25,13 +25,15 @@ import {
   geocodeLocationByCoords,
 } from "../../services/locationService";
 import { GetLocation } from "../../components/Location/location";
+import { allCategories } from "../../data/dataArrays";
+import { floor } from "react-native-reanimated";
 
 interface Props {
   navigation: any;
   route: any;
 }
 
-interface State { 
+interface State {
   dataSource: any;
   spinner: any;
   search: "";
@@ -47,7 +49,7 @@ class Home extends React.Component<Props, State> {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       dataSource: [],
       spinner: false,
       search: "",
@@ -62,7 +64,7 @@ class Home extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-     
+
     this.getLocation();
     this.getAllAds();
     this.setState({
@@ -135,8 +137,8 @@ class Home extends React.Component<Props, State> {
 
   render() {
     return (
-      <View style={{backgroundColor:'#b7dedd' }}>
-        <View style={{ marginTop:40,backgroundColor:'#b7dedd' }}></View>
+      <View style={{ backgroundColor: '#b7dedd' }}>
+        <View style={{ marginTop: 40, backgroundColor: '#b7dedd' }}></View>
         <Spinner
           visible={this.state.spinner}
           //   textContent={"Loading..."}
@@ -212,7 +214,7 @@ class Home extends React.Component<Props, State> {
               marginBottom: 10,
             }}
             containerStyle={{ backgroundColor: "#b7dedd" }}
-           // containerStyle={{ backgroundColor: "#e6e8e8" }}
+            // containerStyle={{ backgroundColor: "#e6e8e8" }}
             // containerStyle={{ backgroundColor: "#fcfcfc" }} 038d91
             onChangeText={(text) => {
               this.updateSearch(text);
@@ -221,137 +223,157 @@ class Home extends React.Component<Props, State> {
           />
         </View>
 
-        {/* <TouchableHighlight> */}
-        <View style={styles.homeContainer}>
-          {!this.state.hasShowLocation ? (
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              keyboardShouldPersistTaps="always"
-              onScroll={() => {
-                this.search();
-              }}
-              style={{ backgroundColor: "#fff" }}
-            >
-              <View style={styles.sliderContainer}>
-                <View
-                  style={{
-                    backgroundColor: "#f4fdfd",//"#f4fdfd",edf0ee
-                    borderColor: "#ffffff",
-                    flexDirection: "row",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: 18,
-                      marginLeft: 10,
-                      marginRight: 20,
-                      marginTop: 10,
-                      marginBottom: 10,
-                      color:'#038d91' //"#007272",
-                    }}
-                  >
-                    Browse All Category
-                  </Text>
-                </View>
+        <ScrollView showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="always"
+          onScroll={() => {
+            this.search();
+          }}
+          style={{ backgroundColor: "#fff" }}>
+          <View>
+            <View style={styles.homeContainer}>
+              {!this.state.hasShowLocation ? (
                 <View>
-                  <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                  >
-                    <View style={{ width: 650 }}>
-                      <Categoryslider props={this.props}></Categoryslider>
+                  <View style={styles.sliderContainer}>
+                    <View
+                      style={{
+                        backgroundColor: "#f4fdfd",//"#f4fdfd",edf0ee
+                        borderColor: "#ffffff",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: 18,
+                          marginLeft: 10,
+                          marginRight: 20,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          color: '#038d91' //"#007272",
+                        }}
+                      >
+                        Live Stocks
+                  </Text>
                     </View>
-                  </ScrollView>
-                </View>
-              </View>
+                    <View>
+                      <ScrollView
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                      >
+                        <View style={{ width: 650 }}>
+                          <Categoryslider props={this.props}></Categoryslider>
+                        </View>
+                      </ScrollView>
+                    </View>
+                  </View>
 
-              {/* <View
-                style={{
-                  backgroundColor: "#fffff",
-                  marginTop: 10,
-                  marginLeft: 5,
-                  marginRight: 5,
-                }}
-              >
-                <View>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginRight: 10,
-                      marginTop: 0,
-                      fontSize: 20,
-                      fontWeight: "bold",
-                      color: "#000930",
-                    }}
-                  >
-                    Popular Ads
+                  <View style={styles.sliderContainer}>
+                    <View
+                      style={{
+                        backgroundColor: "#f4fdfd",//"#f4fdfd",edf0ee
+                        borderColor: "#ffffff",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          fontSize: 18,
+                          marginLeft: 10,
+                          marginRight: 20,
+                          marginTop: 10,
+                          marginBottom: 10,
+                          color: '#038d91' //"#007272",
+                        }}
+                      >
+                        Farm Properties and meachines
                   </Text>
-                </View>
-                <FlatList
-                  style={{ marginTop: 15 }}
-                  showsHorizontalScrollIndicator={false}
-                  horizontal={true}
-                  // numColumns={2}
-                  data={this.state.dataSource}
-                  renderItem={this.renderPopularItems}
-                  keyExtractor={(item) => `${item.AdId}`}
-                />
-              </View> */}
-              <View
-                style={{
-                  marginBottom: 10,
-                  borderTopColor: "#e8e8e8",
-                  // borderTopWidth:1,
-                }}
-              >
-                <View
-                  style={{
-                    // marginBottom: 10,
-                    // marginTop: 10,
-                    backgroundColor: "#f4fdfd"//"#edf0ee",
-                  }}
-                >
-                  <Text
+                    </View>
+                    <View>
+                      <ScrollView
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                      >
+                        <View style={{ width: 650 }}>
+                          <FarmPropertiesCategoryslider props={this.props}></FarmPropertiesCategoryslider>
+                        </View>
+                      </ScrollView>
+                    </View>
+                  </View>
+
+                  <View
                     style={{
-                      marginTop: 10,
-                      marginLeft: 10,
-                      marginRight: 10,
                       marginBottom: 10,
-                      fontWeight: "bold",
-                      fontSize: 18,
-                      color: '#038d91'//"#038d91",
+                      borderTopColor: "#e8e8e8",
                     }}
                   >
-                    Recommended Ads
+                    <View
+                      style={{
+                        backgroundColor: "#f4fdfd"//"#edf0ee",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          marginTop: 10,
+                          marginLeft: 10,
+                          marginRight: 10,
+                          marginBottom: 10,
+                          fontWeight: "bold",
+                          fontSize: 18,
+                          color: '#038d91'//"#038d91",
+                        }}
+                      >
+                        Recommended Ads
                   </Text>
+                    </View>
+                    <View
+                      style={{
+                        backgroundColor: "#ffffff",
+                        borderColor: "#fcfcfc",
+                        display: 'flex',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        justifyContent: 'space-around'
+                      }}
+                    >
+                      {
+                        allCategories.farmItems.map((item, index) => {
+                          return <View style={{
+                            borderColor: 'green', margin: 5,
+                            borderWidth: 1, height: 240, width: '46%',
+                            display:'flex',
+                            flexDirection:'column',
+                            justifyContent:'flex-start'
+                          }}>
+                            <View style={{
+                              backgroundColor: '#f2f5f2', margin: 5,
+                              height: 160
+                            }}>
+
+                            </View>
+                            <View style={{ height: 32}}>
+
+                            </View>
+
+                            <View style={{justifyContent:'flex-end',
+                              backgroundColor: '#f2f5f2', margin: 5,
+                              height: 30
+                            }}>
+                            </View>
+                          </View>
+                        })
+                      }
+
+                    </View>
+                    <View></View>
+                  </View>
                 </View>
-                <View
-                  style={{
-                    backgroundColor: "#ffffff", 
-                    borderColor: "#fcfcfc",
-                    // borderTopWidth: 10,
-                    marginBottom: 350,
-                    margin:5,  
-                    width: "100%",
-                  }}
-                >
-                  <FlatList
-                    showsVerticalScrollIndicator={false}
-                    numColumns={2}
-                    data={this.state.dataSource}
-                    renderItem={this.renderRecommendedItems}
-                    keyExtractor={(item) => `${item.AdId}`}
-                  />
-                </View>
+              ) : (
                 <View></View>
-              </View>
-            </ScrollView>
-          ) : (
-            <View></View>
-          )}
-        </View>
-        {/* </TouchableHighlight> */}
+              )}
+            </View>
+          </View>
+        </ScrollView>
       </View>
     );
   }
@@ -537,7 +559,7 @@ const Search = () => {
     <SearchBar
       placeholder="Type Here..."
       onChangeText={updateSearch}
-      //   value={search}
+    //   value={search}
     />
   );
 };
@@ -575,7 +597,7 @@ const styles = StyleSheet.create({
     // borderTopWidth: 30,
   },
 
-  searchContainer: { 
+  searchContainer: {
     backgroundColor: "#ffffff",
   },
   homeContainer: {
